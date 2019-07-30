@@ -1,0 +1,26 @@
+{
+  "name": "react-data-async",
+  "version": "0.0.1",
+  "description": "Work in progress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackyef/react-data-async.git"
+  },
+  "keywords": [
+    "react",
+    "async",
+    "data",
+    "promise"
+  ],
+  "author": "Jacky Efendi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackyef/react-data-async/issues"
+  },
+  "homepage": "https://github.com/jackyef/react-data-async#readme"
+}
