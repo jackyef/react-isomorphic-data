@@ -22,5 +22,19 @@
   "bugs": {
     "url": "https://github.com/jackyef/react-data-async/issues"
   },
-  "homepage": "https://github.com/jackyef/react-data-async#readme"
+  "homepage": "https://github.com/jackyef/react-data-async#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "3.0.2",
+    "husky": "^3.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
+    }
+  }
 }
