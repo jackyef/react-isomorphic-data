@@ -2,8 +2,10 @@
   "name": "react-data-async",
   "version": "0.0.1",
   "description": "Work in progress",
-  "main": "index.js",
+  "main": "dist/lib/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "npm publish --access public"
   },
@@ -24,8 +26,19 @@
   },
   "homepage": "https://github.com/jackyef/react-data-async#readme",
   "devDependencies": {
+    "@types/lodash.camelcase": "^4.3.6",
+    "@types/rollup-plugin-json": "^3.0.2",
+    "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "cz-conventional-changelog": "3.0.2",
-    "husky": "^3.0.2"
+    "husky": "^3.0.2",
+    "lodash.camelcase": "^4.3.0",
+    "rollup": "^1.19.3",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.22.1",
+    "typescript": "^3.5.3"
   },
   "config": {
     "commitizen": {
