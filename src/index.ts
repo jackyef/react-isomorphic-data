@@ -1,3 +1,1 @@
-import name from './name';
-
-console.log(`Hello, ${name}`);
+export { default as useAsyncData } from './hooks/index';
