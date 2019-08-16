@@ -2,20 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useAsyncData } from 'react-data-async';
 
-interface PropsMapper {
-  (resolvedValue: any): any;
-}
-
-interface AsyncDataState {
-  data: any,
-  error: Error | boolean | null,
-  loading: boolean,
-}
-
 const App = () => {
-  const { data, loading, error } = useAsyncData('https://pokeapi.co/api/v2/pokemon/1/', {}, (result: any) => {
-    return result
-  });
+  const { data, loading, error } = useAsyncData('https://pokeapi.co/api/v2/pokemon/1/', {});
 
   return (
     <div>

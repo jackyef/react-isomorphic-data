@@ -2,17 +2,20 @@ import * as React from 'react';
 
 import qsify from '../utils/querystringify.js';
 
-interface PropsMapper {
-  (resolvedValue: any): any;
-}
+type AsyncDataState = {
+  data: any;
+  error: Error | boolean | null;
+  loading: boolean;
+};
 
-interface AsyncDataState {
-  data: any,
-  error: Error | boolean | null,
-  loading: boolean,
-}
+const useAsyncData = (
+  url: string,
+  queryParams: Record<string, any>,
+  fetchOptions: RequestInit = {},
+): AsyncDataState => {
+  // fetchOptions rarely changes. So let's just store it into a ref
+  const optionsRef = React.useRef<RequestInit>(fetchOptions);
 
-const useAsyncData = (url: string, queryParams: Object, mapResultToProps: PropsMapper): AsyncDataState => {
   const queryString = qsify(queryParams, '?');
   const [state, setState] = React.useState<AsyncDataState>({
     data: null,
@@ -21,13 +24,11 @@ const useAsyncData = (url: string, queryParams: Object, mapResultToProps: PropsM
   });
 
   React.useEffect(() => {
-    fetch(`${url}${queryString}`)
+    fetch(`${url}${queryString}`, optionsRef.current)
       .then(result => result.json())
       .then(json => {
-        const data = mapResultToProps(json);
-
         setState({
-          data,
+          data: json,
           error: false,
           loading: false,
         });
@@ -43,6 +44,5 @@ const useAsyncData = (url: string, queryParams: Object, mapResultToProps: PropsM
 
   return state;
 };
-
 
 export default useAsyncData;
