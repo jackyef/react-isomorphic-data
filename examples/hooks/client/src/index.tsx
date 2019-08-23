@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { useAsyncData } from 'react-data-async';
+import { useAsyncData, DataProvider } from 'react-data-async';
 
 const App = () => {
   const { data, loading, error } = useAsyncData('https://pokeapi.co/api/v2/pokemon/1/', {});
@@ -26,4 +26,9 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <DataProvider>
+    <App />
+  </DataProvider>,
+  document.getElementById('root'),
+);
