@@ -1,0 +1,11 @@
+import useBaseData from './utils/useBaseData.ts';
+
+import { AsyncDataState } from './types';
+
+const useData = (url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}): AsyncDataState => {
+  const [, baseData] = useBaseData(url, queryParams, fetchOptions, false);
+  
+  return baseData;
+};
+
+export default useData;

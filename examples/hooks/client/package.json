@@ -8,6 +8,7 @@
     "@types/react": "16.8.24",
     "@types/react-dom": "16.8.5",
     "react": "16.9.0",
+    "react-data-async": "file:../../../../../dist/lib/index.js",
     "react-dom": "16.9.0",
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.0",
@@ -18,8 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "link:rda": "yarn link react-data-async"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

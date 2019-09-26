@@ -1,25 +1,27 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { useAsyncData, DataProvider } from 'react-data-async';
+import { useLazyData, useData, DataProvider } from 'react-data-async';
+
+import './styles.css';
 
 const App = () => {
-  const { data, loading, error } = useAsyncData('https://pokeapi.co/api/v2/pokemon/1/', {});
+  const [fetchData, lazyData] = useLazyData('https://pokeapi.co/api/v2/pokemon/1/', {});
+  const eagerData = useData('https://pokeapi.co/api/v2/pokemon/2/', {});
 
   return (
     <div>
-      Hello world
+      Example #1
       <div>
         <pre>
-          data:
-          {JSON.stringify(data, null, 2)}
+          {JSON.stringify(eagerData, null, 2)}
         </pre>
+      </div>
+      <hr />
+      Example #2
+      <button onClick={fetchData}>Hit me to fetch data!</button>
+      <div>
         <pre>
-          loading:
-          {JSON.stringify(loading, null, 2)}
-        </pre>
-        <pre>
-          error:
-          {JSON.stringify(error, null, 2)}
+          {JSON.stringify(lazyData, null, 2)}
         </pre>
       </div>
     </div>

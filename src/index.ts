@@ -1,2 +1,2 @@
-export { default as useAsyncData } from './hooks/index';
-export { DataContext, DataProvider } from './common';
+export * from './hooks/index.ts';
+export { DataContext, DataProvider } from './common/index.ts';

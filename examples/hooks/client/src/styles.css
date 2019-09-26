@@ -1,0 +1,9 @@
+pre {
+  max-height: 200px;
+  max-width: 100%;
+  overflow: scroll;
+  font-size: 0.75rem;
+  color: rgba(176,45,39,1);
+  background: rgba(235,230,230,1);
+  padding: 8px;
+}
