@@ -1,6 +1,6 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-# react-isomorphic-data monorepo
+# react-isomorphic-data
 Work in progress
 
 ## list

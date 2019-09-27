@@ -1,15 +1,17 @@
 {
   "name": "react-isomorphic-data",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Work in progress",
+  "sideEffects": false,
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pub": "npm publish --access public"
+    "prepare": "rollup -c",
+    "predeploy": "rollup -c",
+    "deploy": "npm publish"
   },
   "files": [
     "dist"
@@ -64,6 +66,7 @@
     "rollup-plugin-terser": "^5.1.1"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
