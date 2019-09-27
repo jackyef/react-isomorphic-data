@@ -1,0 +1,62 @@
+{
+  "name": "react-isomorphic-data",
+  "version": "0.0.1",
+  "description": "Work in progress",
+  "main": "dist/lib/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pub": "npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackyef/react-isomorphic-data.git"
+  },
+  "keywords": [
+    "react",
+    "isomorphic",
+    "data",
+    "promise",
+    "fetch"
+  ],
+  "author": "Jacky Efendi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackyef/react-isomorphic-data/issues"
+  },
+  "homepage": "https://github.com/jackyef/react-isomorphic-data#readme",
+  "devDependencies": {
+    "@types/lodash.camelcase": "^4.3.6",
+    "@types/rollup-plugin-json": "^3.0.2",
+    "@types/rollup-plugin-sourcemaps": "^0.4.2",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "lodash.camelcase": "^4.3.0",
+    "prettier": "^1.18.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "rollup": "^1.19.3",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.22.1",
+    "typescript": "^3.5.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "dependencies": {
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.8.5",
+    "rollup-plugin-terser": "^5.1.1"
+  }
+}
