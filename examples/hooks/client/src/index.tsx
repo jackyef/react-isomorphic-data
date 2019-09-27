@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { useLazyData, useData, DataProvider } from 'react-data-async';
+import { useLazyData, useData, DataProvider } from 'react-isomorphic-data';
 
 import './styles.css';
 

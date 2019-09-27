@@ -8,7 +8,7 @@ import { terser as minify } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
-const libraryName = 'react-data-async';
+const libraryName = 'react-isomorphic-data';
 
 export default {
   input: `src/index.ts`,
