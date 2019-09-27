@@ -1,5 +1,5 @@
 {
-  "name": "react-data-async",
+  "name": "react-isomorphic-data",
   "version": "0.0.1",
   "description": "Work in progress",
   "main": "dist/lib/index.js",
@@ -12,20 +12,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jackyef/react-data-async.git"
+    "url": "git+https://github.com/jackyef/react-isomorphic-data.git"
   },
   "keywords": [
     "react",
-    "async",
+    "isomorphic",
     "data",
-    "promise"
+    "promise",
+    "fetch"
   ],
   "author": "Jacky Efendi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jackyef/react-data-async/issues"
+    "url": "https://github.com/jackyef/react-isomorphic-data/issues"
   },
-  "homepage": "https://github.com/jackyef/react-data-async#readme",
+  "homepage": "https://github.com/jackyef/react-isomorphic-data#readme",
   "devDependencies": {
     "@types/lodash.camelcase": "^4.3.6",
     "@types/rollup-plugin-json": "^3.0.2",
