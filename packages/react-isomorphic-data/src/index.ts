@@ -1,2 +1,2 @@
-export * from './hooks/index.ts';
-export { DataContext, DataProvider } from './common/index.ts';
+export * from './hooks';
+export { DataContext, DataProvider } from './common';

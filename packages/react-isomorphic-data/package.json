@@ -2,14 +2,18 @@
   "name": "react-isomorphic-data",
   "version": "0.0.1",
   "description": "Work in progress",
-  "main": "dist/lib/index.js",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pub": "npm publish --access public"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jackyef/react-isomorphic-data.git"
@@ -58,5 +62,8 @@
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.8.5",
     "rollup-plugin-terser": "^5.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

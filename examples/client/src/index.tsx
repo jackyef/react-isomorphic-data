@@ -28,8 +28,10 @@ const App = () => {
   );
 };
 
+const initialData = {}; // We will be able to restore serialized data from SSR here later
+
 ReactDOM.render(
-  <DataProvider>
+  <DataProvider initialData={initialData}>
     <App />
   </DataProvider>,
   document.getElementById('root'),

@@ -1,4 +1,4 @@
-import useBaseData from './utils/useBaseData.ts';
+import useBaseData from './utils/useBaseData';
 
 import { AsyncDataState } from './types';
 
