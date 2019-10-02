@@ -1,14 +1,21 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
-import { DataProvider } from 'react-isomorphic-data';
+import { DataProvider, createDataClient } from 'react-isomorphic-data';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 
-const initialData = {};
+declare global {
+  interface Window { __cache: any; }
+}
+
+const dataClient = createDataClient({
+  initialCache: window.__cache,
+  ssr: false,
+});
 
 hydrate(
-  <DataProvider initialData={initialData}>
+  <DataProvider client={dataClient}>
     <BrowserRouter>
       <App />
     </BrowserRouter>

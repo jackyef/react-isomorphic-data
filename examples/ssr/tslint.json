@@ -45,6 +45,7 @@
       "check-open-brace",
       "check-whitespace"
     ],
+    "ordered-imports": false,
     "quotemark": [true, "single", "jsx-double"],
     "radix": true,
     "semicolon": [true, "always"],

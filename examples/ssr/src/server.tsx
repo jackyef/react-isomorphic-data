@@ -1,9 +1,16 @@
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { DataProvider, createDataClient, getDataFromTree } from 'react-isomorphic-data';
 import { StaticRouter } from 'react-router-dom';
+import fetch from 'node-fetch';
+import compression from 'compression';
 
 import App from './App';
+
+// hack for augmenting fetch to global
+const globalAny: any = global;
+globalAny.fetch = fetch;
 
 let assets: any;
 
@@ -17,13 +24,26 @@ const server = express()
   .disable('x-powered-by')
   // eslint-disable-next-line
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
-  .get('/*', (req: express.Request, res: express.Response) => {
+  .use(compression())
+  .get('/*', async (req: express.Request, res: express.Response) => {
     const context = {};
-    const markup = renderToString(
-      <StaticRouter context={context} location={req.url}>
-        <App />
-      </StaticRouter>
+
+    // create a dataClient instance
+    const dataClient = createDataClient({ initialCache: {}, ssr: true });
+    
+    // pass it to the DataProvider
+    const reactApp = (
+      <DataProvider client={dataClient}>
+        <StaticRouter context={context} location={req.url}>
+          <App />
+        </StaticRouter>
+      </DataProvider>
     );
+
+    // pass the same dataClient instance you are passing to your provider here
+    await getDataFromTree(reactApp, dataClient);
+
+    const markup = renderToString(reactApp);
     res.send(
       `<!doctype html>
     <html lang="">
@@ -37,6 +57,9 @@ const server = express()
             ? `<link rel="stylesheet" href="${assets.client.css}">`
             : ''
         }
+        <script>
+          window.__cache=${JSON.stringify(dataClient.cache)}
+        </script>
           ${
             process.env.NODE_ENV === 'production'
               ? `<script src="${assets.client.js}" defer></script>`
