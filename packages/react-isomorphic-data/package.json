@@ -9,9 +9,9 @@
   "scripts": {
     "dev": "rollup -c --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c",
-    "prepare": "rollup -c",
-    "predeploy": "rollup -c",
+    "build": "NODE_ENV=production rollup -c",
+    "prepare": "yarn build",
+    "predeploy": "yarn build",
     "deploy": "npm publish"
   },
   "files": [
