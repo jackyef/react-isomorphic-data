@@ -15,10 +15,11 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 ### Example
 ```javascript
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { useData, useLazyData, DataProvider, createDataClient } from 'react-isomorphic-data';
 
 const dataClient = createDataClient({
-  initialCache: window.__cache,
+  initialCache: window.__cache || {},
   ssr: false,
 });
 
