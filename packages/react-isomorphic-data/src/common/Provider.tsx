@@ -2,10 +2,12 @@ import * as React from 'react';
 
 import DataContext from './Context';
 
+import { DataContextAPI } from './types';
+
 /**
  * We only cache GET requests, because deep checking request body on POST request is not ideal.
  */
-type DataProviderProps = {
+interface DataProviderProps {
   children: JSX.Element[] | JSX.Element;
   initialData: Record<string, any>;
 };
