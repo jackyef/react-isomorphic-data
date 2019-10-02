@@ -65,3 +65,6 @@ typings/
 
 # dist
 dist
+
+# stats.html from rollup-plugin-visualizer 
+stats.html
