@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.2.2...react-isomorphic-data@0.3.0) (2019-10-02)
+
+
+### Features
+
+* **react-isomorphic-data:** improve bundlesize by removing react-dom/server out of bundle ([0e9c10a](https://github.com/jackyef/react-isomorphic-data/commit/0e9c10a))
+
+
+### Performance Improvements
+
+* **react-isomorphic-data:** fix build script so the output is minimized for prod build ([440344f](https://github.com/jackyef/react-isomorphic-data/commit/440344f))
+
+
+
+
+
 ## [0.2.2](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.2.1...react-isomorphic-data@0.2.2) (2019-10-02)
 
 **Note:** Version bump only for package react-isomorphic-data
