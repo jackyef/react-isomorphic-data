@@ -5,7 +5,9 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "commitHooks": false,
+      "allowBranch": ["master"]
     }
   }
 }
