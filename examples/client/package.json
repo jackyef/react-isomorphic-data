@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.16",
@@ -9,7 +9,7 @@
     "@types/react-dom": "16.8.5",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-isomorphic-data": "^0.2.1",
+    "react-isomorphic-data": "^0.2.2",
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.0",
     "subscriptions-transport-ws": "^0.9.16",
