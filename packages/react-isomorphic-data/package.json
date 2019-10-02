@@ -9,8 +9,9 @@
   "scripts": {
     "dev": "rollup -c --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "rollup -c",
-    "predeploy": "rollup -c",
+    "build": "NODE_ENV=production rollup -c",
+    "prepare": "yarn build",
+    "predeploy": "yarn build",
     "deploy": "npm publish"
   },
   "files": [
@@ -57,6 +58,7 @@
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-typescript2": "^0.22.1",
+    "rollup-plugin-visualizer": "^2.6.0",
     "typescript": "^3.5.3"
   },
   "peerDependencies": {
