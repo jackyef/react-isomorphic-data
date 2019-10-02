@@ -1,7 +1,11 @@
 import * as React from 'react';
 
+import { createDataClient } from './Client';
+
+import { DataContextAPI } from './types';
+
 const DataContext = React.createContext<DataContextAPI>({
-  cache: {},
+  client: createDataClient({}),
   addToCache: () => {},
 });
 

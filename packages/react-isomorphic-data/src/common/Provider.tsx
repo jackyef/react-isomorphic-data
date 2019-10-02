@@ -2,18 +2,27 @@ import * as React from 'react';
 
 import DataContext from './Context';
 
+import { DataClient, DataContextAPI } from './types';
+
 /**
  * We only cache GET requests, because deep checking request body on POST request is not ideal.
  */
-type DataProviderProps = {
+interface DataProviderProps {
   children: JSX.Element[] | JSX.Element;
-  initialData: Record<string, any>;
-};
+  client: DataClient;
+}
 
-const DataProvider: React.FC<DataProviderProps> = ({ children, initialData = {} }) => {
-  const [cache, setCache] = React.useState<Record<string, any>>(initialData);
+const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
+  const [cache, setCache] = React.useState<Record<string, any>>(client.cache);
 
   const addToCache = (key: string, value: any) => {
+    if (client.ssr) {
+      client.cache = {
+        ...cache,
+        [key]: value,
+      };
+    }
+
     setCache(prevCache => ({
       ...prevCache,
       [key]: value,
@@ -21,7 +30,10 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, initialData = {} 
   };
 
   const injectedValues: DataContextAPI = {
-    cache,
+    client: {
+      ...client,
+      cache,
+    },
     addToCache,
   };
 

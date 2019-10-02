@@ -14,6 +14,7 @@
     "build": "lerna run build --scope=react-isomorphic-data --stream",
     "dev": "lerna run dev --scope=react-isomorphic-data --stream",
     "example": "lerna run start --scope=client --stream",
+    "example:ssr": "lerna run start --scope=ssr --stream",
     "deploy": "lerna publish --no-commit-hooks"
   },
   "repository": {

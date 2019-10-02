@@ -10,6 +10,6 @@ export interface AsyncDataHookState {
 };
 
 export type LazyAsyncDataState = [
-  () => void,
+  () => Promise<any> | void,
   AsyncDataState,
 ];
