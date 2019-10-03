@@ -3,12 +3,12 @@
 # react-isomorphic-data
 Easily fetch data from a GET request in your React components, with similar APIs to [react-apollo](https://github.com/apollographql/react-apollo/) 🎉
 
-Currently only use support react hooks.
+You can use hooks or HOC, both are supported. 🎉
 
 NOTE: This project is still very much work in progress, use at your own risk ⚠️
 
 ### Features
-- React hooks
+- React hooks 
 - SSR support
 - Simple built-in cache
 
@@ -96,7 +96,6 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
 
 ### Future features
 - [ ] More fine tuned options for cache policy, fetch policy, etc.
-- [ ] Higher-order-components support
 - [ ] Better error handling
 - [ ] Better documentation
 

@@ -3,8 +3,17 @@
 # react-isomorphic-data monorepo
 Easily fetch data from a GET request in your React components, with similar APIs to [react-apollo](https://github.com/apollographql/react-apollo/) 🎉
 
-Currently only use support react hooks.
+*NOTE: This project is still very much work in progress, use at your own risk ⚠️*
 
-NOTE: This project is still very much work in progress, use at your own risk ⚠️
+**The main package is in [`./packages/react-isomorphic-data`](./packages/react-isomorphic-data)**
 
-### [README.md](./packages/react-isomorphic-data/README.md)
+### Trying it out
+```
+# install dependencies
+yarn install
+
+# run the SSR example
+yarn example:ssr
+```
+
+The example (a [razzle](https://github.com/jaredpalmer/razzle) app) by default will run on localhost:3000 🎉
