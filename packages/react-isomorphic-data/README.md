@@ -97,5 +97,7 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
 ### Future features
 - [ ] More fine tuned options for cache policy, fetch policy, etc.
 - [ ] Higher-order-components support
+- [ ] Better error handling
+- [ ] Better documentation
 
 Feel free to open an issue if you have something in mind!
