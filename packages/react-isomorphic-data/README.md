@@ -98,5 +98,6 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
 - [ ] More fine tuned options for cache policy, fetch policy, etc.
 - [ ] Better error handling
 - [ ] Better documentation
+- [ ] Multi-package structure so we can separate HOC stuffs to decrease bundlesize. Currently, HOCs require hoist-non-react-static which increase our bundle size.
 
 Feel free to open an issue if you have something in mind!
