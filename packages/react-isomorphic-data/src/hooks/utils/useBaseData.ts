@@ -5,8 +5,8 @@ import qsify from '../../utils/querystringify.js';
 import { AsyncDataHookState, LazyAsyncDataState } from '../types';
 
 const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, lazy = false): LazyAsyncDataState => {
-  // fetchOptions rarely changes. So let's just store it into a ref
   const promisePushed = React.useRef<boolean>(false);
+  // fetchOptions rarely changes. So let's just store it into a ref
   const optionsRef = React.useRef<RequestInit>(fetchOptions);
   const { client, addToCache } = React.useContext(DataContext);
   const { cache } = client;
@@ -32,7 +32,7 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
 
           if (!isSSR) {
             setState({
-              error: false,
+              error: null,
               loading: false,
             });
           }
