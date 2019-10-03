@@ -1,6 +1,7 @@
+
 export interface DataClient {
   cache: Record<string, any>;
-  pendingPromises: Promise<any>[];
+  pendingPromiseFactories: { () : Promise<any> }[];
   ssr: boolean;
 }
 

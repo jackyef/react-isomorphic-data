@@ -17,10 +17,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
 
   const addToCache = (key: string, value: any) => {
     if (client.ssr) {
-      client.cache = {
-        ...cache,
-        [key]: value,
-      };
+      client.cache[key] = value;
     }
 
     setCache(prevCache => ({

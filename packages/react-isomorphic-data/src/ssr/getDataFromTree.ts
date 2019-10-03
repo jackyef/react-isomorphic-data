@@ -11,12 +11,20 @@ const getDataFromTree = async (tree: React.ReactElement, client: DataClient): Pr
   while (true) {
     renderToStaticMarkup(tree);
 
-    const currPendingPromisesLength = client.pendingPromises.length;
+    const currPendingPromisesLength = client.pendingPromiseFactories.length;
     
-    if (currPendingPromisesLength > prevPendingPromisesLength) {
-      prevPendingPromisesLength = currPendingPromisesLength;
+    if (currPendingPromisesLength > prevPendingPromisesLength) {      
+      const arrayOfPromises = client.pendingPromiseFactories.map((p, index) => {
+        if (index >= prevPendingPromisesLength) {
+          return p();
+        } else {
+          return new Promise(resolve => resolve());
+        }
+      });
 
-      await Promise.all(client.pendingPromises);
+      prevPendingPromisesLength = currPendingPromisesLength;
+      
+      await Promise.all(arrayOfPromises);
     } else {
       return;
     }

@@ -5,7 +5,7 @@ export const createDataClient = (options: DataClientOptions = {}): DataClient =>
 
   return {
     cache: initialCache ? { ...initialCache } : {},
-    pendingPromises: [],
+    pendingPromiseFactories: [],
     ssr: ssr || false,
   }
 }

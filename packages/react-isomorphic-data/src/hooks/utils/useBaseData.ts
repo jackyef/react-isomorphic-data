@@ -14,9 +14,16 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
   const dataFromCache = cache[fullUrl];
+  
+  let initialLoading = lazy ? false : true;
+
+  if (dataFromCache) {
+    initialLoading = false;
+  }
+
   const [state, setState] = React.useState<AsyncDataHookState>({
     error: null,
-    loading: false,
+    loading: initialLoading,
   });
 
   const isSSR = client.ssr && typeof window === 'undefined';
@@ -36,6 +43,8 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
               loading: false,
             });
           }
+
+          return fullUrl;
         })
         .catch(err => {
           if (!isSSR) {
@@ -55,7 +64,7 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
   // if this is ssr mode
   if (isSSR && !promisePushed.current) {
     if (!lazy && !dataFromCache) {
-      client.pendingPromises.push(fetchData());
+      client.pendingPromiseFactories.push(fetchData);
       promisePushed.current = true;
     }
   }
