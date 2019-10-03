@@ -12,7 +12,7 @@
     "interface-name": [true, "never-prefix"],
     "jsdoc-format": true,
     "jsx-no-lambda": false,
-    "jsx-no-multiline-js": true,
+    "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
     "label-position": true,
     "max-line-length": [true, 120],
@@ -45,6 +45,7 @@
       "check-open-brace",
       "check-whitespace"
     ],
+    "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [true, "single", "jsx-double"],
     "radix": true,

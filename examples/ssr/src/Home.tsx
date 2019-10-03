@@ -1,6 +1,8 @@
 import React from 'react';
 import { useData, useLazyData } from 'react-isomorphic-data';
 
+import ComponentUsingHOC from './ComponentUsingHOC';
+import ComponentUsingLazyHOC from './ComponentUsingLazyHOC';
 import logo from './react.svg';
 
 import './Home.css';
@@ -10,7 +12,7 @@ const ChildComponent = () => {
 
   return (
     <div>
-      <h1>This is ChildComponent.</h1>
+      This is ChildComponent.
       <div>
         <pre>{JSON.stringify(eagerData, null, 2)}</pre>
       </div>
@@ -40,7 +42,13 @@ const Home = () => {
         <div>
           <pre>{JSON.stringify(lazyData, null, 2)}</pre>
         </div>
-        {eagerData.loading ? null : <ChildComponent />}
+        {eagerData.loading ? null : (
+          <>
+            <ChildComponent />
+            <ComponentUsingHOC />
+            <ComponentUsingLazyHOC />
+          </>
+        )}
       </div>
     </div>
   );

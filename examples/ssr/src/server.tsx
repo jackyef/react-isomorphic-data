@@ -44,6 +44,7 @@ const server = express()
     await getDataFromTree(reactApp, dataClient);
 
     const markup = renderToString(reactApp);
+
     res.send(
       `<!doctype html>
     <html lang="">
