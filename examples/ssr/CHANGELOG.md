@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.2.3...ssr@0.3.0) (2019-10-03)
+
+
+### Features
+
+* **ssr:** added HOC usage example to the SSR example ([2d3845f](https://github.com/jackyef/react-isomorphic-data/commit/2d3845f))
+
+
+
+
+
 ## [0.2.3](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.2.2...ssr@0.2.3) (2019-10-02)
 
 **Note:** Version bump only for package ssr

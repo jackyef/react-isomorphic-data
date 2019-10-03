@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.3.0...react-isomorphic-data@0.4.0) (2019-10-03)
+
+
+### Bug Fixes
+
+* **react-isomorphic-data:** fix SSR was doing more renders than necessary ([05b47ca](https://github.com/jackyef/react-isomorphic-data/commit/05b47ca))
+* **usebasedata:** fix `error` sometimes can be null, and sometimes can be false ([0ee87ad](https://github.com/jackyef/react-isomorphic-data/commit/0ee87ad))
+
+
+### Features
+
+* **react-isomorphic-data:** added HOCs withData and withLazyData :tada: ([1f432e3](https://github.com/jackyef/react-isomorphic-data/commit/1f432e3))
+
+
+
+
+
 # [0.3.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.2.2...react-isomorphic-data@0.3.0) (2019-10-02)
 
 
