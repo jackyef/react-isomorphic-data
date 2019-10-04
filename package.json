@@ -16,7 +16,7 @@
     "example": "lerna run start --scope=client --stream",
     "example:ssr": "lerna run start --scope=ssr --stream",
     "deploy": "HUSKY_SKIP_HOOKS=true lerna publish --no-commit-hooks",
-    "doc:gen": "yarn typedoc --out packages/react-isomorphic-data/docs packages/react-isomorphic-data/src --tsconfig packages/react-isomorphic-data/tsconfig.json --theme markdown"
+    "doc:gen": "yarn typedoc --out docs packages/react-isomorphic-data/src --tsconfig packages/react-isomorphic-data/tsconfig.json --theme docusaurus"
   },
   "repository": {
     "type": "git",
