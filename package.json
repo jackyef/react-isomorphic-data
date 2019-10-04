@@ -15,7 +15,8 @@
     "dev": "lerna run dev --scope=react-isomorphic-data --stream",
     "example": "lerna run start --scope=client --stream",
     "example:ssr": "lerna run start --scope=ssr --stream",
-    "deploy": "HUSKY_SKIP_HOOKS=true lerna publish --no-commit-hooks"
+    "deploy": "HUSKY_SKIP_HOOKS=true lerna publish --no-commit-hooks",
+    "docgen:api": "yarn typedoc --out docusaurus/docs/api packages/react-isomorphic-data/src --tsconfig packages/react-isomorphic-data/tsconfig.json --theme docusaurus"
   },
   "repository": {
     "type": "git",
@@ -35,9 +36,12 @@
   },
   "homepage": "https://github.com/jackyef/react-isomorphic-data#readme",
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.10",
     "cz-conventional-changelog": "3.0.2",
     "husky": "^3.0.5",
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "typedoc": "^0.15.0",
+    "typedoc-plugin-markdown": "^2.2.7"
   },
   "config": {
     "commitizen": {
