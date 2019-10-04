@@ -17,3 +17,7 @@ yarn example:ssr
 ```
 
 The example (a [razzle](https://github.com/jaredpalmer/razzle) app) by default will run on localhost:3000 🎉
+
+### Documentations [![Netlify Status](https://api.netlify.com/api/v1/badges/81844630-ff7d-4bf6-95f0-9f170ba6e421/deploy-status)](https://app.netlify.com/sites/unruffled-austin-36e969/deploys)
+
+The documentations live at:  https://react-isomorphic-data.netlify.com/

@@ -23,8 +23,8 @@ const users = [
 const siteConfig = {
   title: 'React Isomorphic Data', // Title for your website.
   tagline: 'Easily fetch data from a GET request, with full SSR support! 🎉',
-  url: 'https://jackyef.github.io', // Your website URL
-  baseUrl: '/react-isomorphic-data/', // Base URL for your project */
+  url: 'https://react-isomorphic-data.netlify.com/', // Your website URL
+  baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
