@@ -81,6 +81,5 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
         <div id="root">${markup}</div>
       </body>
     </html>`
-    );
-
+  );
 }

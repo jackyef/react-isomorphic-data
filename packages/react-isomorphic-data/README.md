@@ -51,7 +51,7 @@ ReactDOM.render(
 );
 ```
 
-##### SSR (example with express)
+### SSR example with express
 ```javascript
 import express from 'express';
 import React from 'react';
@@ -92,8 +92,7 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
         <div id="root">${markup}</div>
       </body>
     </html>`
-    );
-
+  );
 }
 ```
 
