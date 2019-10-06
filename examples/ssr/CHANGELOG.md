@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.3.1...ssr@0.4.0) (2019-10-06)
+
+
+### Features
+
+* **examples/ssr:** added example for forwarding headers during SSR ([2ef8fe4](https://github.com/jackyef/react-isomorphic-data/commit/2ef8fe4))
+
+
+
+
+
 ## [0.3.1](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.3.0...ssr@0.3.1) (2019-10-03)
 
 **Note:** Version bump only for package ssr

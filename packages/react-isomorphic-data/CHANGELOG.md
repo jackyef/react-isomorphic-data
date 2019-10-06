@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.4.1...react-isomorphic-data@0.5.0) (2019-10-06)
+
+
+### Features
+
+* **react-isomorphic-data:** added options to add headers for all fetches with the same DataClient ([6184395](https://github.com/jackyef/react-isomorphic-data/commit/6184395))
+
+
+
+
+
 ## [0.4.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.4.0...react-isomorphic-data@0.4.1) (2019-10-03)
 
 
