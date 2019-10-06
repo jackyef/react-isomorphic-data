@@ -65,14 +65,26 @@ import App from './App';
 global.fetch = fetch;
 
 express.get('/*', async (req: express.Request, res: express.Response) => {
-  const dataClient = createDataClient({ initialCache: {}, ssr: true });
+  const dataClient = createDataClient({ 
+    initialCache: {}, 
+    ssr: true, 
+    headers: {
+      // forward headers from client to the REST API (such as cookies)
+      'cookie': req.header('cookie'),
+      'my-custom-header': 'will be sent on all requests',
+  }});
+
   const reactApp = (
     <DataProvider client={dataClient}>
       <App />
     </DataProvider>
   );
 
-  await getDataFromTree(reactApp, dataClient);
+  try {
+    await getDataFromTree(reactApp, dataClient);
+  } catch (err) {
+    console.error('Error while trying to getDataFromTree', err);
+  }
 
   const markup = renderToString(reactApp);
 

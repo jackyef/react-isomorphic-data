@@ -33,8 +33,8 @@ const server = express()
       initialCache: {}, 
       ssr: true, 
       headers: {
-        // forward headers from client to the REST API (such as Cookies)
-        cookies: req.header('cookie'),
+        // forward headers from client to the REST API (such as cookies)
+        'cookie': req.header('cookie'),
         'my-custom-header': 'will be sent on all requests',
     }});
     
