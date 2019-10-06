@@ -4,9 +4,6 @@ import DataContext from './Context';
 
 import { DataClient, DataContextAPI } from './types';
 
-/**
- * We only cache GET requests, because deep checking request body on POST request is not ideal.
- */
 interface DataProviderProps {
   children: JSX.Element[] | JSX.Element;
   client: DataClient;

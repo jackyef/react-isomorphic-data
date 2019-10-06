@@ -6,10 +6,17 @@ import { AsyncDataHookState, LazyAsyncDataState } from '../types';
 
 const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, lazy = false): LazyAsyncDataState => {
   const promisePushed = React.useRef<boolean>(false);
-  // fetchOptions rarely changes. So let's just store it into a ref
-  const optionsRef = React.useRef<RequestInit>(fetchOptions);
   const { client, addToCache } = React.useContext(DataContext);
   const { cache } = client;
+  // fetchOptions rarely changes. So let's just store it into a ref
+  const optionsRef = React.useRef<RequestInit>({
+    ...fetchOptions,
+    method: 'GET', // hardcode the method to 'GET'
+    headers: {
+      ...client.headers, // add the base headers added when creating the DataClient
+      ...fetchOptions.headers, // append other headers specific to this fetch
+    }
+  });
 
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
@@ -52,6 +59,9 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
               error: err,
               loading: false,
             });
+          } else {
+            // throw an error during SSR 
+            throw err;
           }
         });
     }
