@@ -29,7 +29,14 @@ const server = express()
     const context = {};
 
     // create a dataClient instance
-    const dataClient = createDataClient({ initialCache: {}, ssr: true });
+    const dataClient = createDataClient({ 
+      initialCache: {}, 
+      ssr: true, 
+      headers: {
+        // forward headers from client to the REST API (such as Cookies)
+        cookies: req.header('cookie'),
+        'my-custom-header': 'will be sent on all requests',
+    }});
     
     // pass it to the DataProvider
     const reactApp = (
@@ -41,7 +48,11 @@ const server = express()
     );
 
     // pass the same dataClient instance you are passing to your provider here
-    await getDataFromTree(reactApp, dataClient);
+    try {
+      await getDataFromTree(reactApp, dataClient);
+    } catch (err) {
+      console.error('Error while trying to getDataFromTree', err);
+    }
 
     const markup = renderToString(reactApp);
 

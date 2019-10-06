@@ -22,7 +22,11 @@ const ChildComponent = () => {
 
 const Home = () => {
   const [fetchData, lazyData] = useLazyData('https://pokeapi.co/api/v2/pokemon/1/', {});
-  const eagerData = useData('https://pokeapi.co/api/v2/pokemon/2/', {});
+  const eagerData = useData('https://pokeapi.co/api/v2/pokemon/2/', {}, {
+    headers: {
+      'x-custom-header': 'will only be sent for pokemon/2 request',
+    },
+  });
 
   return (
     <div className="Home">
