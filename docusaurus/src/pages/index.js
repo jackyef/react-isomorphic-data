@@ -57,7 +57,7 @@ function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Easily fetch data from a GET request in your ⚛️ React app, with full SSR support! 🎉">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title"><code>react-isomorphic-data</code></h1>
@@ -68,7 +68,7 @@ function Home() {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted,
               )}
-              to={withBaseUrl('docs/doc1')}>
+              to={withBaseUrl('docs/intro')}>
               Get Started
             </Link>
           </div>

@@ -7,7 +7,7 @@
 
 module.exports = {
   title: 'React Isomorphic Data Documentation',
-  tagline: 'Easily fetch data from a GET request, with full SSR support! 🎉',
+  tagline: 'Easily fetch data from a GET request in your ⚛️ React app, with full SSR support! 🎉',
   url: 'https://react-isomorphic-data.netlify.com/', // Your website URL
   baseUrl: '/',
   favicon: 'img/favicon.ico',
