@@ -21,7 +21,7 @@
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
 } */
-:root {
+/* :root {
   --ifm-color-primary: #3298ff;
   --ifm-color-primary-dark: #3278df;
   --ifm-color-primary-darker: #3268cf;
@@ -29,4 +29,14 @@
   --ifm-color-primary-light: #42a8ff;
   --ifm-color-primary-lighter: #52b8ff;
   --ifm-color-primary-lightest: #62b8ff;
+} */
+
+:root {
+  --ifm-color-primary: #3298ff;
+  --ifm-color-primary-dark: #1362F2;
+  --ifm-color-primary-darker: #0024E3;
+  --ifm-color-primary-darkest: #1100D0;
+  --ifm-color-primary-light: #5AC3FF;
+  --ifm-color-primary-lighter: #8AE1FF;
+  --ifm-color-primary-lightest: #BFF5FF;
 }

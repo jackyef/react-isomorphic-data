@@ -79,6 +79,9 @@ module.exports = {
       },
       copyright: `Copyright © ${new Date().getFullYear()} Jacky Efendi, Inc. Built with Docusaurus.`,
     },
+    googleAnalytics: {
+      trackingID: 'UA-149852843-1',
+    },
   },
   presets: [
     [
