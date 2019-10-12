@@ -15,7 +15,7 @@ module.exports = {
   projectName: 'react-isomorphic-data', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'react-isomorphic-data',
+      title: 'React Isomorphic Data',
       logo: {
         alt: 'react-isomorphic-data Logo',
         src: 'img/logo.png',

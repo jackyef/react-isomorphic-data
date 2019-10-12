@@ -40,3 +40,12 @@
   --ifm-color-primary-lighter: #8AE1FF;
   --ifm-color-primary-lightest: #BFF5FF;
 }
+
+/**
+* Hide NavBar title on small viewport
+*/
+@media screen and (max-width: 560px) {
+  .navbar__brand > strong {
+    display: none !important;
+  }
+}
