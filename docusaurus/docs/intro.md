@@ -14,6 +14,6 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 - Simple built-in cache
 
 ### Installing
-```
+```sh
 yarn add react-isomorphic-data
 ```
