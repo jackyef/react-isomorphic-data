@@ -17,7 +17,7 @@ const App = () => {
       </div>
       <hr />
       Example #2
-      <button onClick={fetchData}>Click me to fetch data!</button>
+      <button onClick={fetchData}>Click me to fetch data from network!</button>
       <div>
         <pre>
           {JSON.stringify(lazyData, null, 2)}
