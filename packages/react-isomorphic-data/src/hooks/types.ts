@@ -7,6 +7,7 @@ export interface AsyncDataState {
 export interface AsyncDataHookState {
   error: Error | boolean | null;
   loading: boolean;
+  tempData: any;
 };
 
 export type LazyAsyncDataState = [

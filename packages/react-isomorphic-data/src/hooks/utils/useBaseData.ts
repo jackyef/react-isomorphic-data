@@ -8,10 +8,12 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
   const promisePushed = React.useRef<boolean>(false);
   const { client, addToCache } = React.useContext(DataContext);
   const { cache } = client;
+  const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
   // fetchOptions rarely changes. So let's just store it into a ref
   const optionsRef = React.useRef<RequestInit>({
     ...fetchOptions,
-    method: 'GET', // hardcode the method to 'GET'
+    // only allow non-GET request for lazy requests, because non-GET request can be not idempotent
+    method: finalMethod,
     headers: {
       ...client.headers, // add the base headers added when creating the DataClient
       ...fetchOptions.headers, // append other headers specific to this fetch
@@ -31,6 +33,7 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
   const [state, setState] = React.useState<AsyncDataHookState>({
     error: null,
     loading: initialLoading,
+    tempData: null, // store data from non-GET requests
   });
 
   const isSSR = client.ssr && typeof window === 'undefined';
@@ -42,22 +45,27 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
       return fetch(fullUrl, optionsRef.current)
         .then(result => result.json())
         .then(json => {
-          addToCache(fullUrl, json);
+          if (!fetchOptions.method || fetchOptions.method === 'GET') {
+            // only cache response for GET requests
+            addToCache(fullUrl, json);
+          }
 
           if (!isSSR) {
             setState({
               error: null,
               loading: false,
+              tempData: json,
             });
           }
 
-          return fullUrl;
+          return json;
         })
         .catch(err => {
           if (!isSSR) {
             setState({
               error: err,
               loading: false,
+              tempData: null,
             });
           } else {
             // throw an error during SSR 
@@ -90,7 +98,7 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
     {
       error: state.error,
       loading: state.loading,
-      data: dataFromCache || null,
+      data: finalMethod === 'GET' ? (dataFromCache || null) : state.tempData,
     },
   ];
 };
