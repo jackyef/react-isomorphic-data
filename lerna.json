@@ -5,6 +5,7 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
+      "message": "chore(release): Creating releases",
       "conventionalCommits": true,
       "commitHooks": false,
       "allowBranch": ["master"]

@@ -28,6 +28,15 @@ const Home = () => {
     },
   });
 
+  // response will be returned by the hook
+  const [postData, postDataResponse] = useLazyData('http://localhost:3000/some-rest-api', {}, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ data: 'some data posted from client', foo: 'bar baz' }),
+  });
+
   return (
     <div className="Home">
       <div className="Home-header">
@@ -42,9 +51,19 @@ const Home = () => {
           <pre>{JSON.stringify(eagerData, null, 2)}</pre>
         </div>
         <hr />
-        Example #2 <button onClick={fetchData}>Hit me to fetch data!</button>
+        Example #2 <code>useLazyData()</code> <button onClick={fetchData}>Hit me to fetch data!</button>
         <div>
           <pre>{JSON.stringify(lazyData, null, 2)}</pre>
+        </div>
+        Example #3 <code>useLazyData()</code> with POST method <button onClick={() => {
+          const promise = postData(); 
+          if (promise && promise.then) {
+            // you can get the data from the fetcher function as well, if you need to do something imperatively
+            promise.then(data => console.log({ data }));
+          }
+        }}>Hit me to post data!</button>
+        <div>
+          <pre>{JSON.stringify(postDataResponse, null, 2)}</pre>
         </div>
         {eagerData.loading ? null : (
           <>
