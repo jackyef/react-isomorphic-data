@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.5.1...react-isomorphic-data@0.6.0) (2019-10-16)
+
+
+### Bug Fixes
+
+* **react-isomorphic-data:** fix the typings for `error` ([468d9df](https://github.com/jackyef/react-isomorphic-data/commit/468d9df))
+
+
+### Features
+
+* **react-isomorphic-data:** support non-GET requests lazily ([1e42d59](https://github.com/jackyef/react-isomorphic-data/commit/1e42d59))
+
+
+
+
+
 ## [0.5.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.5.0...react-isomorphic-data@0.5.1) (2019-10-06)
 
 **Note:** Version bump only for package react-isomorphic-data

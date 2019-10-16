@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.4.1...ssr@0.5.0) (2019-10-16)
+
+
+### Features
+
+* **examples/ssr:** updated example to include POST example ([c885b93](https://github.com/jackyef/react-isomorphic-data/commit/c885b93))
+
+
+
+
+
 ## [0.4.1](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.4.0...ssr@0.4.1) (2019-10-06)
 
 **Note:** Version bump only for package ssr
