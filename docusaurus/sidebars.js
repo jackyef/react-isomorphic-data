@@ -8,6 +8,9 @@
 module.exports = {
   docs: {
     'Getting Started': ['intro', 'examples'],
+    Hooks: ['hooks/usedata', 'hooks/uselazydata'],
+    'Higher Order Components': ['hocs/withdata', 'hocs/withlazydata'],
+    Caching: ['caching/intro'],
   },
   // 'react-isomorphic-data': {
     // Introduction: ['api/index', 'api/globals'],
