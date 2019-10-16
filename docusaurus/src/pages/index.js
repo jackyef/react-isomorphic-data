@@ -57,7 +57,7 @@ function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Easily fetch data from a GET request in your ⚛️ React app, with full SSR support! 🎉">
+      description="Easily fetch data in your ⚛️ React app, with full SSR support! 🎉">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title"><code>react-isomorphic-data</code></h1>

@@ -1,5 +1,5 @@
 # react-isomorphic-data
-Easily fetch data from a GET request in your React components, with similar APIs to [react-apollo](https://github.com/apollographql/react-apollo/) 🎉
+Easily fetch data in your React components, with similar APIs to [react-apollo](https://github.com/apollographql/react-apollo/) 🎉
 
 You can use hooks or HOC, both are supported. 🎉
 
@@ -108,10 +108,8 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
 }
 ```
 
-### Future features
-- [ ] More fine tuned options for cache policy, fetch policy, etc.
-- [ ] Better error handling
-- [ ] Better documentation
-- [ ] Multi-package structure so we can separate HOC stuffs to decrease bundlesize. Currently, HOCs require hoist-non-react-static which increase our bundle size.
+### Documentations [![Netlify Status](https://api.netlify.com/api/v1/badges/81844630-ff7d-4bf6-95f0-9f170ba6e421/deploy-status)](https://app.netlify.com/sites/unruffled-austin-36e969/deploys)
+
+The documentations live at:  https://react-isomorphic-data.netlify.com/
 
 Feel free to open an issue if you have something in mind!

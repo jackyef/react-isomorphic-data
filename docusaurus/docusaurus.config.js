@@ -7,7 +7,7 @@
 
 module.exports = {
   title: 'React Isomorphic Data Documentation',
-  tagline: 'Easily fetch data from a GET request in your ⚛️ React app, with full SSR support! 🎉',
+  tagline: 'Easily fetch data in your ⚛️ React app, with full SSR support! 🎉',
   url: 'https://react-isomorphic-data.netlify.com/', // Your website URL
   baseUrl: '/',
   favicon: 'img/favicon.ico',
@@ -77,7 +77,7 @@ module.exports = {
         alt: 'React Isomorphic Data Logo',
         src: 'img/logo.png',
       },
-      copyright: `Copyright © ${new Date().getFullYear()} Jacky Efendi, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Jacky Efendi. Built with Docusaurus.`,
     },
     googleAnalytics: {
       trackingID: 'UA-149852843-1',
