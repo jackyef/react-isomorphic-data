@@ -5,7 +5,7 @@ export interface AsyncDataState {
 };
 
 export interface AsyncDataHookState {
-  error: Error | boolean | null;
+  error: Error | null;
   loading: boolean;
   tempData: any;
 };
