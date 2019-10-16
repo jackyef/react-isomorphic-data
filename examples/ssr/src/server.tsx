@@ -5,6 +5,7 @@ import { DataProvider, createDataClient, getDataFromTree } from 'react-isomorphi
 import { StaticRouter } from 'react-router-dom';
 import fetch from 'node-fetch';
 import compression from 'compression';
+import bodyParser from 'body-parser';
 
 import App from './App';
 
@@ -20,55 +21,62 @@ const syncLoadAssets = () => {
 };
 syncLoadAssets();
 
-const server = express()
-  .disable('x-powered-by')
-  // eslint-disable-next-line
-  .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
-  .use(compression())
-  .get('/*', async (req: express.Request, res: express.Response) => {
-    const context = {};
+const server = express();
 
-    // create a dataClient instance
-    const dataClient = createDataClient({ 
-      initialCache: {}, 
-      ssr: true, 
-      headers: {
-        // forward headers from client to the REST API (such as cookies)
-        'cookie': req.header('cookie'),
-        'my-custom-header': 'will be sent on all requests',
-    }});
-    
-    // pass it to the DataProvider
-    const reactApp = (
-      <DataProvider client={dataClient}>
-        <StaticRouter context={context} location={req.url}>
-          <App />
-        </StaticRouter>
-      </DataProvider>
-    );
+server.disable('x-powered-by');
+server.use(bodyParser());
+// eslint-disable-next-line
+server.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
+server.use(compression());
 
-    // pass the same dataClient instance you are passing to your provider here
-    try {
-      await getDataFromTree(reactApp, dataClient);
-    } catch (err) {
-      console.error('Error while trying to getDataFromTree', err);
-    }
+server.post('/some-rest-api', async (req: express.Request, res: express.Response) => {
+  res.json({
+    message: `echo-ing the stuffs you posted`,
+    data: req.body,
+  });
+});
 
-    const markup = renderToString(reactApp);
+server.get('/*', async (req: express.Request, res: express.Response) => {
+  const context = {};
 
-    res.send(
-      `<!doctype html>
+  // create a dataClient instance
+  const dataClient = createDataClient({
+    initialCache: {},
+    ssr: true,
+    headers: {
+      // forward headers from client to the REST API (such as cookies)
+      'cookie': req.header('cookie'),
+      'my-custom-header': 'will be sent on all requests',
+    },
+  });
+
+  // pass it to the DataProvider
+  const reactApp = (
+    <DataProvider client={dataClient}>
+      <StaticRouter context={context} location={req.url}>
+        <App />
+      </StaticRouter>
+    </DataProvider>
+  );
+
+  // pass the same dataClient instance you are passing to your provider here
+  try {
+    await getDataFromTree(reactApp, dataClient);
+  } catch (err) {
+    console.error('Error while trying to getDataFromTree', err);
+  }
+
+  const markup = renderToString(reactApp);
+
+  res.send(
+    `<!doctype html>
     <html lang="">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charSet='utf-8' />
         <title>Razzle TypeScript</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        ${
-          assets.client.css
-            ? `<link rel="stylesheet" href="${assets.client.css}">`
-            : ''
-        }
+        ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
         <script>
           window.__cache=${JSON.stringify(dataClient.cache)}
         </script>
@@ -81,8 +89,8 @@ const server = express()
     <body>
         <div id="root">${markup}</div>
     </body>
-</html>`
-    );
-  });
+</html>`,
+  );
+});
 
 export default server;
