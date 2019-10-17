@@ -82,6 +82,11 @@ module.exports = {
     googleAnalytics: {
       trackingID: 'UA-149852843-1',
     },
+    algolia: {
+      apiKey: '062377f2ac2d588380929aafb76a76ab',
+      indexName: 'react-isomorphic-data',
+      algoliaOptions: {},
+    },
   },
   presets: [
     [
@@ -96,5 +101,5 @@ module.exports = {
       },
     ],
   ],
-  themes: ['@docusaurus/theme-classic', '@docusaurus/theme-live-codeblock'],
+  themes: ['@docusaurus/theme-classic', '@docusaurus/theme-live-codeblock', '@docusaurus/theme-search-algolia'],
 };
