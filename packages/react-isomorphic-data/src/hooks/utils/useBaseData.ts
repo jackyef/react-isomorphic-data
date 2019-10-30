@@ -4,6 +4,8 @@ import qsify from '../../utils/querystringify.js';
 
 import { AsyncDataHookState, LazyAsyncDataState, DataHookOptions } from '../types';
 
+const LoadingSymbol = Symbol('LoadingFlag');
+
 const useBaseData = (
   url: string,
   queryParams: Record<string, any>,
@@ -32,7 +34,7 @@ const useBaseData = (
 
   let initialLoading = lazy ? false : true;
 
-  if (dataFromCache) {
+  if (dataFromCache && dataFromCache !== LoadingSymbol) {
     initialLoading = false;
   }
 
@@ -47,6 +49,7 @@ const useBaseData = (
   const fetchData = async (): Promise<any> => {
     if (typeof dataFromCache === 'undefined') {
       setState(prev => ({ ...prev, loading: true }));
+      addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
 
       return fetch(fullUrl, optionsRef.current)
         .then(result => result.json())
@@ -99,12 +102,14 @@ const useBaseData = (
     }
   }, [lazy, memoizedFetchData]);
 
+  const finalData = dataFromCache === LoadingSymbol ? null : dataFromCache;
+
   return [
     memoizedFetchData,
     {
       error: state.error,
       loading: state.loading,
-      data: finalMethod === 'GET' ? dataFromCache || null : state.tempData,
+      data: finalMethod === 'GET' ? finalData : state.tempData,
     },
   ];
 };
