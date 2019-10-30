@@ -5,7 +5,7 @@ import { useData } from '../hooks';
 import { HocOptions } from './types';
 
 const withData = (options: HocOptions) => {
-  const { url, name, queryParams = {}, fetchOptions = {} } = options;
+  const { url, name, queryParams = {}, fetchOptions = {}, dataOptions } = options;
 
   if (!name && process.env.NODE_ENV !== 'production') {
     console.warn('No `name` is passed to `withData` HOC, defaulting to `data`. Please provide a name to avoid props name collision!');
@@ -13,7 +13,7 @@ const withData = (options: HocOptions) => {
 
   return (Component: React.ElementType) => {
     return hoistNonReactStatics((props: any) => {
-      const { data, loading, error } = useData(url, queryParams, fetchOptions);
+      const { data, loading, error } = useData(url, queryParams, fetchOptions, dataOptions);
       const dataProps = {
         [name || 'data']: {
           data,

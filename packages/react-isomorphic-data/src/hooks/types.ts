@@ -14,3 +14,7 @@ export type LazyAsyncDataState = [
   () => Promise<any> | void,
   AsyncDataState,
 ];
+
+export interface DataHookOptions {
+  ssr?: boolean;
+};

@@ -1,10 +1,15 @@
 import useBaseData from './utils/useBaseData';
 
-import { AsyncDataState } from './types';
+import { AsyncDataState, DataHookOptions } from './types';
 
-const useData = (url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}): AsyncDataState => {
-  const [, baseData] = useBaseData(url, queryParams, fetchOptions, false);
-  
+const useData = (
+  url: string,
+  queryParams: Record<string, any>,
+  fetchOptions: RequestInit = {},
+  dataOptions?: DataHookOptions,
+): AsyncDataState => {
+  const [, baseData] = useBaseData(url, queryParams, fetchOptions, false, dataOptions);
+
   return baseData;
 };
 

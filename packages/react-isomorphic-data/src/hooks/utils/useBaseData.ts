@@ -2,9 +2,15 @@ import * as React from 'react';
 import { DataContext } from '../../common';
 import qsify from '../../utils/querystringify.js';
 
-import { AsyncDataHookState, LazyAsyncDataState } from '../types';
+import { AsyncDataHookState, LazyAsyncDataState, DataHookOptions } from '../types';
 
-const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, lazy = false): LazyAsyncDataState => {
+const useBaseData = (
+  url: string,
+  queryParams: Record<string, any>,
+  fetchOptions: RequestInit = {},
+  lazy = false,
+  dataOpts: DataHookOptions = { ssr: true },
+): LazyAsyncDataState => {
   const promisePushed = React.useRef<boolean>(false);
   const { client, addToCache } = React.useContext(DataContext);
   const { cache } = client;
@@ -17,13 +23,13 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
     headers: {
       ...client.headers, // add the base headers added when creating the DataClient
       ...fetchOptions.headers, // append other headers specific to this fetch
-    }
+    },
   });
 
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
   const dataFromCache = cache[fullUrl];
-  
+
   let initialLoading = lazy ? false : true;
 
   if (dataFromCache) {
@@ -36,7 +42,7 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
     tempData: null, // store data from non-GET requests
   });
 
-  const isSSR = client.ssr && typeof window === 'undefined';
+  const isSSR = client.ssr && dataOpts.ssr && typeof window === 'undefined';
 
   const fetchData = async (): Promise<any> => {
     if (typeof dataFromCache === 'undefined') {
@@ -68,14 +74,14 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
               tempData: null,
             });
           } else {
-            // throw an error during SSR 
+            // throw an error during SSR
             throw err;
           }
         });
     }
 
     return new Promise(resolve => resolve());
-  }
+  };
 
   const memoizedFetchData = React.useCallback(fetchData, [dataFromCache, fullUrl, addToCache]);
 
@@ -98,7 +104,7 @@ const useBaseData = (url: string, queryParams: Record<string, any>, fetchOptions
     {
       error: state.error,
       loading: state.loading,
-      data: finalMethod === 'GET' ? (dataFromCache || null) : state.tempData,
+      data: finalMethod === 'GET' ? dataFromCache || null : state.tempData,
     },
   ];
 };
