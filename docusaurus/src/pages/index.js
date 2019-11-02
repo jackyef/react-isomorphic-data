@@ -45,7 +45,7 @@ const features = [
     title: <>Lightweight</>,
     imageUrl: `img/undraw_file_bundle.svg`,
     description: (
-      <>Less than 5 kB gzipped</>
+      <>Less than 4 kB gzipped</>
     ),
   },
 ];
