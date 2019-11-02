@@ -54,7 +54,7 @@ The returned value of `useData()` are:
 
 4. `refetch: () => Promise<any>`
 
-    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 ### Supported methods
 Only `GET` requests are supported for `useData()`. Supporting other methods is not in the plan because it can be dangerous to re-request a non-idempotent request on component state update.

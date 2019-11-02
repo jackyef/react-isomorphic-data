@@ -40,7 +40,7 @@ The returned value of `useData()` are:
 
 1. `fetchData(): Promise<any>`
 
-    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`. Fetching data this way will still respect the DataState[`fetchPolicy`](../others/caching.md#caching-strategies).
+    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`. Fetching data this way will still respect the [`fetchPolicy`](../others/caching.md#caching-strategies).
 
 2. `data <any>`
 
@@ -56,7 +56,7 @@ The returned value of `useData()` are:
 
 5. `refetch: () => Promise<any>`
 
-    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 ### Supported methods
 All HTTP methods are supported. The example show usage of `POST` method, but it could be any HTTP method. But, only `GET` requests are cached.

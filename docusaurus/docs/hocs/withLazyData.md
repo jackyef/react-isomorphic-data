@@ -52,7 +52,7 @@ The HOC will inject a 2-element array as a props named `name` (depending on the 
 
 1. `fetchData(): Promise<any>`
 
-    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`. Fetching data this way will respect the DataState[`fetchPolicy`](../others/caching.md#caching-strategies).
+    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`. Fetching data this way will respect the [`fetchPolicy`](../others/caching.md#caching-strategies).
 
 2. `data <any>`
 
@@ -68,9 +68,9 @@ The HOC will inject a 2-element array as a props named `name` (depending on the 
 
 5. `refetch: () => Promise<any>`
 
-    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
-Which are basically exactly the same as what [`useLaztData()`](../hooks/useLazyData.md) is returning.
+Which are basically exactly the same as what [`useLazyData()`](../hooks/useLazyData.md) is returning.
 
 ### Supported methods
 Same as [`useLazyData()`](../hooks/useLazyData.md), all HTTP methods are supported. But, only `GET` requests are cached.

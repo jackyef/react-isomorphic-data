@@ -63,7 +63,7 @@ The HOC will inject an object as a props named `name` (depending on the `name` y
 
 4. `refetch: () => Promise<any>`
 
-    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 Which are basically exactly the same as what [`useData()`](../hooks/useData.md) is returning.
 
