@@ -89,7 +89,7 @@ const useBaseData = (
           }
         });
 
-    if (dataFromCache === undefined) {
+    if (cache[fullUrl] === undefined) {
       setState(prev => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
       fetchedFromNetwork.current = true;
