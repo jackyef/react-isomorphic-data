@@ -8,7 +8,7 @@ import logo from './react.svg';
 
 import './Home.css';
 
-const ChildComponent = ({ id, ssr }: { id: number, ssr: boolean }) => {
+const ChildComponent = ({ id, ssr }: { id: number; ssr: boolean }) => {
   const eagerData = useData(`http://localhost:3000/some-rest-api/${id}`, {}, undefined, {
     ssr,
   });
@@ -24,27 +24,41 @@ const ChildComponent = ({ id, ssr }: { id: number, ssr: boolean }) => {
 };
 
 const Home = () => {
-  const eagerData = useData('http://localhost:3000/some-rest-api/1', {}, {
-    headers: {
-      'x-custom-header': 'will only be sent for some-rest-api/1 request',
+  const eagerData = useData(
+    'http://localhost:3000/some-rest-api/1',
+    {},
+    {
+      headers: {
+        'x-custom-header': 'will only be sent for some-rest-api/1 request',
+      },
     },
-  }, {
-    ssr: true, // defaults to true. You can set to false if you don't want this to be fetched during SSR
-    fetchPolicy: 'cache-first',
-  });
+    {
+      ssr: true, // defaults to true. You can set to false if you don't want this to be fetched during SSR
+      fetchPolicy: 'cache-first',
+    },
+  );
 
-  const [fetchData, lazyData] = useLazyData('http://localhost:3000/some-rest-api/2', {}, {}, {
-    fetchPolicy: 'network-only',
-  });
+  const [fetchData, lazyData] = useLazyData(
+    'http://localhost:3000/some-rest-api/2',
+    {},
+    {},
+    {
+      fetchPolicy: 'network-only',
+    },
+  );
 
   // response will be returned by the hook
-  const [postData, postDataResponse] = useLazyData('http://localhost:3000/some-rest-api/3', {}, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
+  const [postData, postDataResponse] = useLazyData(
+    'http://localhost:3000/some-rest-api/3',
+    {},
+    {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ data: 'some data posted from client', foo: 'bar baz' }),
     },
-    body: JSON.stringify({ data: 'some data posted from client', foo: 'bar baz' }),
-  });
+  );
 
   return (
     <div className="Home">
@@ -65,19 +79,24 @@ const Home = () => {
         <div>
           <pre>{JSON.stringify(lazyData, null, 2)}</pre>
         </div>
-        Example #3 <code>useLazyData()</code> with POST method <button onClick={() => {
-          const promise = postData(); 
-          if (promise && promise.then) {
-            // you can get the data from the fetcher function as well, if you need to do something imperatively
-            promise.then(data => console.log({ data }));
-          }
-        }}>Hit me to post data!</button>
+        Example #3 <code>useLazyData()</code> with POST method{' '}
+        <button
+          onClick={() => {
+            const promise = postData();
+            if (promise && promise.then) {
+              // you can get the data from the fetcher function as well, if you need to do something imperatively
+              promise.then((data) => console.log({ data }));
+            }
+          }}
+        >
+          Hit me to post data!
+        </button>
         <div>
           <pre>{JSON.stringify(postDataResponse, null, 2)}</pre>
         </div>
         {eagerData.loading ? null : (
           <>
-            <ChildComponent id={123} ssr />
+            <ChildComponent id={123} ssr={true} />
             <ComponentUsingHOC />
             <ComponentUsingLazyHOC />
           </>

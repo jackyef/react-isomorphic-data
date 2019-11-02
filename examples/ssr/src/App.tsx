@@ -8,9 +8,12 @@ const App = () => {
   return (
     <>
       <Switch>
-        <Route path="/somewhere" render={() => {
-          return <Link to="/">Go back</Link>
-        }}/>
+        <Route
+          path="/somewhere"
+          render={() => {
+            return <Link to="/">Go back</Link>;
+          }}
+        />
         <Route exact={true} path="/" component={Home} />
       </Switch>
     </>
