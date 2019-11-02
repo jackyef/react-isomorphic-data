@@ -29,10 +29,18 @@ server.use(bodyParser());
 server.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 server.use(compression());
 
-server.post('/some-rest-api', async (req: express.Request, res: express.Response) => {
+server.get('/some-rest-api*', async (req: express.Request, res: express.Response) => {
+  res.json({
+    message: req.url,
+    randomNumber: Math.floor(Math.random() * 100),
+  });
+});
+
+server.post('/some-rest-api*', async (req: express.Request, res: express.Response) => {
   res.json({
     message: `echo-ing the stuffs you posted`,
     data: req.body,
+    randomNumber: Math.floor(Math.random() * 100),
   });
 });
 

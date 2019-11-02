@@ -25,8 +25,12 @@ class ComponentUsingHOC extends React.Component<ComponentUsingHOCProps> {
 }
 
 export default withData({
-  url: 'https://pokeapi.co/api/v2/pokemon/4/',
+  url: 'http://localhost:3000/some-rest-api/24',
   name: 'pokemonData', // the name of the prop the data will be injected to
   queryParams: {},
   fetchOptions: {}, // options that can be accepted by the native `fetch` API
+  dataOptions: { // additional options
+    ssr: false,
+    // fetchPolicy: 'cache-and-network',
+  },
 })(ComponentUsingHOC);

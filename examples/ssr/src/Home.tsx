@@ -1,5 +1,6 @@
 import React from 'react';
 import { useData, useLazyData } from 'react-isomorphic-data';
+import { Link } from 'react-router-dom';
 
 import ComponentUsingHOC from './ComponentUsingHOC';
 import ComponentUsingLazyHOC from './ComponentUsingLazyHOC';
@@ -7,12 +8,14 @@ import logo from './react.svg';
 
 import './Home.css';
 
-const ChildComponent = () => {
-  const eagerData = useData('https://pokeapi.co/api/v2/pokemon/3/', {});
+const ChildComponent = ({ id, ssr }: { id: number, ssr: boolean }) => {
+  const eagerData = useData(`http://localhost:3000/some-rest-api/${id}`, {}, undefined, {
+    ssr,
+  });
 
   return (
     <div>
-      This is ChildComponent.
+      This is ChildComponent with <code>{`id: ${id}, ssr: ${ssr}`}</code>
       <div>
         <pre>{JSON.stringify(eagerData, null, 2)}</pre>
       </div>
@@ -21,15 +24,21 @@ const ChildComponent = () => {
 };
 
 const Home = () => {
-  const [fetchData, lazyData] = useLazyData('https://pokeapi.co/api/v2/pokemon/1/', {});
-  const eagerData = useData('https://pokeapi.co/api/v2/pokemon/2/', {}, {
+  const eagerData = useData('http://localhost:3000/some-rest-api/1', {}, {
     headers: {
-      'x-custom-header': 'will only be sent for pokemon/2 request',
+      'x-custom-header': 'will only be sent for some-rest-api/1 request',
     },
+  }, {
+    ssr: true, // defaults to true. You can set to false if you don't want this to be fetched during SSR
+    fetchPolicy: 'cache-first',
+  });
+
+  const [fetchData, lazyData] = useLazyData('http://localhost:3000/some-rest-api/2', {}, {}, {
+    fetchPolicy: 'network-only',
   });
 
   // response will be returned by the hook
-  const [postData, postDataResponse] = useLazyData('http://localhost:3000/some-rest-api', {}, {
+  const [postData, postDataResponse] = useLazyData('http://localhost:3000/some-rest-api/3', {}, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -39,6 +48,7 @@ const Home = () => {
 
   return (
     <div className="Home">
+      <Link to="/somewhere">Go /somewhere</Link>
       <div className="Home-header">
         <img src={logo} className="Home-logo" alt="logo" />
         <h2>
@@ -67,11 +77,12 @@ const Home = () => {
         </div>
         {eagerData.loading ? null : (
           <>
-            <ChildComponent />
+            <ChildComponent id={123} ssr />
             <ComponentUsingHOC />
             <ComponentUsingLazyHOC />
           </>
         )}
+        <ChildComponent id={99} ssr={false} />
       </div>
     </div>
   );
