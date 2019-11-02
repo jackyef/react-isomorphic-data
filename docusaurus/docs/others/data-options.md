@@ -46,9 +46,13 @@ const MyComponentWithData = withData({
 ### Configurations
 Following is a list of all the fields possible to be configured in the `dataOptions` object
 
-#### `ssr: boolean`
+#### `ssr`
+* Type: `boolean`
+
 Determines whether the particular data should be fetched during server side rendering or not. Setting this `true` does not affect lazy data.
 `default: true`
 
-#### `fetchPolicy: 'cache-first' | 'cache-and-network' | 'network-only'`
+#### `fetchPolicy`
+* Type: `'cache-first' | 'cache-and-network' | 'network-only'`
+
 Determines the how the data is handled. A more detailed explanation can be found in [Caching](./caching.md). `default: 'cache-first'`

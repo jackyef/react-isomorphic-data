@@ -94,6 +94,11 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          path: './docs',
+          editUrl:
+            'https://github.com/jackyef/react-isomorphic-data/edit/master/docusaurus/docs/',
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

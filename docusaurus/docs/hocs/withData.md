@@ -4,7 +4,16 @@ title: withData()
 sidebar_label: withData()
 ---
 
-## `withData({ url: string, name: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, dataOptions: DataHookOptions })`
+## `withData`
+Params:
+* `options: HocOptions`
+  * `url: string`
+  * `name: string`
+  * `queryParams: Record<string, any>`
+  * `fetchOptions: RequestInit = {}`
+  * `dataOptions: DataHookOptions`
+
+> To learn more about what `dataOptions` can be passed, go [here](../others/data-options.md).
 
 Example usage:
 ```javascript
@@ -35,8 +44,6 @@ export default withData({
   },
 })(MyComponent);
 ```
-
-> To learn more about what `dataOptions` can be passed, go [here](../others/data-options.md).
 
 The response from the REST endpoint will be parsed as JSON, and will throw an error if it is not a valid JSON. The `response` will be available in the `data` variable.
 
