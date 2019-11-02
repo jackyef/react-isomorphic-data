@@ -18,7 +18,7 @@ Params:
 Example usage:
 ```javascript
 const MyComponent = () => {
-  const { data, loading, error } = this.props.pokemonData;
+  const { data, loading, error, refetch } = this.props.pokemonData;
 
   return (
     loading 
@@ -60,6 +60,10 @@ The HOC will inject an object as a props named `name` (depending on the `name` y
 3. `error <Error | null>`
 
     The `Error` object, if any error happened during the network request. `null` if no error happened.
+
+4. `refetch: () => Promise<any>`
+
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 Which are basically exactly the same as what [`useData()`](../hooks/useData.md) is returning.
 

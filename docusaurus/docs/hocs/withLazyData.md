@@ -19,7 +19,7 @@ Params:
 Example usage:
 ```javascript
 const MyComponent = () => {
-  const [fetchData, { data, loading, error }] = this.props.pokemonData;
+  const [fetchData, { data, loading, error, refetch }] = this.props.pokemonData;
 
   return (
     !data
@@ -52,7 +52,7 @@ The HOC will inject a 2-element array as a props named `name` (depending on the 
 
 1. `fetchData(): Promise<any>`
 
-    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`.
+    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`. Fetching data this way will respect the DataState[`fetchPolicy`](../others/caching.md#caching-strategies).
 
 2. `data <any>`
 
@@ -65,6 +65,10 @@ The HOC will inject a 2-element array as a props named `name` (depending on the 
 4. `error <Error | null>`
 
     The `Error` object, if any error happened during the network request. `null` if no error happened.
+
+5. `refetch: () => Promise<any>`
+
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 Which are basically exactly the same as what [`useLaztData()`](../hooks/useLazyData.md) is returning.
 

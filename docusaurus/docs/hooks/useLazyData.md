@@ -15,7 +15,7 @@ Params
 
 Example usage:
 ```javascript
-const [fetchData, { data, error, loading }] = useLazyData(
+const [fetchData, { data, error, loading, refetch }] = useLazyData(
   // the url string of the endpoint we will send request to
   'https://pokeapi.co/api/v2/pokemon/3/', 
   // Object of query params, which should be empty in a POST request
@@ -40,7 +40,7 @@ The returned value of `useData()` are:
 
 1. `fetchData(): Promise<any>`
 
-    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`.
+    A function that will send the request to the endpoint. You can use this inside an event handler such as `onClick` to trigger the request on demand. The promise will resolve with the data from the endpoint with exactly the same value as `data`. Fetching data this way will still respect the DataState[`fetchPolicy`](../others/caching.md#caching-strategies).
 
 2. `data <any>`
 
@@ -53,6 +53,10 @@ The returned value of `useData()` are:
 4. `error <Error | null>`
 
     The `Error` object, if any error happened during the network request. `null` if no error happened.
+
+5. `refetch: () => Promise<any>`
+
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 ### Supported methods
 All HTTP methods are supported. The example show usage of `POST` method, but it could be any HTTP method. But, only `GET` requests are cached.

@@ -15,7 +15,7 @@ Params
 
 Example usage:
 ```javascript
-const { data, error, loading } = useData(
+const { data, error, loading, refetch } = useData(
   // the url string of the endpoint we will send request to
   'https://pokeapi.co/api/v2/pokemon/3/', 
   // Object of query params, will be appended to your url
@@ -51,6 +51,10 @@ The returned value of `useData()` are:
 3. `error: Error | null`
 
     The `Error` object, if any error happened during the network request. `null` if no error happened.
+
+4. `refetch: () => Promise<any>`
+
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what DataState[`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 ### Supported methods
 Only `GET` requests are supported for `useData()`. Supporting other methods is not in the plan because it can be dangerous to re-request a non-idempotent request on component state update.
