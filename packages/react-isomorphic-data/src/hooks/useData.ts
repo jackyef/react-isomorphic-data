@@ -1,13 +1,13 @@
 import useBaseData from './utils/useBaseData';
 
-import { AsyncDataState, DataHookOptions } from './types';
+import { DataState, DataHookOptions } from './types';
 
 const useData = (
   url: string,
   queryParams: Record<string, any>,
   fetchOptions: RequestInit = {},
   dataOptions?: DataHookOptions,
-): AsyncDataState => {
+): DataState => {
   const [, baseData] = useBaseData(url, queryParams, fetchOptions, false, dataOptions);
 
   if (process.env.NODE_ENV !== 'production') {

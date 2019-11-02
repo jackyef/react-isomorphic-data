@@ -1,18 +1,19 @@
-export interface AsyncDataState {
+export interface DataState {
   data: any;
   error: Error | boolean | null;
   loading: boolean;
+  refetch: () => Promise<any>;
 };
 
-export interface AsyncDataHookState {
+export interface DataHookState {
   error: Error | null;
   loading: boolean;
   tempData: any;
 };
 
-export type LazyAsyncDataState = [
+export type LazyDataState = [
   () => Promise<any> | void,
-  AsyncDataState,
+  DataState,
 ];
 
 export interface DataHookOptions {

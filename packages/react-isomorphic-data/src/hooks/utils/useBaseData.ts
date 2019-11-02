@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DataContext } from '../../common';
 import qsify from '../../utils/querystringify.js';
 
-import { AsyncDataHookState, LazyAsyncDataState, DataHookOptions } from '../types';
+import { DataHookState, LazyDataState, DataHookOptions } from '../types';
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
@@ -12,7 +12,7 @@ const useBaseData = (
   fetchOptions: RequestInit = {},
   lazy = false,
   dataOpts: DataHookOptions = {},
-): LazyAsyncDataState => {
+): LazyDataState => {
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
   let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
@@ -22,10 +22,10 @@ const useBaseData = (
   const { client, addToCache } = React.useContext(DataContext);
   const { cache } = client;
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
-  
+
   if (finalMethod !== 'GET') fetchPolicy = 'network-only';
   if (isSSR) fetchPolicy = 'cache-first';
-  
+
   const useTempData = finalMethod !== 'GET' || fetchPolicy === 'network-only';
 
   // fetchOptions rarely changes. So let's just store it into a ref
@@ -49,48 +49,48 @@ const useBaseData = (
     initialLoading = false;
   }
 
-  const [state, setState] = React.useState<AsyncDataHookState>({
+  const [state, setState] = React.useState<DataHookState>({
     error: null,
     loading: initialLoading,
     tempData: null, // store data from non-GET requests
   });
 
+  const createFetch = () =>
+    fetch(fullUrl, optionsRef.current)
+      .then((result) => result.json())
+      .then((json) => {
+        if (!useTempData) {
+          // only cache response for GET requests
+          // AND non 'network-only' requests
+          addToCache(fullUrl, json);
+        }
+
+        if (!isSSR) {
+          setState({
+            error: null,
+            loading: false,
+            tempData: json,
+          });
+        }
+
+        return json;
+      })
+      .catch((err) => {
+        if (!isSSR) {
+          setState({
+            error: err,
+            loading: false,
+            tempData: null,
+          });
+        } else {
+          // throw an error during SSR
+          throw err;
+        }
+      });
+
   const fetchData = async (): Promise<any> => {
-    const createFetch = () =>
-      fetch(fullUrl, optionsRef.current)
-        .then(result => result.json())
-        .then(json => {
-          if (!useTempData) {
-            // only cache response for GET requests
-            // AND non 'network-only' requests
-            addToCache(fullUrl, json);
-          }
-
-          if (!isSSR) {
-            setState({
-              error: null,
-              loading: false,
-              tempData: json,
-            });
-          }
-
-          return json;
-        })
-        .catch(err => {
-          if (!isSSR) {
-            setState({
-              error: err,
-              loading: false,
-              tempData: null,
-            });
-          } else {
-            // throw an error during SSR
-            throw err;
-          }
-        });
-
     if (cache[fullUrl] === undefined) {
-      setState(prev => ({ ...prev, loading: true }));
+      setState((prev) => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
       fetchedFromNetwork.current = true;
 
@@ -107,7 +107,7 @@ const useBaseData = (
       }
     }
 
-    return new Promise(resolve => resolve());
+    return new Promise((resolve) => resolve());
   };
 
   const memoizedFetchData = React.useCallback(fetchData, [dataFromCache, fullUrl, addToCache]);
@@ -134,6 +134,7 @@ const useBaseData = (
       error: state.error,
       loading: state.loading,
       data: (!useTempData ? finalData : state.tempData) || null,
+      refetch: () => createFetch(), // always bypass cache on refetch
     },
   ];
 };
