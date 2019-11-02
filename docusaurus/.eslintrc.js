@@ -6,7 +6,8 @@ module.exports = {
   extends: ['prettier', 'plugin:react/recommended'],
   plugins: ['react-hooks'],
   rules: {
-    'react-hooks/rules-of-hooks': 'error',
+    // have to disable this because docusaurus 2 has `useBaseUrl` but isn't a hook
+    'react-hooks/rules-of-hooks': 'off',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
     // 'import/no-unresolved': [

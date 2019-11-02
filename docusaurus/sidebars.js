@@ -10,7 +10,7 @@ module.exports = {
     'Getting Started': ['intro', 'examples'],
     Hooks: ['hooks/usedata', 'hooks/uselazydata'],
     'Higher Order Components': ['hocs/withdata', 'hocs/withlazydata'],
-    Caching: ['caching/intro'],
+    'Others': ['others/caching', 'others/data-options', 'others/cant-find-answer'],
   },
   // 'react-isomorphic-data': {
     // Introduction: ['api/index', 'api/globals'],

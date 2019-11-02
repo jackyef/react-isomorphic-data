@@ -29,8 +29,11 @@ class ComponentUsingLazyHOC extends React.Component<ComponentUsingLazyHOCProps> 
 }
 
 export default withLazyData({
-  url: 'https://pokeapi.co/api/v2/pokemon/5/',
+  url: 'http://localhost:3000/some-rest-api/23',
   name: 'lazyPokemonData', // the name of the prop the data will be injected to
   fetchOptions: {}, // options that can be accepted by the native `fetch` API
   queryParams: {},
+  dataOptions: {
+    fetchPolicy: 'cache-first',
+  },
 })(ComponentUsingLazyHOC);

@@ -5,6 +5,7 @@ import camelCase from 'lodash.camelcase';
 import typescript from 'rollup-plugin-typescript2';
 import json from 'rollup-plugin-json';
 import visualizer from 'rollup-plugin-visualizer';
+import replace from '@rollup/plugin-replace';
 import { terser as minify } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
@@ -42,6 +43,9 @@ export default {
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve(),
+
+    // works like webpack define plugin
+    replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
 
     process.env.NODE_ENV === 'production' && minify({
       mangle: {

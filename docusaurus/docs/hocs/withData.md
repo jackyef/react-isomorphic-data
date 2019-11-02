@@ -4,12 +4,21 @@ title: withData()
 sidebar_label: withData()
 ---
 
-## `withData({ url: string, name: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {} })`
+## `withData`
+Params:
+* `options: HocOptions`
+  * `url: string`
+  * `name: string`
+  * `queryParams: Record<string, any>`
+  * `fetchOptions: RequestInit = {}`
+  * `dataOptions: DataHookOptions`
+
+> To learn more about what `dataOptions` can be passed, go [here](../others/data-options.md).
 
 Example usage:
 ```javascript
 const MyComponent = () => {
-  const { data, loading, error } = this.props.pokemonData;
+  const { data, loading, error, refetch } = this.props.pokemonData;
 
   return (
     loading 
@@ -29,6 +38,10 @@ export default withData({
   fetchOptions: {
     method: 'GET',
   }, 
+  // dataOptions object. Used to configure some behaviors.
+  dataOptions: {
+    ssr: true,
+  },
 })(MyComponent);
 ```
 
@@ -47,6 +60,10 @@ The HOC will inject an object as a props named `name` (depending on the `name` y
 3. `error <Error | null>`
 
     The `Error` object, if any error happened during the network request. `null` if no error happened.
+
+4. `refetch: () => Promise<any>`
+
+    A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
 Which are basically exactly the same as what [`useData()`](../hooks/useData.md) is returning.
 
