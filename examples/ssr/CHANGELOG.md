@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.5.0...ssr@0.6.0) (2019-11-02)
+
+
+### Features
+
+* **example:** updated the example to showcase usage of dataOptions ([fc42ed0](https://github.com/jackyef/react-isomorphic-data/commit/fc42ed09e4d31ebd6bda644b9da2cab236e46cda))
+* **example/ssr:** added refetch() example ([44eb6fd](https://github.com/jackyef/react-isomorphic-data/commit/44eb6fdc8871841e099fab1bf7f229584643efc0))
+* **react-isomorphic-data:** added fetchPolicy for finer control on how data should be cached ([8c0cd67](https://github.com/jackyef/react-isomorphic-data/commit/8c0cd67ce6c106ff7ae507008ed1dce0a4bb2ae0))
+
+
+
+
+
 # [0.5.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.4.1...ssr@0.5.0) (2019-10-16)
 
 

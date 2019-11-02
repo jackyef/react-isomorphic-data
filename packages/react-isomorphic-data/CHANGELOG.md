@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.6.1...react-isomorphic-data@0.7.0) (2019-11-02)
+
+
+### Bug Fixes
+
+* **usebasedata:** fixed a subtle bug where exact same requests are fetched multiple time during SSR ([9c37936](https://github.com/jackyef/react-isomorphic-data/commit/9c3793620be187feac71d094fd9d1a14106f6d6a))
+* **usebasedata:** fixed issue where multiple same request could be sent when another is in flight ([eb6af37](https://github.com/jackyef/react-isomorphic-data/commit/eb6af3768b140b89d7d2abf553c7b4dfcba9b33d))
+
+
+### Features
+
+* **react-isomorphic-data:** added dataOptions that allows component to skip ssr for some data ([91b5843](https://github.com/jackyef/react-isomorphic-data/commit/91b58430a6995d051de6850e6882e84dcfadfda5))
+* **react-isomorphic-data:** added fetchPolicy for finer control on how data should be cached ([8c0cd67](https://github.com/jackyef/react-isomorphic-data/commit/8c0cd67ce6c106ff7ae507008ed1dce0a4bb2ae0))
+* added refetch() that will always bypass cache ([f62126f](https://github.com/jackyef/react-isomorphic-data/commit/f62126fe96c391b5a18e3f794118eb4fd8cdd1ec))
+
+
+### Performance Improvements
+
+* **react-isomorphic-data:** added rollup replacer plugin for better minification ([894f419](https://github.com/jackyef/react-isomorphic-data/commit/894f419f914893b7e30f758bb1baa3656a3d81f4))
+
+
+
+
+
 ## [0.6.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.6.0...react-isomorphic-data@0.6.1) (2019-10-16)
 
 **Note:** Version bump only for package react-isomorphic-data
