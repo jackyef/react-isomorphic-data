@@ -71,6 +71,7 @@ const Home = () => {
       </div>
       <div className="Example-container">
         Example #1
+        <button onClick={() => eagerData.refetch()}>Click me to refetch</button>
         <div>
           <pre>{JSON.stringify(eagerData, null, 2)}</pre>
         </div>
