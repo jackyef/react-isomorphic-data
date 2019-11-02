@@ -11,12 +11,23 @@ const useBaseData = (
   queryParams: Record<string, any>,
   fetchOptions: RequestInit = {},
   lazy = false,
-  dataOpts: DataHookOptions = { ssr: true },
+  dataOpts: DataHookOptions = {},
 ): LazyAsyncDataState => {
+  const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
+  const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
+  let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
+
   const promisePushed = React.useRef<boolean>(false);
+  const fetchedFromNetwork = React.useRef<boolean>(false);
   const { client, addToCache } = React.useContext(DataContext);
   const { cache } = client;
-  const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
+  const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
+  
+  if (finalMethod !== 'GET') fetchPolicy = 'network-only';
+  if (isSSR) fetchPolicy = 'cache-first';
+  
+  const useTempData = finalMethod !== 'GET' || fetchPolicy === 'network-only';
+
   // fetchOptions rarely changes. So let's just store it into a ref
   const optionsRef = React.useRef<RequestInit>({
     ...fetchOptions,
@@ -44,18 +55,14 @@ const useBaseData = (
     tempData: null, // store data from non-GET requests
   });
 
-  const isSSR = client.ssr && dataOpts.ssr && typeof window === 'undefined';
-
   const fetchData = async (): Promise<any> => {
-    if (typeof dataFromCache === 'undefined') {
-      setState(prev => ({ ...prev, loading: true }));
-      addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
-
-      return fetch(fullUrl, optionsRef.current)
+    const createFetch = () =>
+      fetch(fullUrl, optionsRef.current)
         .then(result => result.json())
         .then(json => {
-          if (!fetchOptions.method || fetchOptions.method === 'GET') {
+          if (!useTempData) {
             // only cache response for GET requests
+            // AND non 'network-only' requests
             addToCache(fullUrl, json);
           }
 
@@ -81,6 +88,23 @@ const useBaseData = (
             throw err;
           }
         });
+
+    if (dataFromCache === undefined) {
+      setState(prev => ({ ...prev, loading: true }));
+      addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
+      fetchedFromNetwork.current = true;
+
+      return createFetch();
+    }
+
+    // data is already in cache
+    if (fetchPolicy !== 'cache-first') {
+      // fetch again 1 time for cache-and-network cases
+      if (!fetchedFromNetwork.current || lazy) {
+        fetchedFromNetwork.current = true;
+
+        return createFetch();
+      }
     }
 
     return new Promise(resolve => resolve());
@@ -97,19 +121,19 @@ const useBaseData = (
   }
 
   React.useEffect(() => {
-    if (!lazy) {
+    if (!lazy && dataFromCache !== LoadingSymbol) {
       memoizedFetchData();
     }
-  }, [lazy, memoizedFetchData]);
+  }, [lazy, memoizedFetchData, dataFromCache]);
 
-  const finalData = dataFromCache === LoadingSymbol ? null : dataFromCache;
+  const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
 
   return [
     memoizedFetchData,
     {
       error: state.error,
       loading: state.loading,
-      data: finalMethod === 'GET' ? finalData : state.tempData,
+      data: (!useTempData ? finalData : state.tempData) || null,
     },
   ];
 };
