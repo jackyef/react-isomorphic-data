@@ -4,7 +4,7 @@ title: useData()
 sidebar_label: useData()
 ---
 
-## `useData(url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {})`
+## `useData(url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, dataOptions: DataHookOptions)`
 
 Example usage:
 ```javascript
@@ -22,20 +22,28 @@ const { data, error, loading } = useData(
       'x-custom-header': 'myheadervalue',
     },
   },
+  // dataOptions object. Used to configure some behaviors.
+  {
+    ssr: true,
+  },
 );
 ```
+
+> To learn more about what `dataOptions` can be passed, go [here](../others/data-options.md).
 
 The response from the REST endpoint will be parsed as JSON, and will throw an error if it is not a valid JSON. The `response` will be available in the `data` variable.
 
 The returned value of `useData()` are:
 
-1. `data <any>`
+1. `data: any`
 
     The JSON response from the endpoint
-2. `loading <boolean>`
+
+2. `loading: boolean`
 
     A `boolean` value that determine whether a request is currently in-flight
-3. `error <Error | null>`
+
+3. `error: Error | null`
 
     The `Error` object, if any error happened during the network request. `null` if no error happened.
 

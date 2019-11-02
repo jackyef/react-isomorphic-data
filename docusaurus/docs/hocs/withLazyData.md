@@ -4,7 +4,7 @@ title: withLazyData()
 sidebar_label: withLazyData()
 ---
 
-## `withLazyData({ url: string, name: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {} })`
+## `withLazyData({ url: string, name: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, dataOptions: DataHookOptions })`
 
 Example usage:
 ```javascript
@@ -29,8 +29,14 @@ export default withLazyData({
   fetchOptions: {
     method: 'GET',
   }, 
+  // dataOptions object. Used to configure some behaviors.
+  dataOptions: {
+    ssr: false,
+  },
 })(MyComponent);
 ```
+
+> To learn more about what `dataOptions` can be passed, go [here](../others/data-options.md).
 
 The response from the REST endpoint will be parsed as JSON, and will throw an error if it is not a valid JSON. The `response` will be available in the `data` variable.
 

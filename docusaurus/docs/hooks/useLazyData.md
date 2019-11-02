@@ -4,7 +4,7 @@ title: useLazyData()
 sidebar_label: useLazyData()
 ---
 
-## `useData(url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {})`
+## `useLazyData(url: string, queryParams: Record<string, any>, fetchOptions: RequestInit = {}, dataOptions: DataHookOptions)`
 
 Example usage:
 ```javascript
@@ -20,8 +20,14 @@ const [fetchData, { data, error, loading }] = useLazyData(
       'x-custom-header': 'myheadervalue',
     },
   },
+  // dataOptions object. Used to configure some behaviors.
+  {
+    ssr: false,
+  },
 );
 ```
+
+> To learn more about what `dataOptions` can be passed, go [here](../others/data-options.md).
 
 The response from the REST endpoint will be parsed as JSON, and will throw an error if it is not a valid JSON. The `response` will be available in the `data` variable.
 
