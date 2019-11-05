@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.6.0...ssr@0.7.0) (2019-11-05)
+
+
+### Features
+
+* **example:** make the example use renderToStringWithData instead ([97a16c7](https://github.com/jackyef/react-isomorphic-data/commit/97a16c77612ae770761ac312ea6bee2e6e12f999))
+
+
+
+
+
 # [0.6.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.5.0...ssr@0.6.0) (2019-11-02)
 
 

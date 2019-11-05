@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.7.0...react-isomorphic-data@0.8.0) (2019-11-05)
+
+
+### Features
+
+* **ssr:** added `renderToStringWithData` for SSR use cases ([7029043](https://github.com/jackyef/react-isomorphic-data/commit/702904328a09de2324f92e32290fc1551b30d181))
+
+
+
+
+
 # [0.7.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.6.1...react-isomorphic-data@0.7.0) (2019-11-02)
 
 
