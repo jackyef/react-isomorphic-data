@@ -1,7 +1,6 @@
 import express from 'express';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { DataProvider, createDataClient, getDataFromTree } from 'react-isomorphic-data';
+import { DataProvider, createDataClient, renderToStringWithData } from 'react-isomorphic-data';
 import { StaticRouter } from 'react-router-dom';
 import fetch from 'node-fetch';
 import compression from 'compression';
@@ -67,15 +66,14 @@ server.get('/*', async (req: express.Request, res: express.Response) => {
     </DataProvider>
   );
 
+  let markup;
   // pass the same dataClient instance you are passing to your provider here
   try {
-    await getDataFromTree(reactApp, dataClient);
+    markup = await renderToStringWithData(reactApp, dataClient);
   } catch (err) {
     console.error('Error while trying to getDataFromTree', err);
   }
-
-  const markup = renderToString(reactApp);
-
+  
   res.send(
     `<!doctype html>
     <html lang="">

@@ -17,3 +17,27 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 ```sh
 yarn add react-isomorphic-data
 ```
+
+### Setup
+Simply create a `DataClient` instance and wrap your whole app inside the `DataProvider`...
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { DataProvider, createDataClient } from 'react-isomorphic-data';
+
+import App from './App';
+
+const dataClient = createDataClient({
+  initialCache: {},
+  ssr: false,
+});
+
+ReactDOM.render(
+  <DataProvider client={dataClient}>
+    <App />
+  </DataProvider>,
+  document.getElementById('root')
+);
+```
+
+...and now you can use the hooks and HOCs inside your components 🎉
