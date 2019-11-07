@@ -10,7 +10,7 @@ module.exports = {
     'Getting Started': ['intro', 'examples'],
     Hooks: ['hooks/usedata', 'hooks/uselazydata'],
     'Higher Order Components': ['hocs/withdata', 'hocs/withlazydata'],
-    'Server-side Rendering': ['ssr/rendertostringwithdata', 'ssr/getdatafromtree', 'ssr/client-side-hydration'],
+    'Server-side Rendering': ['ssr/intro', 'ssr/rendertostringwithdata', 'ssr/getdatafromtree', 'ssr/client-side-hydration'],
     'Others': ['others/caching', 'others/data-options', 'others/cant-find-answer'],
   },
   // 'react-isomorphic-data': {

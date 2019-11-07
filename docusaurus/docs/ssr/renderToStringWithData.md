@@ -29,7 +29,7 @@ global.fetch = fetch;
 express.get('/*', async (req, res) => {
   const dataClient = createDataClient({
     initialCache: {},
-    ssr: false,
+    ssr: true, // set this to true on server side
   });
 
   const tree = (

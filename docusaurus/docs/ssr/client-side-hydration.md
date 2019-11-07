@@ -4,10 +4,15 @@ title: Client-side Hydration
 sidebar_label: Client-side Hydration
 ---
 
-When doing server-side rendering, you should serialise the cache to HTML, so that it can be reused on the client side. For now, you can do that by just calling `JSON.stringify` on the `dataClient.cache`. 
+If your app will be re-hydrated on the client side, you should serialise the cache to HTML, so that it can be reused on the client side. For now, you can do that by just calling `JSON.stringify` on the `dataClient.cache`. 
 
 ### Serialising on the server side
 ```javascript
+const dataClient = createDataClient({
+  initialCache: {},
+  ssr: true, // set this to true on server side
+});
+
 const tree = (
   <DataProvider client={dataClient}>
     <App />
