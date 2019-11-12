@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.8.0...react-isomorphic-data@0.9.0) (2019-11-12)
+
+
+### Features
+
+* separate `ssr` utilities to its own bundle ([d2d78db](https://github.com/jackyef/react-isomorphic-data/commit/d2d78db1b815c1e2b3127ae857b6b33ab255dc25))
+
+
+### BREAKING CHANGES
+
+* `renderToStringWithData` and `getDataFromTree` can now be imported from `react-isomorphic-data/ssr` instead of `react-isomorphic-data`
+
+
+
+
+
 # [0.8.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.7.0...react-isomorphic-data@0.8.0) (2019-11-05)
 
 
