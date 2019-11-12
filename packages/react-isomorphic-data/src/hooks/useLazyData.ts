@@ -4,7 +4,7 @@ import { LazyDataState, DataHookOptions } from './types';
 
 const useData = (
   url: string,
-  queryParams: Record<string, any>,
+  queryParams: Record<string, any> = {},
   fetchOptions: RequestInit = {},
   dataOptions?: DataHookOptions,
 ): LazyDataState => {

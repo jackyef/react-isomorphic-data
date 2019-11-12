@@ -8,7 +8,7 @@ const LoadingSymbol = Symbol('LoadingFlag');
 
 const useBaseData = (
   url: string,
-  queryParams: Record<string, any>,
+  queryParams: Record<string, any> = {},
   fetchOptions: RequestInit = {},
   lazy = false,
   dataOpts: DataHookOptions = {},
