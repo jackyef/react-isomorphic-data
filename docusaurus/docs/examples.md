@@ -45,7 +45,8 @@ ReactDOM.render(
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { DataProvider, createDataClient, getDataFromTree } from 'react-isomorphic-data';
+import { DataProvider, createDataClient } from 'react-isomorphic-data';
+import { getDataFromTree } from 'react-isomorphic-data/ssr';
 import fetch from 'node-fetch';
 
 import App from './App';
