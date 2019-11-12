@@ -12,7 +12,33 @@ import pkg from './package.json';
 
 const libraryName = 'react-isomorphic-data';
 
-export default {
+const sharedPlugins = [
+  // Allow json resolution
+  json(),
+  // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+  commonjs(),
+  // Allow node_modules resolution, so you can use 'external' to control
+  // which external modules to include in the bundle
+  // https://github.com/rollup/rollup-plugin-node-resolve#usage
+  resolve(),
+
+  // works like webpack define plugin
+  replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
+
+  // let users minify themselves. Just ship non-minified bundle
+  // process.env.NODE_ENV === 'production' && minify({
+  //   mangle: {
+  //     toplevel: true,
+  //   },
+  // }),
+
+  // Resolve source maps to the original source
+  sourceMaps(),
+
+  visualizer(),
+].filter(Boolean);
+
+const mainBundleConfig = {
   input: `src/index.ts`,
   output: [
     {
@@ -29,34 +55,44 @@ export default {
     include: 'src/**',
   },
   plugins: [
-    // Allow json resolution
-    json(),
     // Compile TypeScript files
     typescript({ 
       typescript: require('typescript'),
       objectHashIgnoreUnknownHack: true,
       useTsconfigDeclarationDir: true,
     }),
-    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs(),
-    // Allow node_modules resolution, so you can use 'external' to control
-    // which external modules to include in the bundle
-    // https://github.com/rollup/rollup-plugin-node-resolve#usage
-    resolve(),
-
-    // works like webpack define plugin
-    replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
-
-    // let users minify themselves. Just ship non-minified bundle
-    // process.env.NODE_ENV === 'production' && minify({
-    //   mangle: {
-    //     toplevel: true,
-    //   },
-    // }),
-
-    // Resolve source maps to the original source
-    sourceMaps(),
-
-    visualizer(),
-  ].filter(Boolean),
+    ...sharedPlugins,
+  ],
 };
+
+const serverBundleConfig = {
+  input: `src/ssr/index.ts`,
+  output: [
+    {
+      file: 'dist/cjs/ssr.js',
+      format: 'cjs',
+      sourcemap: true,
+    },
+  ],
+  // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
+  external: ['react', 'react-dom', 'react-dom/server'],
+  watch: {
+    include: 'src/ssr/**',
+  },
+  plugins: [
+    // Compile TypeScript files
+    typescript({ 
+      typescript: require('typescript'),
+      objectHashIgnoreUnknownHack: true,
+      useTsconfigDeclarationDir: true,
+      tsconfigOverride: {
+        include: [
+          "src/ssr/**/*",
+        ],
+      }
+    }),
+    ...sharedPlugins,
+  ],
+}
+
+export default [mainBundleConfig, serverBundleConfig];

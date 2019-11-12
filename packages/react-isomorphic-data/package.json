@@ -14,7 +14,8 @@
     "deploy": "npm publish"
   },
   "files": [
-    "dist"
+    "dist",
+    "ssr"
   ],
   "repository": {
     "type": "git",
