@@ -21,6 +21,7 @@ const useBaseData = (
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
   const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
 
+  const promiseRef = React.useRef<Promise<any> | null>(null);
   const promisePushed = React.useRef<boolean>(false);
   const fetchedFromNetwork = React.useRef<boolean>(false);
   const { client, addToCache, addToBePrefetched } = React.useContext(DataContext);
@@ -59,8 +60,8 @@ const useBaseData = (
     tempData: null, // store data from non-GET requests
   });
 
-  const createFetch = () =>
-    fetch(fullUrl, optionsRef.current)
+  const createFetch = () => {
+    promiseRef.current = fetch(fullUrl, optionsRef.current)
       .then((result) => result.json())
       .then((json) => {
         if (!useTempData) {
@@ -91,6 +92,9 @@ const useBaseData = (
           throw err;
         }
       });
+
+      return promiseRef.current;
+    }
 
   const fetchData = async (): Promise<any> => {
     if (retrieveFromCache(cache, fullUrl) === undefined) {
@@ -138,6 +142,11 @@ const useBaseData = (
   }, [lazy, memoizedFetchData, dataFromCache]);
 
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
+
+  if (state.loading && promiseRef.current instanceof Promise) {
+    // throw a promise
+    throw promiseRef.current;
+  }
 
   return [
     memoizedFetchData,
