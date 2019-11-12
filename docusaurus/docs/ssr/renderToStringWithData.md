@@ -18,7 +18,8 @@ Following is an example of SSR implementation using `express` web server.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import express from 'express';
-import { DataProvider, createDataClient, renderToStringWithData } from 'react-isomorphic-data';
+import { DataProvider, createDataClient } from 'react-isomorphic-data';
+import { renderToStringWithData } from 'react-isomorphic-data/ssr';
 import fetch from 'node-fetch';
 
 import App from './App';

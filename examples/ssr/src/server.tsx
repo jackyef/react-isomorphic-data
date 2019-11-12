@@ -1,6 +1,7 @@
 import express from 'express';
 import React from 'react';
-import { DataProvider, createDataClient, renderToStringWithData } from 'react-isomorphic-data';
+import { DataProvider, createDataClient } from 'react-isomorphic-data';
+import { renderToStringWithData } from 'react-isomorphic-data/ssr';
 import { StaticRouter } from 'react-router-dom';
 import fetch from 'node-fetch';
 import compression from 'compression';

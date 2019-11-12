@@ -25,7 +25,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import express from 'express';
-import { DataProvider, createDataClient, getDataFromTree } from 'react-isomorphic-data';
+import { DataProvider, createDataClient } from 'react-isomorphic-data';
+import { getDataFromTree } from 'react-isomorphic-data/ssr';
 import fetch from 'node-fetch';
 
 import App from './App';
