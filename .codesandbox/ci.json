@@ -1,0 +1,5 @@
+{
+  "buildCommand": "build",
+  "packages": ["packages/react-isomorphic-data"],
+  "sandboxes": ["new"]
+}
