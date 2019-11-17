@@ -11,6 +11,11 @@ interface DataProviderProps {
 
 const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
   const [cache, setCache] = React.useState<Record<string, any>>(client.cache);
+  const { toBePrefetched } = client;
+
+  const addToBePrefetched = React.useCallback((url: string) => {
+    toBePrefetched[url] = true;
+  }, [toBePrefetched]);
 
   const addToCache = (key: string, value: any) => {
     if (client.ssr) {
@@ -30,6 +35,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
       cache,
     },
     addToCache,
+    addToBePrefetched,
   };
 
   return <DataContext.Provider value={injectedValues}>{children}</DataContext.Provider>;

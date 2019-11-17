@@ -8,5 +8,6 @@ export const createDataClient = (options: DataClientOptions = {}): DataClient =>
     pendingPromiseFactories: [],
     ssr: ssr || false,
     headers: headers || {},
+    toBePrefetched: {},
   }
 }

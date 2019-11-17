@@ -17,10 +17,13 @@ const useBaseData = (
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
   let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
+  
+  // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
+  const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && !ssrOpt : false;
 
   const promisePushed = React.useRef<boolean>(false);
   const fetchedFromNetwork = React.useRef<boolean>(false);
-  const { client, addToCache } = React.useContext(DataContext);
+  const { client, addToCache, addToBePrefetched } = React.useContext(DataContext);
   const { cache } = client;
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
 
@@ -112,12 +115,19 @@ const useBaseData = (
   };
 
   const memoizedFetchData = React.useCallback(fetchData, [dataFromCache, fullUrl, addToCache]);
-
-  // if this is ssr mode
-  if (isSSR && !promisePushed.current) {
-    if (!lazy && !dataFromCache) {
+  
+  // if this query is supposed to be fetched during SSR
+  if (isSSR) {
+    if (!promisePushed.current && !lazy && !dataFromCache) {
       client.pendingPromiseFactories.push(fetchData);
       promisePushed.current = true;
+    }
+  }
+
+  // if the DataClient instance we are using is in ssr mode
+  if (client.ssr) {
+    if (shouldPrefetch) {
+      addToBePrefetched(fullUrl);
     }
   }
 
