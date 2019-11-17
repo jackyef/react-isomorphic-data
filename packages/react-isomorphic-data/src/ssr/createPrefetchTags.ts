@@ -1,7 +1,10 @@
-const createPrefetchTags = (shouldBePrefetched: Record<string, boolean>): string => {
+import { DataClient } from '../common/types';
+
+const createPrefetchTags = (dataClient: DataClient): string => {
+  const { toBePrefetched } = dataClient;
   let output = '';
   
-  Object.keys(shouldBePrefetched).forEach((url: string): void => {
+  Object.keys(toBePrefetched).forEach((url: string): void => {
     output += `<link rel="prefetch" href="${url}" />`;
   });
 

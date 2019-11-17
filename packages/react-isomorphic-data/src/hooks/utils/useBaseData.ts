@@ -19,7 +19,7 @@ const useBaseData = (
   let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
   
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
-  const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && !ssrOpt : false;
+  const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
 
   const promisePushed = React.useRef<boolean>(false);
   const fetchedFromNetwork = React.useRef<boolean>(false);
@@ -125,6 +125,7 @@ const useBaseData = (
   }
 
   // if the DataClient instance we are using is in ssr mode
+  console.log({ shouldPrefetch, fullUrl });
   if (client.ssr) {
     if (shouldPrefetch) {
       addToBePrefetched(fullUrl);

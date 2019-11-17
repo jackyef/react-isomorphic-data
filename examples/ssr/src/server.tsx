@@ -75,7 +75,7 @@ server.get('/*', async (req: express.Request, res: express.Response) => {
     console.error('Error while trying to getDataFromTree', err);
   }
 
-  const linkPrefetchTags = createPrefetchTags(dataClient.toBePrefetched);
+  const linkPrefetchTags = createPrefetchTags(dataClient);
   
   res.send(
     `<!doctype html>
