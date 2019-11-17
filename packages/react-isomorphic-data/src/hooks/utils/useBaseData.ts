@@ -116,7 +116,7 @@ const useBaseData = (
 
   const memoizedFetchData = React.useCallback(fetchData, [dataFromCache, fullUrl, addToCache]);
   
-  // if this query is supposed to be fetched during SSR
+  // if this data is supposed to be fetched during SSR
   if (isSSR) {
     if (!promisePushed.current && !lazy && !dataFromCache) {
       client.pendingPromiseFactories.push(fetchData);
@@ -125,7 +125,6 @@ const useBaseData = (
   }
 
   // if the DataClient instance we are using is in ssr mode
-  console.log({ shouldPrefetch, fullUrl });
   if (client.ssr) {
     if (shouldPrefetch) {
       addToBePrefetched(fullUrl);
