@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataContext } from '../../common';
+import retrieveFromCache from '../../common/utils/retrieveFromCache';
 import qsify from '../../utils/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
@@ -41,7 +42,7 @@ const useBaseData = (
 
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
-  const dataFromCache = cache[fullUrl];
+  const dataFromCache = retrieveFromCache(cache, fullUrl);
 
   let initialLoading = lazy ? false : true;
 
@@ -89,7 +90,7 @@ const useBaseData = (
       });
 
   const fetchData = async (): Promise<any> => {
-    if (cache[fullUrl] === undefined) {
+    if (retrieveFromCache(cache, fullUrl) === undefined) {
       setState((prev) => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
       fetchedFromNetwork.current = true;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import DataContext from './Context';
-
+import normalisedAddToCache from './utils/addToCache';
 import { DataClient, DataContextAPI } from './types';
 
 interface DataProviderProps {
@@ -14,13 +14,14 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
 
   const addToCache = (key: string, value: any) => {
     if (client.ssr) {
-      client.cache[key] = value;
+      normalisedAddToCache(client.cache, key, value);
     }
 
-    setCache(prevCache => ({
-      ...prevCache,
-      [key]: value,
-    }));
+    setCache(prevCache => {
+      const newCache = { ...prevCache };
+      
+      return normalisedAddToCache(newCache, key, value);
+    });
   };
 
   const injectedValues: DataContextAPI = {
