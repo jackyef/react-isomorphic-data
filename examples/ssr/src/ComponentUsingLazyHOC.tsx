@@ -35,5 +35,7 @@ export default withLazyData({
   queryParams: {},
   dataOptions: {
     fetchPolicy: 'cache-first',
+    ssr: false,
+    prefetch: true,
   },
 })(ComponentUsingLazyHOC);
