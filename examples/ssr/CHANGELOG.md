@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.8.0...ssr@0.9.0) (2019-11-17)
+
+
+### Features
+
+* **example:** added usage of link prefetch tags in the example ([080e9bb](https://github.com/jackyef/react-isomorphic-data/commit/080e9bbb4456ab609a3b66301c350ad7b8173d5a))
+
+
+
+
+
 # [0.8.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.7.0...ssr@0.8.0) (2019-11-12)
 
 **Note:** Version bump only for package ssr

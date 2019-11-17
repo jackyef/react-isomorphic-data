@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.9.0...react-isomorphic-data@0.10.0) (2019-11-17)
+
+
+### Features
+
+* added capabilities to create link prefetch tags automatically during SSR ([d5145ae](https://github.com/jackyef/react-isomorphic-data/commit/d5145aed9d8a7fa29f2d81ef1d528652429fb704))
+
+
+
+
+
 # [0.9.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.8.0...react-isomorphic-data@0.9.0) (2019-11-12)
 
 
