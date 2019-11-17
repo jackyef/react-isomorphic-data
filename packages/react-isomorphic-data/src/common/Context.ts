@@ -6,7 +6,8 @@ import { DataContextAPI } from './types';
 
 const DataContext = React.createContext<DataContextAPI>({
   client: createDataClient({}),
-  addToCache: () => {},
+  addToCache: (_key: string, _value: any) => {},
+  addToBePrefetched: (_url: string) => {},
 });
 
 export default DataContext;

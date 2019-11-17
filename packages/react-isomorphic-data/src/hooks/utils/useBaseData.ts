@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataContext } from '../../common';
+import retrieveFromCache from '../../common/utils/retrieveFromCache';
 import qsify from '../../utils/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
@@ -16,10 +17,13 @@ const useBaseData = (
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
   let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
+  
+  // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
+  const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
 
   const promisePushed = React.useRef<boolean>(false);
   const fetchedFromNetwork = React.useRef<boolean>(false);
-  const { client, addToCache } = React.useContext(DataContext);
+  const { client, addToCache, addToBePrefetched } = React.useContext(DataContext);
   const { cache } = client;
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
 
@@ -41,7 +45,7 @@ const useBaseData = (
 
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
-  const dataFromCache = cache[fullUrl];
+  const dataFromCache = retrieveFromCache(cache, fullUrl);
 
   let initialLoading = lazy ? false : true;
 
@@ -89,7 +93,7 @@ const useBaseData = (
       });
 
   const fetchData = async (): Promise<any> => {
-    if (cache[fullUrl] === undefined) {
+    if (retrieveFromCache(cache, fullUrl) === undefined) {
       setState((prev) => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
       fetchedFromNetwork.current = true;
@@ -111,12 +115,19 @@ const useBaseData = (
   };
 
   const memoizedFetchData = React.useCallback(fetchData, [dataFromCache, fullUrl, addToCache]);
-
-  // if this is ssr mode
-  if (isSSR && !promisePushed.current) {
-    if (!lazy && !dataFromCache) {
+  
+  // if this data is supposed to be fetched during SSR
+  if (isSSR) {
+    if (!promisePushed.current && !lazy && !dataFromCache) {
       client.pendingPromiseFactories.push(fetchData);
       promisePushed.current = true;
+    }
+  }
+
+  // if the DataClient instance we are using is in ssr mode
+  if (client.ssr) {
+    if (shouldPrefetch) {
+      addToBePrefetched(fullUrl);
     }
   }
 

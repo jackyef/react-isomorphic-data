@@ -19,4 +19,5 @@ export type LazyDataState = [
 export interface DataHookOptions {
   ssr?: boolean;
   fetchPolicy?: 'cache-first' | 'cache-and-network' | 'network-only';
+  prefetch?: boolean;
 };

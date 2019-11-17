@@ -1,7 +1,7 @@
 import express from 'express';
 import React from 'react';
 import { DataProvider, createDataClient } from 'react-isomorphic-data';
-import { renderToStringWithData } from 'react-isomorphic-data/ssr';
+import { renderToStringWithData, createPrefetchTags } from 'react-isomorphic-data/ssr';
 import { StaticRouter } from 'react-router-dom';
 import fetch from 'node-fetch';
 import compression from 'compression';
@@ -74,6 +74,8 @@ server.get('/*', async (req: express.Request, res: express.Response) => {
   } catch (err) {
     console.error('Error while trying to getDataFromTree', err);
   }
+
+  const linkPrefetchTags = createPrefetchTags(dataClient);
   
   res.send(
     `<!doctype html>
@@ -83,6 +85,7 @@ server.get('/*', async (req: express.Request, res: express.Response) => {
         <meta charSet='utf-8' />
         <title>Razzle TypeScript</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        ${linkPrefetchTags}
         ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
         <script>
           window.__cache=${JSON.stringify(dataClient.cache)}

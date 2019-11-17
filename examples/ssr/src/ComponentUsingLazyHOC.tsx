@@ -19,7 +19,7 @@ class ComponentUsingLazyHOC extends React.Component<ComponentUsingLazyHOCProps> 
 
     return (
       <div>
-        This is a ComponentUsingLazyHOC. <button onClick={load}> Click me to load pokemonData</button>
+        This is a ComponentUsingLazyHOC. <button onClick={load}> Click me to load data</button>
         <div>
           <pre>{JSON.stringify(pokemonData, null, 2)}</pre>
         </div>
@@ -35,5 +35,7 @@ export default withLazyData({
   queryParams: {},
   dataOptions: {
     fetchPolicy: 'cache-first',
+    ssr: false,
+    prefetch: true,
   },
 })(ComponentUsingLazyHOC);
