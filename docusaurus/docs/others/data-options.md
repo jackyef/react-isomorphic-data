@@ -48,11 +48,19 @@ Following is a list of all the fields possible to be configured in the `dataOpti
 
 #### `ssr`
 * Type: `boolean`
+* Default: `true`
 
 Determines whether the particular data should be fetched during server side rendering or not. Setting this `true` does not affect lazy data.
-`default: true`
+
 
 #### `fetchPolicy`
 * Type: `'cache-first' | 'cache-and-network' | 'network-only'`
+* Default: `'cache-first'`
 
-Determines the how the data is handled. A more detailed explanation can be found in [Caching](./caching.md). `default: 'cache-first'`
+Determines the how the data is handled. A more detailed explanation can be found in [Caching](./caching.md).
+
+#### `prefetch`
+* Type: `boolean`
+* Default: `false`
+
+Determines whether the particular data should be prefetched. Usually used with lazy data. This has no effect when `ssr` is `true`. A more detailed explanation can be found in [Prefetching](../ssr/prefetching.md). 
