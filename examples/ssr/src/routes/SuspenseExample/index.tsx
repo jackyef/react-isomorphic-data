@@ -15,8 +15,6 @@ const SuspenseRoute: React.SFC<{}> = () => {
     },
   );
 
-  console.log({ loading });
-
   return (
     <React.Suspense fallback={<div>Route is not ready yet...</div>}>
       <LazyLoadedView resource={resource} />
