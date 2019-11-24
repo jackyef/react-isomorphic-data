@@ -19,9 +19,7 @@ const dataClient = createDataClient({
 hydrate(
   <DataProvider client={dataClient}>
     <BrowserRouter>
-      <React.Suspense fallback="loading....">
-        <App />
-      </React.Suspense>
+      <App />
     </BrowserRouter>
   </DataProvider>,
   document.getElementById('root'),
