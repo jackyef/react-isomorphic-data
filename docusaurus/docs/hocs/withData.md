@@ -65,6 +65,10 @@ The HOC will inject an object as a props named `name` (depending on the `name` y
 
     A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
+5. `resource: DataResource`
+
+    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md)
+
 Which are basically exactly the same as what [`useData()`](../hooks/useData.md) is returning.
 
 ### Supported methods
