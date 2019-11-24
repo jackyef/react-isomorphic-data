@@ -4,6 +4,7 @@ import retrieveFromCache from '../../common/utils/retrieveFromCache';
 import qsify from '../../utils/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
+import createResource from './createResource';
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
@@ -17,7 +18,7 @@ const useBaseData = (
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
   let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
-  
+
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
   const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
 
@@ -48,10 +49,10 @@ const useBaseData = (
   const fullUrl = `${url}${queryString}`;
   const dataFromCache = retrieveFromCache(cache, fullUrl);
 
-  let initialLoading = lazy ? false : true;
+  let initialLoading = false;
 
-  if (dataFromCache && dataFromCache !== LoadingSymbol) {
-    initialLoading = false;
+  if (dataFromCache && dataFromCache === LoadingSymbol || !lazy) {
+    initialLoading = true;
   }
 
   const [state, setState] = React.useState<DataHookState>({
@@ -68,6 +69,9 @@ const useBaseData = (
           // only cache response for GET requests
           // AND non 'network-only' requests
           addToCache(fullUrl, json);
+        } else {
+          // resets the cache to 'undefined'
+          addToCache(fullUrl, undefined);
         }
 
         if (!isSSR) {
@@ -93,13 +97,17 @@ const useBaseData = (
         }
       });
 
-      return promiseRef.current;
-    }
+    return promiseRef.current;
+  };
 
   const fetchData = async (): Promise<any> => {
-    if (retrieveFromCache(cache, fullUrl) === undefined) {
-      setState((prev) => ({ ...prev, loading: true }));
+    const currentDataInCache = retrieveFromCache(cache, fullUrl);
+
+    // data not in cache yet
+    if (currentDataInCache === undefined && state.tempData === null) {
+      setState(prev => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
+      
       fetchedFromNetwork.current = true;
 
       return createFetch();
@@ -118,8 +126,15 @@ const useBaseData = (
     return new Promise((resolve) => resolve());
   };
 
-  const memoizedFetchData = React.useCallback(fetchData, [dataFromCache, fullUrl, addToCache]);
-  
+  const memoizedFetchData = React.useCallback(fetchData, [
+    dataFromCache,
+    fullUrl,
+    addToCache,
+    retrieveFromCache,
+    fetchPolicy,
+    state.tempData,
+  ]);
+
   // if this data is supposed to be fetched during SSR
   if (isSSR) {
     if (!promisePushed.current && !lazy && !dataFromCache) {
@@ -136,25 +151,24 @@ const useBaseData = (
   }
 
   React.useEffect(() => {
-    if (!lazy && dataFromCache !== LoadingSymbol) {
+    // !promiseRef.current ensure that the fetch is at least fired once.
+    if (!lazy && dataFromCache !== LoadingSymbol && !state.loading || !promiseRef.current) {
       memoizedFetchData();
     }
-  }, [lazy, memoizedFetchData, dataFromCache]);
+  }, [lazy, memoizedFetchData, dataFromCache, state.loading]);
 
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
-
-  if (state.loading && promiseRef.current instanceof Promise) {
-    // throw a promise
-    throw promiseRef.current;
-  }
+  const usedData = (!useTempData ? finalData : state.tempData) || null;
+  const isLoading = dataFromCache === LoadingSymbol || state.loading;
 
   return [
     memoizedFetchData,
     {
       error: state.error,
-      loading: state.loading,
-      data: (!useTempData ? finalData : state.tempData) || null,
+      loading: isLoading,
+      data: usedData,
       refetch: () => createFetch(), // always bypass cache on refetch
+      resource: createResource(isLoading, usedData, promiseRef),
     },
   ];
 };
