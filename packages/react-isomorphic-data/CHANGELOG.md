@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.10.0...react-isomorphic-data@0.11.0) (2019-11-24)
+
+
+### Features
+
+* Support for Suspense :tada: ([#17](https://github.com/jackyef/react-isomorphic-data/issues/17)) ([5cf689e](https://github.com/jackyef/react-isomorphic-data/commit/5cf689e68c09c20369232e16e1ec1aef8c8e5c1f))
+
+
+
+
+
 # [0.10.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.9.0...react-isomorphic-data@0.10.0) (2019-11-17)
 
 
