@@ -6,7 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 declare global {
-  interface Window { __cache: any; }
+  interface Window {
+    __cache: any;
+  }
 }
 
 const dataClient = createDataClient({
@@ -20,7 +22,7 @@ hydrate(
       <App />
     </BrowserRouter>
   </DataProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 if (module.hot) {

@@ -13,15 +13,11 @@ const withData = (options: HocOptions) => {
 
   return (Component: React.ElementType) => {
     return hoistNonReactStatics((props: any) => {
-      const [load, { data, loading, error }] = useLazyData(url, queryParams, fetchOptions, dataOptions);
+      const [load, baseData] = useLazyData(url, queryParams, fetchOptions, dataOptions);
       const dataProps = {
         [name || 'data']: [
           load,
-          {
-            data,
-            loading,
-            error,
-          },
+          baseData
         ],
       };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useData, useLazyData } from 'react-isomorphic-data';
-import { Link } from 'react-router-dom';
 
 import ComponentUsingHOC from './ComponentUsingHOC';
 import ComponentUsingLazyHOC from './ComponentUsingLazyHOC';
@@ -65,7 +64,6 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <Link to="/somewhere">Go /somewhere</Link>
       <div className="Home-header">
         <img src={logo} className="Home-logo" alt="logo" />
         <h2>

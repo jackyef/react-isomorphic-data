@@ -31,6 +31,6 @@ export default withData({
   fetchOptions: {}, // options that can be accepted by the native `fetch` API
   dataOptions: { // additional options
     ssr: false,
-    // fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   },
 })(ComponentUsingHOC);
