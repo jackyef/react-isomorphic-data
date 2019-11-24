@@ -13,13 +13,9 @@ const withData = (options: HocOptions) => {
 
   return (Component: React.ElementType) => {
     return hoistNonReactStatics((props: any) => {
-      const { data, loading, error } = useData(url, queryParams, fetchOptions, dataOptions);
+      const baseData = useData(url, queryParams, fetchOptions, dataOptions);
       const dataProps = {
-        [name || 'data']: {
-          data,
-          loading,
-          error,
-        },
+        [name || 'data']: baseData,
       };
 
       return <Component {...props} {...dataProps} />;
