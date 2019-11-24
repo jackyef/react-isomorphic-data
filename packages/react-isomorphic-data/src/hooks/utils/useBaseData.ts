@@ -168,7 +168,7 @@ const useBaseData = (
       loading: isLoading,
       data: usedData,
       refetch: () => createFetch(), // always bypass cache on refetch
-      resource: createResource(isLoading, usedData, promiseRef),
+      resource: createResource(isLoading, usedData, promiseRef, state.error),
     },
   ];
 };
