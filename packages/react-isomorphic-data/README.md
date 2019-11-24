@@ -9,7 +9,6 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 - React hooks 
 - SSR support
 - Simple built-in cache
-- Support for React Suspense (experimental) ⚠️
 
 ### Installing
 ```

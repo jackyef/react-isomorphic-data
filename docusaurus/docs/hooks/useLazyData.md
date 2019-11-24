@@ -58,9 +58,9 @@ The returned value of `useData()` are:
 
     A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
-6. `resource: DataResource`
+<!-- 6. `resource: DataResource`
 
-    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md)
+    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md) -->
 
 ### Supported methods
 All HTTP methods are supported. The example show usage of `POST` method, but it could be any HTTP method. But, only `GET` requests are cached.

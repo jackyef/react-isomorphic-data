@@ -56,9 +56,9 @@ The returned value of `useData()` are:
 
     A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
-5. `resource: DataResource`
+<!-- 5. `resource: DataResource`
 
-    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md)
+    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md) -->
 
 ### Supported methods
 Only `GET` requests are supported for `useData()`. Supporting other methods is not in the plan because it can be dangerous to re-request a non-idempotent request on component state update.

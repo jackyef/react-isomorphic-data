@@ -70,9 +70,9 @@ The HOC will inject a 2-element array as a props named `name` (depending on the 
 
     A function that will trigger refetching data from network. Fetching data from network this way will always bypass the cache, no matter what the [`fetchPolicy`](../others/caching.md#caching-strategies) is set to.
 
-6. `resource: DataResource`
+<!-- 6. `resource: DataResource`
 
-    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md)
+    An object to be used when working with `Suspense`. Read more [here](../others/working-with-suspense.md) -->
 
 Which are basically exactly the same as what [`useLazyData()`](../hooks/useLazyData.md) is returning.
 
