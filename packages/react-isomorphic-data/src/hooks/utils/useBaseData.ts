@@ -5,6 +5,7 @@ import qsify from '../../utils/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
 import createResource from './createResource';
+import createFetchRequirements from './createFetchRequirements';
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
@@ -15,9 +16,12 @@ const useBaseData = (
   lazy = false,
   dataOpts: DataHookOptions = {},
 ): LazyDataState => {
+  const { client, addToCache, addToBePrefetched } = React.useContext(DataContext);
+  const { cache } = client;
+
+  const [finalFetchOpts, fetchPolicy] = createFetchRequirements(fetchOptions, client, dataOpts, lazy);
+
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
-  const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
-  let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
 
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
   const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
@@ -25,34 +29,21 @@ const useBaseData = (
   const promiseRef = React.useRef<Promise<any> | null>(null);
   const promisePushed = React.useRef<boolean>(false);
   const fetchedFromNetwork = React.useRef<boolean>(false);
-  const { client, addToCache, addToBePrefetched } = React.useContext(DataContext);
-  const { cache } = client;
+
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
-
-  if (finalMethod !== 'GET') fetchPolicy = 'network-only';
-  if (isSSR) fetchPolicy = 'cache-first';
-
-  const useTempData = finalMethod !== 'GET' || fetchPolicy === 'network-only';
+  const useTempData = finalFetchOpts.method !== 'GET' || fetchPolicy === 'network-only';
 
   // fetchOptions rarely changes. So let's just store it into a ref
-  const optionsRef = React.useRef<RequestInit>({
-    ...fetchOptions,
-    // only allow non-GET request for lazy requests, because non-GET request can be not idempotent
-    method: finalMethod,
-    headers: {
-      ...client.headers, // add the base headers added when creating the DataClient
-      ...fetchOptions.headers, // append other headers specific to this fetch
-    },
-  });
+  const optionsRef = React.useRef<RequestInit>(finalFetchOpts);
 
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
   const dataFromCache = retrieveFromCache(cache, fullUrl);
 
-  let initialLoading = false;
+  let initialLoading = lazy ? false : true;
 
-  if (dataFromCache && dataFromCache === LoadingSymbol || !lazy) {
-    initialLoading = true;
+  if (dataFromCache && dataFromCache !== LoadingSymbol) {
+    initialLoading = false;
   }
 
   const [state, setState] = React.useState<DataHookState>({
