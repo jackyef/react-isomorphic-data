@@ -23,6 +23,8 @@ const ChildComponent = ({ id, ssr }: { id: number; ssr: boolean }) => {
 };
 
 const Home = () => {
+  const [count, setCount] = React.useState(1);
+
   const eagerData = useData(
     'http://localhost:3000/some-rest-api/1',
     {
@@ -58,9 +60,11 @@ const Home = () => {
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ data: 'some data posted from client', foo: 'bar baz' }),
+      body: JSON.stringify({ data: 'some data posted from client', foo: 'bar baz', count }),
     },
   );
+
+  console.log('render home', { postDataResponse });
 
   return (
     <div className="Home">
@@ -85,6 +89,8 @@ const Home = () => {
         <button
           onClick={() => {
             const promise = postData();
+            setCount(count + 1);
+            
             if (promise && promise.then) {
               // you can get the data from the fetcher function as well, if you need to do something imperatively
               promise.then((data) => console.log({ data }));

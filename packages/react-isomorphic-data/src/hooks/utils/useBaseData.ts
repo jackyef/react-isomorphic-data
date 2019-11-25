@@ -33,9 +33,6 @@ const useBaseData = (
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
   const useTempData = finalFetchOpts.method !== 'GET' || fetchPolicy === 'network-only';
 
-  // fetchOptions rarely changes. So let's just store it into a ref
-  const optionsRef = React.useRef<RequestInit>(finalFetchOpts);
-
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
   const dataFromCache = retrieveFromCache(cache, fullUrl);
@@ -53,7 +50,7 @@ const useBaseData = (
   });
 
   const createFetch = () => {
-    promiseRef.current = fetch(fullUrl, optionsRef.current)
+    promiseRef.current = fetch(fullUrl, finalFetchOpts)
       .then((result) => result.json())
       .then((json) => {
         if (!useTempData) {
@@ -96,9 +93,9 @@ const useBaseData = (
 
     // data not in cache yet
     if (currentDataInCache === undefined && state.tempData === null) {
-      setState(prev => ({ ...prev, loading: true }));
+      setState((prev) => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
-      
+
       fetchedFromNetwork.current = true;
 
       return createFetch();
@@ -144,7 +141,7 @@ const useBaseData = (
   React.useEffect(() => {
     if (!lazy) {
       // !promiseRef.current ensure that the fetch is at least fired once.
-      if (dataFromCache !== LoadingSymbol && !state.loading || !promiseRef.current) {
+      if ((dataFromCache !== LoadingSymbol && !state.loading) || !promiseRef.current) {
         memoizedFetchData();
       }
     }
@@ -161,7 +158,6 @@ const useBaseData = (
       loading: isLoading,
       data: usedData,
       refetch: () => createFetch(), // always bypass cache on refetch
-      resource: createResource(isLoading, usedData, promiseRef, state.error),
     },
   ];
 };

@@ -1,13 +1,8 @@
-export interface DataResource {
-  read: () => any;
-};
-
 export interface DataState {
   data: any;
   error: Error | boolean | null;
   loading: boolean;
   refetch: () => Promise<any>;
-  resource: DataResource;
 };
 
 export interface DataHookState {
