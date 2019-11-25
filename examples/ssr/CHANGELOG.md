@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.10.3...ssr@0.10.4) (2019-11-25)
+
+
+### Bug Fixes
+
+* allow fetchOptions to change between render ([62c4f73](https://github.com/jackyef/react-isomorphic-data/commit/62c4f73aa9e248db5b2159aa33e3aa0172f4aecb))
+
+
+
+
+
 ## [0.10.3](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.10.2...ssr@0.10.3) (2019-11-25)
 
 **Note:** Version bump only for package ssr
