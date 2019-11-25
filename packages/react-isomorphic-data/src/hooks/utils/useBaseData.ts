@@ -142,9 +142,11 @@ const useBaseData = (
   }
 
   React.useEffect(() => {
-    // !promiseRef.current ensure that the fetch is at least fired once.
-    if (!lazy && dataFromCache !== LoadingSymbol && !state.loading || !promiseRef.current) {
-      memoizedFetchData();
+    if (!lazy) {
+      // !promiseRef.current ensure that the fetch is at least fired once.
+      if (dataFromCache !== LoadingSymbol && !state.loading || !promiseRef.current) {
+        memoizedFetchData();
+      }
     }
   }, [lazy, memoizedFetchData, dataFromCache, state.loading]);
 
