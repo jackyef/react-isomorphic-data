@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.3](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.2...react-isomorphic-data@0.11.3) (2019-11-25)
+
+
+### Bug Fixes
+
+* fix a bug where lazy data are fetched immediately ([9c8d699](https://github.com/jackyef/react-isomorphic-data/commit/9c8d699e267c6df0661c021e3d66adae2fd400a3))
+
+
+
+
+
 ## [0.11.2](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.1...react-isomorphic-data@0.11.2) (2019-11-25)
 
 
