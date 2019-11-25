@@ -1,4 +1,6 @@
-
+export interface DataResource {
+  read: () => any;
+};
 export interface DataClient {
   cache: Record<string, any>;
   pendingPromiseFactories: { () : Promise<any> }[];

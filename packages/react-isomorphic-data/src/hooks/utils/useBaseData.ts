@@ -4,7 +4,7 @@ import retrieveFromCache from '../../common/utils/retrieveFromCache';
 import qsify from '../../utils/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
-import createFetchRequirements from './createFetchRequirements';
+import createFetchRequirements from '../../common/utils/createFetchRequirements';
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
