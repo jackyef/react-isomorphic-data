@@ -4,7 +4,6 @@ import retrieveFromCache from '../../common/utils/retrieveFromCache';
 import qsify from '../../utils/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
-import createResource from './createResource';
 import createFetchRequirements from './createFetchRequirements';
 
 const LoadingSymbol = Symbol('LoadingFlag');
@@ -74,11 +73,15 @@ const useBaseData = (
       })
       .catch((err) => {
         if (!isSSR) {
+          // sets the state accordingly
           setState({
             error: err,
             loading: false,
             tempData: null,
           });
+
+          // resets the cache to 'undefined'
+          addToCache(fullUrl, undefined);
         } else {
           // throw an error during SSR
           throw err;
@@ -121,6 +124,7 @@ const useBaseData = (
     retrieveFromCache,
     fetchPolicy,
     state.tempData,
+    finalFetchOpts,
   ]);
 
   // if this data is supposed to be fetched during SSR
