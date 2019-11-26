@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.5](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.4...react-isomorphic-data@0.11.5) (2019-11-26)
+
+
+### Bug Fixes
+
+* fixed a bug where loading stays true on error ([f19ae57](https://github.com/jackyef/react-isomorphic-data/commit/f19ae574a656efedf6708cdbf9c7ed1bd4ea126c))
+
+
+
+
+
 ## [0.11.4](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.3...react-isomorphic-data@0.11.4) (2019-11-25)
 
 
