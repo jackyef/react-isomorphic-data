@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.6](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.5...react-isomorphic-data@0.11.6) (2019-11-26)
+
+
+### Bug Fixes
+
+* fix a bug where an error will cause infinite retries ([61b358b](https://github.com/jackyef/react-isomorphic-data/commit/61b358bc988dcf8ea80d332600aa1940fb55b052))
+
+
+
+
+
 ## [0.11.5](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.4...react-isomorphic-data@0.11.5) (2019-11-26)
 
 
