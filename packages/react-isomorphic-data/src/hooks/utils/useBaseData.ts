@@ -52,6 +52,10 @@ const useBaseData = (
     promiseRef.current = fetch(fullUrl, finalFetchOpts)
       .then((result) => result.json())
       .then((json) => {
+        // this block of code will cause 2 re-renders because React doesn't batch these 2 updates
+        // https://twitter.com/dan_abramov/status/887963264335872000?lang=en
+        // TODO: improve how we are handling the states so we only have 1 re-render
+
         if (!useTempData) {
           // only cache response for GET requests
           // AND non 'network-only' requests
@@ -96,7 +100,9 @@ const useBaseData = (
 
     // data not in cache yet
     if (currentDataInCache === undefined && state.tempData === null) {
+      console.log('data in cache - before set State');
       setState((prev) => ({ ...prev, loading: true }));
+      console.log('data in cache - before set cache');
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
 
       fetchedFromNetwork.current = true;
@@ -108,6 +114,7 @@ const useBaseData = (
     if (fetchPolicy !== 'cache-first') {
       // fetch again 1 time for cache-and-network cases
       if (!fetchedFromNetwork.current || lazy) {
+        console.log('data not in cache - before fetch');
         fetchedFromNetwork.current = true;
 
         return createFetch();
