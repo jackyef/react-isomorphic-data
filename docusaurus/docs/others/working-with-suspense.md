@@ -17,12 +17,20 @@ import * as React from 'react';
 const LazyLoadedView = React.lazy(() => import(/* webpackChunkName: "lazy-loaded-route" */ './views/main'));
 
 const SuspenseRoute = () => {
+  const client = useDataClient();
+  const [show, setShow] = React.useState(false);
+
   return (
-    <ErrorBoundary errorView={<div>something wrong happened!</div>}>
-      <React.Suspense fallback={<div>Route is not ready yet...</div>}>
-        <LazyLoadedView />
-      </React.Suspense>
-    </ErrorBoundary>
+    <>
+      <button onClick={showLazyLoadedComponent}>Show a lazy-loaded component</button>
+      {show ? (
+        <ErrorBoundary errorView={<div>something wrong happened!</div>}>
+          <React.Suspense fallback={<div>Route is not ready yet...</div>}>
+            <LazyLoadedView />
+          </React.Suspense>
+        </ErrorBoundary>
+      ) : null}
+    </>
   );
 };
 
@@ -30,37 +38,9 @@ export default SuspenseRoute;
 ```
 We have `ErrorBoundary` to handle error cases inside our app. An explanation about `ErrorBoundary` can be found in the [React docs here](https://reactjs.org/docs/error-boundaries.html). We also have a `React.Suspense` wrapper that is required if we are using `React.lazy`.
 
-Rendering this component will trigger browser to download the javascript chunk for `LazyLoadedView` component. If we were to use `useData` hook inside `LazyLoadedView`, the request for the data will only be sent *AFTER* the javascript chunk is loaded. This is what usually called a **waterfall**. It causes the overall loading time to be slower.
+By clicking the button, we will render the `LazyLoadedView` component. This will trigger browser to download the javascript chunk for `LazyLoadedView` component. If we were to use `useData` hook inside `LazyLoadedView`, the request for the data will only be sent *AFTER* the javascript chunk is loaded. This is what usually called a **waterfall**. It causes the overall loading time to be slower.
 
-With `react-isomorphic-data` you can call `useData` inside the `SuspenseRoute` immediately.
-
-```javascript
-import * as React from 'react';
-import { useData } from 'react-isomorphic-data';
-
-const LazyLoadedView = React.lazy(() => import(/* webpackChunkName: "lazy-loaded-route" */ './views/main'));
-
-const SuspenseRoute = () => {
-  // We will load the data as we load the javascript chunk to avoid waterfalls
-  const { data, loading, error } = useData('http://localhost:3000/some-rest-api/this-is-loaded-in-first-before-the-javascript-chunk');
-
-  return (
-    <ErrorBoundary errorView={<div>something wrong happened!</div>}>
-      <React.Suspense fallback={<div>Route is not ready yet...</div>}>
-        {loading ? 'loading...' : null}
-        {error ? 'something wrong happened' : null}
-        {!loading && !error ? <LazyLoadedView data={data} /> : null}
-      </React.Suspense>
-    </ErrorBoundary>
-  );
-};
-
-export default SuspenseRoute;
-```
-
-This doesn't solve the problem, though; it only moved the problem around. In this case, we are waiting for the data to be received first, and then we start to render `LazyLoadedView`. We will still have a waterfall, because rendering the `LazyLoadedView` waits for the data to be ready first. 
-
-Also, we need to handle the `loading` and `error` states by ourselves. This means we will have 2 pairs loading and error states, one for the data, and another one for the loading the javascript chunk, Wouldn't it be nice if we can just let the existing `Suspense` and `ErrorBoundary` to handle both of them? That is exactly what `react-isomorphic-data` hope to achieve by returning `resource`. 
+Following [the advice](https://reactjs.org/docs/concurrent-mode-suspense.html#start-fetching-early) in React docs, we can trigger data fetching in event handler instead of during render. In `react-isomorphic-data` you can achieve this by calling [`preloadData()`](./preloadData.md); the function will return a `resource` from which the component can read.
 
 ```javascript
 import * as React from 'react';
@@ -69,41 +49,50 @@ import { useData } from 'react-isomorphic-data';
 const LazyLoadedView = React.lazy(() => import(/* webpackChunkName: "lazy-loaded-route" */ './views/main'));
 
 const SuspenseRoute = () => {
-  // We will load the data as we load the javascript chunk to avoid waterfalls
-  const { resource } = useData('http://localhost:3000/some-rest-api/this-is-loaded-in-parallel-with-the-route-chunk');
+  const client = useDataClient();
+  const [show, setShow] = React.useState(false);
+  const [resource, setResource] = React.useState();
+  const showLazyLoadedComponent = () => {
+    setShow(true);
+
+    // we store the `resource` in state
+    setResource(preloadData(client, 'http://localhost:3000/some-rest-api/this-is-loaded-in-parallel-with-the-route-chunk'));
+  };
 
   return (
-    <ErrorBoundary errorView={<div>something wrong happened!</div>}>
-      <React.Suspense fallback={<div>Route is not ready yet...</div>}>
-        <LazyLoadedView resource={resource} />
-      </React.Suspense>
-    </ErrorBoundary>
+    <>
+      <button onClick={showLazyLoadedComponent}>Show a lazy-loaded component</button>
+      {show ? (
+        <ErrorBoundary errorView={<div>something wrong happened!</div>}>
+          <React.Suspense fallback={<div>Route is not ready yet...</div>}>
+            {/* and pass it down as props */}
+            <LazyLoadedView resource={resource} />
+          </React.Suspense>
+        </ErrorBoundary>
+      ) : null}
+    </>
   );
 };
 
 export default SuspenseRoute;
 ```
 
-The `useData` hook return a `resource` and our wrapper just pass the `resource` to the component that will need the resource; which in this case, is the `LazyLoadedView`. Notice that we just removed all the code needed for handling error and loading states, and just depend on `ErrorBoundary` and `Suspense` to handle those states.
-
-We also start sending requests for both the data and the javascript chunks in parallel in this case, which means we have successfully avoided the waterfall here.
-
-How do we actually use the data in `LazyLoadedView` though? It is very simple. We just call `resource.read()` which will return the data that would be returned from the REST API.
+`LazyLoadedView` can call `resource.read()` to get the data. If the data is not ready yet, the component will suspend by throwing a promise. This will be caught by the `<Suspense>` wrapper, and React will resume rendering this component once the promise resolves. If there is an error while fetching the data, the `<ErrorBoundary>` will handle it instead. This is why to implement this pattern, you need both of these wrappers.
 
 ```javascript
 import * as React from 'react';
 
-// This is the component that we lazy-loaded using `React.lazy`
 const SuspenseMainView = ({ resource }) => {
   // We get the data here by calling `resource.read()`
   // If it's not ready, this component will suspend automatically
-  // If there is an error, it will throw an error as well, so the nearest ErrorBoundary can catch it
-  const data = resource.read();
+  const data = resource ? resource.read() : null;
 
   return (
-    <div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    <>
+      <div>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </div>
+    </>
   );
 };
 
@@ -114,4 +103,4 @@ And that's it! Using this pattern will help you achieve better performance for y
 
 >Warning ⚠️
 >
->Please note that `Suspense` does not work with server-side rendering yet, so we can not let Suspense handle all our loading states just yet. Though, you still can implement the render-as-you-fetch pattern without Suspense, it will require more code to handle the loading states yourself.
+>Please note that `Suspense` does not work with server-side rendering yet, so we can not let Suspense handle all our loading states just yet. Though, you still can implement the render-as-you-fetch pattern without Suspense, it will require more code to handle the loading states yourself. It also doesn't allow React to resume rendering some part of the component tree, because that is only achieveable by using Suspense.
