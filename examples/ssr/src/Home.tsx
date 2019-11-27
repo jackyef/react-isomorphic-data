@@ -64,8 +64,6 @@ const Home = () => {
     },
   );
 
-  console.log('render home', { postDataResponse });
-
   return (
     <div className="Home">
       <div className="Home-header">

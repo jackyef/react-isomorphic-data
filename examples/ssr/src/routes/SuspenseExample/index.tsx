@@ -7,11 +7,13 @@ const LazyLoadedView = React.lazy(() => import(/* webpackChunkName: "lazy-loaded
 const SuspenseRoute: React.SFC<{}> = () => {
   const client = useDataClient();
   const [show, setShow] = React.useState(false);
-  const [resource, setResource] = React.useState<DataResource>({ read: () => {} });
+  const [resource, setResource] = React.useState<DataResource | undefined>();
 
   const showLazyLoadedComponent = () => {
     setShow(true);
-    setResource(preloadData(client, 'http://localhost:3000/some-rest-api/this-is-loaded-in-parallel-with-the-route-chunk'));
+    setResource(preloadData(client, 'http://localhost:3000/some-rest-api/this-is-loaded-in-parallel-with-the-route-chunk', undefined, undefined, {
+      fetchPolicy: 'network-only',
+    }));
   };
 
   return (

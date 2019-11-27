@@ -18,7 +18,7 @@ const preloadData = (
   fetchOptions: RequestInit = {},
   dataOpts: DataHookOptions = {},
 ) => {
-  const [finalFetchOpts] = createFetchRequirements(fetchOptions, client, dataOpts);
+  const [finalFetchOpts, fetchPolicy] = createFetchRequirements(fetchOptions, client, dataOpts);
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
 
@@ -31,7 +31,11 @@ const preloadData = (
         .then((result) => result.json())
         .then((json) => {
           data = json;
-          preloadCache[fullUrl] = data;
+
+          if (fetchPolicy !== 'network-only') {
+            preloadCache[fullUrl] = data;
+          }
+          
           fulfilled = true;
         })
         .catch((e) => (error = e))
