@@ -100,9 +100,7 @@ const useBaseData = (
 
     // data not in cache yet
     if (currentDataInCache === undefined && state.tempData === null) {
-      console.log('data in cache - before set State');
       setState((prev) => ({ ...prev, loading: true }));
-      console.log('data in cache - before set cache');
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
 
       fetchedFromNetwork.current = true;
@@ -114,7 +112,6 @@ const useBaseData = (
     if (fetchPolicy !== 'cache-first') {
       // fetch again 1 time for cache-and-network cases
       if (!fetchedFromNetwork.current || lazy) {
-        console.log('data not in cache - before fetch');
         fetchedFromNetwork.current = true;
 
         return createFetch();
