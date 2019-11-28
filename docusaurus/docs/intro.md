@@ -12,6 +12,7 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 - React hooks 
 - SSR support
 - Simple built-in cache
+- React Suspense integration for implementing render-as-you-fetch pattern ⚠️ (experimental)
 
 ### Installing
 ```sh
