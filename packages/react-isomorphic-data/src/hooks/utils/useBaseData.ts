@@ -45,7 +45,7 @@ const useBaseData = (
   const [state, setState] = React.useState<DataHookState>({
     error: null,
     loading: initialLoading,
-    tempData: null, // store data from non-GET requests
+    tempCache: {}, // store data from non-GET requests
   });
 
   const createFetch = () => {
@@ -66,11 +66,11 @@ const useBaseData = (
         }
 
         if (!isSSR) {
-          setState({
+          setState((prev: any) => ({
             error: null,
             loading: false,
-            tempData: json,
-          });
+            tempCache: { ...prev.tempCache, [fullUrl]: json },
+          }));
         }
 
         return json;
@@ -78,11 +78,11 @@ const useBaseData = (
       .catch((err) => {
         if (!isSSR) {
           // sets the state accordingly
-          setState({
+          setState((prev: any) => ({
+            ...prev,
             error: err,
             loading: false,
-            tempData: null,
-          });
+          }));
 
           // resets the cache to 'undefined'
           addToCache(fullUrl, undefined);
@@ -97,10 +97,10 @@ const useBaseData = (
 
   const fetchData = async (): Promise<any> => {
     const currentDataInCache = retrieveFromCache(cache, fullUrl);
-
+    
     // data not in cache yet
-    if (currentDataInCache === undefined && state.tempData === null) {
-      setState((prev) => ({ ...prev, loading: true }));
+    if (currentDataInCache === undefined && !state.tempCache[fullUrl]) {
+      setState((prev: any) => ({ ...prev, loading: true }));
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
 
       fetchedFromNetwork.current = true;
@@ -113,11 +113,11 @@ const useBaseData = (
       // fetch again 1 time for cache-and-network cases
       if (!fetchedFromNetwork.current || lazy) {
         fetchedFromNetwork.current = true;
-
+        
         return createFetch();
       }
     }
-
+    
     return new Promise((resolve) => resolve());
   };
 
@@ -127,7 +127,6 @@ const useBaseData = (
     addToCache,
     retrieveFromCache,
     fetchPolicy,
-    state.tempData,
     finalFetchOpts,
   ]);
 
@@ -156,7 +155,7 @@ const useBaseData = (
   }, [lazy, memoizedFetchData, dataFromCache, state.loading, state.error]);
 
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
-  const usedData = (!useTempData ? finalData : state.tempData) || null;
+  const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
   const isLoading = dataFromCache === LoadingSymbol || state.loading;
 
   return [
