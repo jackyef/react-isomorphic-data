@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.6...react-isomorphic-data@0.12.0) (2019-11-30)
+
+
+### Bug Fixes
+
+* fix a bug where updating state does not trigger re-fetch ([6623b4f](https://github.com/jackyef/react-isomorphic-data/commit/6623b4f76993224d2cc29294e564ca775e2480f5))
+
+
+### Features
+
+* **suspense:** added support for network-only fetchPolicy for preloadData ([b220846](https://github.com/jackyef/react-isomorphic-data/commit/b22084688d07f7cbc4b0da81a1fca8628653266d))
+* added withDataClient HOC ([03f78a0](https://github.com/jackyef/react-isomorphic-data/commit/03f78a0408b15ac165ab9690b7ee7e43e9859460))
+* initial setup for Suspense ([b81f96c](https://github.com/jackyef/react-isomorphic-data/commit/b81f96cf52ee3d3a081057db5da5e19c726ce669))
+
+
+
+
+
 ## [0.11.6](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.11.5...react-isomorphic-data@0.11.6) (2019-11-26)
 
 
