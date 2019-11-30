@@ -8,7 +8,7 @@ export interface DataState {
 export interface DataHookState {
   error: Error | null;
   loading: boolean;
-  tempData: any;
+  tempCache: any;
 };
 
 export type LazyDataState = [

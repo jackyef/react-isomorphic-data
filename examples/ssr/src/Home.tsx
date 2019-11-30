@@ -3,6 +3,7 @@ import { useData, useLazyData } from 'react-isomorphic-data';
 
 import ComponentUsingHOC from './ComponentUsingHOC';
 import ComponentUsingLazyHOC from './ComponentUsingLazyHOC';
+import SearchInput from './components/SearchInput';
 import logo from './react.svg';
 
 import './Home.css';
@@ -64,8 +65,6 @@ const Home = () => {
     },
   );
 
-  console.log('render home', { postDataResponse });
-
   return (
     <div className="Home">
       <div className="Home-header">
@@ -74,6 +73,7 @@ const Home = () => {
           Welcome to <code>react-isomorphic-data</code>
         </h2>
       </div>
+      <SearchInput />
       <div className="Example-container">
         Example #1
         <button onClick={() => eagerData.refetch()}>Click me to refetch</button>

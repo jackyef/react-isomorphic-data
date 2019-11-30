@@ -1,5 +1,5 @@
-import { DataClient } from '../../common/types';
-import { DataHookOptions } from '../types';
+import { DataClient } from '../types';
+import { DataHookOptions } from '../../hooks/types';
 
 // returns an array of FetchOptions and string of fetchPolicy
 const createFetchOptions = (
