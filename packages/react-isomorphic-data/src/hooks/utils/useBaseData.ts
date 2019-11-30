@@ -43,7 +43,7 @@ const useBaseData = (
   }
 
   const [state, setState] = React.useState<DataHookState>({
-    error: null,
+    error: {},
     loading: initialLoading,
     tempCache: {}, // store data from non-GET requests
   });
@@ -67,7 +67,7 @@ const useBaseData = (
 
         if (!isSSR) {
           setState((prev: any) => ({
-            error: null,
+            ...prev,
             loading: false,
             tempCache: { ...prev.tempCache, [fullUrl]: json },
           }));
@@ -80,7 +80,10 @@ const useBaseData = (
           // sets the state accordingly
           setState((prev: any) => ({
             ...prev,
-            error: err,
+            error: {
+              ...prev.error,
+              [fullUrl]: err,
+            },
             loading: false,
           }));
 
@@ -148,11 +151,11 @@ const useBaseData = (
   React.useEffect(() => {
     if (!lazy) {
       // !promiseRef.current ensure that the fetch is at least fired once.
-      if ((dataFromCache !== LoadingSymbol && !state.loading && !state.error) || !promiseRef.current) {
+      if ((dataFromCache !== LoadingSymbol && !state.loading && !state.error?.[fullUrl]) || !promiseRef.current) {
         memoizedFetchData();
       }
     }
-  }, [lazy, memoizedFetchData, dataFromCache, state.loading, state.error]);
+  }, [lazy, memoizedFetchData, dataFromCache, state.loading, state.error, fullUrl]);
 
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
   const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
@@ -161,7 +164,7 @@ const useBaseData = (
   return [
     memoizedFetchData,
     {
-      error: state.error,
+      error: state.error?.[fullUrl] || null,
       loading: isLoading,
       data: usedData,
       refetch: () => createFetch(), // always bypass cache on refetch

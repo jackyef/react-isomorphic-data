@@ -1,12 +1,12 @@
 export interface DataState {
   data: any;
-  error: Error | boolean | null;
+  error: Error | null;
   loading: boolean;
   refetch: () => Promise<any>;
 };
 
 export interface DataHookState {
-  error: Error | null;
+  error: Record<string, Error | null>;
   loading: boolean;
   tempCache: any;
 };
