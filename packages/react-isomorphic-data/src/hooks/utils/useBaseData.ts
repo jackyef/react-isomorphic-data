@@ -41,7 +41,7 @@ const useBaseData = (
   const fullUrl = `${url}${queryString}`;
   const dataFromCache = retrieveFromCache(cache, fullUrl);
 
-  let initialLoading = lazy ? false : true;
+  let initialLoading = lazy || skip ? false : true;
 
   if (dataFromCache && dataFromCache !== LoadingSymbol) {
     initialLoading = false;
