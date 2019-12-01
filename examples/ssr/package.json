@@ -1,6 +1,6 @@
 {
   "name": "ssr",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -28,7 +28,7 @@
     "razzle-plugin-typescript": "^3.0.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-isomorphic-data": "^0.12.1",
+    "react-isomorphic-data": "^0.12.2",
     "react-router-dom": "^5.1.2",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0"

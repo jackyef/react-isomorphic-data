@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.12.1...react-isomorphic-data@0.12.2) (2019-12-01)
+
+**Note:** Version bump only for package react-isomorphic-data
+
+
+
+
+
 ## [0.12.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.12.0...react-isomorphic-data@0.12.1) (2019-11-30)
 
 
