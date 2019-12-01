@@ -59,6 +59,12 @@ Determines whether the particular data should be fetched during server side rend
 
 Determines the how the data is handled. A more detailed explanation can be found in [Caching](./caching.md).
 
+#### `skip`
+* Type: `boolean`
+* Default: `false`
+
+Determines whether the data should be fetched or not.
+
 #### `prefetch`
 * Type: `boolean`
 * Default: `false`
