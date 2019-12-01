@@ -21,6 +21,7 @@ const useBaseData = (
   const [finalFetchOpts, fetchPolicy] = createFetchRequirements(fetchOptions, client, dataOpts, lazy);
 
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
+  const skip = dataOpts.skip !== undefined ? dataOpts.skip : false;
 
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
   const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
@@ -149,13 +150,13 @@ const useBaseData = (
   }
 
   React.useEffect(() => {
-    if (!lazy) {
+    if (!lazy && !skip) {
       // !promiseRef.current ensure that the fetch is at least fired once.
       if ((dataFromCache !== LoadingSymbol && !state.loading && !state.error?.[fullUrl]) || !promiseRef.current) {
         memoizedFetchData();
       }
     }
-  }, [lazy, memoizedFetchData, dataFromCache, state.loading, state.error, fullUrl]);
+  }, [skip, lazy, memoizedFetchData, dataFromCache, state.loading, state.error, fullUrl]);
 
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
   const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
