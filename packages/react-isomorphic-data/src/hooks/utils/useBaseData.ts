@@ -15,7 +15,11 @@ const useBaseData = (
   lazy = false,
   dataOpts: DataHookOptions = {},
 ): LazyDataState => {
-  const { client, addToCache, addToBePrefetched } = React.useContext(DataContext);
+  const context = React.useContext(DataContext);
+  
+  if (!context) throw new Error('DataContext is null. Make sure you are wrapping your app inside DataProvider');
+
+  const { client, addToCache, addToBePrefetched } = context;
   const { cache } = client;
 
   const [finalFetchOpts, fetchPolicy] = createFetchRequirements(fetchOptions, client, dataOpts, lazy);
