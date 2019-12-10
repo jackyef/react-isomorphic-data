@@ -172,7 +172,12 @@ const useBaseData = (
       error: state.error?.[fullUrl] || null,
       loading: isLoading,
       data: usedData,
-      refetch: () => createFetch(), // always bypass cache on refetch
+      refetch: () => {
+        // always bypass cache on refetch
+        setState((prev: any) => ({ ...prev, loading: true }));
+
+        return createFetch();
+       },
     },
   ];
 };
