@@ -65,6 +65,8 @@ const Home = () => {
     },
   );
 
+  console.log({ ...eagerData });
+
   return (
     <div className="Home">
       <div className="Home-header">

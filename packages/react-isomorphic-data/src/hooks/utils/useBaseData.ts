@@ -75,6 +75,7 @@ const useBaseData = (
             ...prev,
             loading: false,
             tempCache: { ...prev.tempCache, [fullUrl]: json },
+            error: { ...prev.error, [fullUrl]: undefined },
           }));
         }
 
