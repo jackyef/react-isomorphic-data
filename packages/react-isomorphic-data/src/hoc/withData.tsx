@@ -4,7 +4,7 @@ import { useData } from '../hooks';
 
 import { HocOptions } from './types';
 
-const withData = (options: HocOptions) => {
+const withData = <T, >(options: HocOptions) => {
   const { url, name, queryParams = {}, fetchOptions = {}, dataOptions } = options;
 
   if (!name && process.env.NODE_ENV !== 'production') {
@@ -13,7 +13,7 @@ const withData = (options: HocOptions) => {
 
   return (Component: React.ElementType) => {
     return hoistNonReactStatics((props: any) => {
-      const baseData = useData(url, queryParams, fetchOptions, dataOptions);
+      const baseData = useData<T>(url, queryParams, fetchOptions, dataOptions);
       const dataProps = {
         [name || 'data']: baseData,
       };

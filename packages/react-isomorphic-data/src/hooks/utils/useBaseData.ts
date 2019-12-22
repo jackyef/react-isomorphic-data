@@ -8,13 +8,13 @@ import createFetchRequirements from '../../common/utils/createFetchRequirements'
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
-const useBaseData = (
+const useBaseData = <T, > (
   url: string,
   queryParams: Record<string, any> = {},
   fetchOptions: RequestInit = {},
   lazy = false,
   dataOpts: DataHookOptions = {},
-): LazyDataState => {
+): LazyDataState<T> => {
   const context = React.useContext(DataContext);
   
   if (!context) throw new Error('DataContext is null. Make sure you are wrapping your app inside DataProvider');
