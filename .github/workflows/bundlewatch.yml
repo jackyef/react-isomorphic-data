@@ -1,4 +1,4 @@
-name: "Bundlewatch Github Action"
+name: "Bundlewatch - PR"
 
 on:
   pull_request: 

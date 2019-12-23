@@ -1,4 +1,4 @@
-# react-isomorphic-data [![minified-gzipped-size](https://img.shields.io/bundlephobia/minzip/react-isomorphic-data.svg)](https://bundlephobia.com/result?p=react-isomorphic-data)
+# react-isomorphic-data [![minified-gzipped-size](https://img.shields.io/bundlephobia/minzip/react-isomorphic-data.svg)](https://bundlephobia.com/result?p=react-isomorphic-data) [![bundlewatch - bundlewatched](https://img.shields.io/badge/bundle-watched-blue.svg)](https://bundlewatch.io)
 Easily fetch data in your React components, with similar APIs to [react-apollo](https://github.com/apollographql/react-apollo/) 🎉
 
 You can use hooks or HOC, both are supported. 🎉
