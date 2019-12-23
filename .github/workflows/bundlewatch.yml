@@ -1,0 +1,5 @@
+- name: Bundlewatch Github Action
+  uses: jackyef/bundlewatch-gh-action@0.0.1
+  with: 
+    build-script: build
+    bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}

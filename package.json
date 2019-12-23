@@ -53,5 +53,14 @@
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
     }
+  },
+  "bundlewatch": {
+    "trackBranches": ["master"],
+    "files": [
+      {
+        "path": "./packages/react-isomorphic-data/dist/esm/index.js",
+        "maxSize": "4 KB"
+      }
+    ]
   }
 }
