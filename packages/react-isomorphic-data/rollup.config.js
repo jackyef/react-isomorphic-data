@@ -6,7 +6,7 @@ import typescript from 'rollup-plugin-typescript2';
 import json from 'rollup-plugin-json';
 import visualizer from 'rollup-plugin-visualizer';
 import replace from '@rollup/plugin-replace';
-// import { terser as minify } from 'rollup-plugin-terser';
+import { terser as minify } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
@@ -26,11 +26,12 @@ const sharedPlugins = [
   replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
 
   // let users minify themselves. Just ship non-minified bundle
-  // process.env.NODE_ENV === 'production' && minify({
-  //   mangle: {
-  //     toplevel: true,
-  //   },
-  // }),
+  // we minify only when running bundlewatch
+  process.env.MINIFY && minify({
+    mangle: {
+      toplevel: true,
+    },
+  }),
 
   // Resolve source maps to the original source
   sourceMaps(),
