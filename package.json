@@ -71,7 +71,7 @@
     "files": [
       {
         "path": "./packages/react-isomorphic-data/dist/esm/index.js",
-        "maxSize": "4 KB"
+        "maxSize": "4.5 KB"
       }
     ]
   }
