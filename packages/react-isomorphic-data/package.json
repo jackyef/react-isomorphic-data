@@ -62,7 +62,7 @@
     "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-typescript2": "^0.22.1",
     "rollup-plugin-visualizer": "^2.6.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "react": "^16.8.0",
