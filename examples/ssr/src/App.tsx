@@ -13,10 +13,7 @@ const App = () => {
         <Link to="/suspense-example">Suspense Example</Link>
       </nav>
       <Switch>
-      <Route
-          path="/suspense-example"
-          component={SuspenseRoute}
-        />
+        <Route path="/suspense-example" component={SuspenseRoute} />
         <Route exact={true} path="/" component={Home} />
       </Switch>
     </>

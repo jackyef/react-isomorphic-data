@@ -1,8 +1,8 @@
-export interface DataState {
-  data: any;
+export interface DataState<T> {
+  data: T | null;
   error: Error | null;
   loading: boolean;
-  refetch: () => Promise<any>;
+  refetch: () => Promise<T>;
 };
 
 export interface DataHookState {
@@ -11,9 +11,9 @@ export interface DataHookState {
   tempCache: any;
 };
 
-export type LazyDataState = [
-  () => Promise<any> | void,
-  DataState,
+export type LazyDataState<T> = [
+  () => Promise<T> | void,
+  DataState<T>,
 ];
 
 export interface DataHookOptions {

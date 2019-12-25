@@ -1,5 +1,6 @@
 import React from 'react';
 import { useData, useLazyData } from 'react-isomorphic-data';
+import { DataFromAPI } from './api-types';
 
 import ComponentUsingHOC from './ComponentUsingHOC';
 import ComponentUsingLazyHOC from './ComponentUsingLazyHOC';
@@ -9,7 +10,7 @@ import logo from './react.svg';
 import './Home.css';
 
 const ChildComponent = ({ id, ssr }: { id: number; ssr: boolean }) => {
-  const eagerData = useData(`http://localhost:3000/some-rest-api/${id}`, {}, undefined, {
+  const eagerData = useData<DataFromAPI>(`http://localhost:3000/some-rest-api/${id}`, {}, undefined, {
     ssr,
   });
 
@@ -64,8 +65,6 @@ const Home = () => {
       body: JSON.stringify({ data: 'some data posted from client', foo: 'bar baz', count }),
     },
   );
-
-  console.log({ ...eagerData });
 
   return (
     <div className="Home">
