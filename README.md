@@ -1,6 +1,6 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![bundlewatch - bundlewatched](https://img.shields.io/badge/bundle-watched-blue.svg)](https://bundlewatch.io)
-
+A
 # react-isomorphic-data monorepo
 Easily fetch data from a GET request in your React components, with similar APIs to [react-apollo](https://github.com/apollographql/react-apollo/) 🎉
 
