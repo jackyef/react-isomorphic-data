@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataContext } from '../../common';
 import retrieveFromCache from '../../common/utils/retrieveFromCache';
-import qsify from '../../utils/querystringify.js';
+import qsify from '../../utils/querystringify/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
 import createFetchRequirements from '../../common/utils/createFetchRequirements';
