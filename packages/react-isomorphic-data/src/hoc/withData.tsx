@@ -11,16 +11,23 @@ const withData = <T, >(options: HocOptions) => {
     console.warn('No `name` is passed to `withData` HOC, defaulting to `data`. Please provide a name to avoid props name collision!');
   }
 
-  return (Component: React.ElementType) => {
-    return hoistNonReactStatics((props: any) => {
+  const Wrapped = (Component: React.ComponentType<any>) => {
+    const NewComp: React.SFC = (props: any) => {
       const baseData = useData<T>(url, queryParams, fetchOptions, dataOptions);
       const dataProps = {
         [name || 'data']: baseData,
       };
 
       return <Component {...props} {...dataProps} />;
-    }, Component);
+    }
+
+    NewComp.displayName = `withData(${Component.displayName || Component.name || 'Component'})`;
+    
+    return hoistNonReactStatics(NewComp, Component);
   };
+
+
+  return Wrapped;
 };
 
 export default withData;
