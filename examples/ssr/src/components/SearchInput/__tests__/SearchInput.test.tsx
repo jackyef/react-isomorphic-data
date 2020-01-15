@@ -8,7 +8,7 @@ import {
   act,
   queryByTestId,
 } from '@testing-library/react';
-import SearchInput from '../SearchInput';
+import SearchInput from '../index';
 
 test('data loads, renders and updates correctly', async () => {
   const mocks = [
@@ -57,7 +57,7 @@ test('data loads, renders and updates correctly', async () => {
 
   // Wait for the mock data to be "fetched"
   await wait(); 
-  // It's not longer loading, so the text is gone
+  // It's no longer loading, so the text is gone
   expect(queryByText(container, 'loading...')).toBeNull(); 
   // The first mock data is displayed
   expect(queryByTestId(container, 'data')?.innerHTML).toContain('123'); 

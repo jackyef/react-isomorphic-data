@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useData } from 'react-isomorphic-data';
 
-import { DataFromAPI } from '../api-types';
+import { DataFromAPI } from '../../api-types';
 
 const SearchInput = () => {
   const [searchText, setSearchText] = React.useState('');
