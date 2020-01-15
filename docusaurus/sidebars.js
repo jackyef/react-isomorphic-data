@@ -11,6 +11,7 @@ module.exports = {
     Hooks: ['hooks/usedata', 'hooks/uselazydata', 'hooks/usedataclient'],
     'Higher Order Components': ['hocs/withdata', 'hocs/withlazydata', 'hocs/withdataclient'],
     'Server-side Rendering': ['ssr/intro', 'ssr/rendertostringwithdata', 'ssr/getdatafromtree', 'ssr/client-side-hydration', 'ssr/prefetching'],
+    'Testing': ['testing/writing-tests'],
     'Others': ['others/caching', 'others/data-options', 'others/preloaddata', 'others/typescript', 'others/suspense', 'others/cant-find-answer'],
   },
   // 'react-isomorphic-data': {
