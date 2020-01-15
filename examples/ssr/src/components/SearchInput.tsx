@@ -18,7 +18,7 @@ const SearchInput = () => {
       <input type="text" data-testid="search-input" onChange={(e) => setSearchText(e.target.value)} />
       {data ? <pre data-testid="data">{JSON.stringify(data, null, 2)}</pre> : null}
       {loading ? 'loading...' : null}
-      {error ? error.message : null}
+      {error ? <div data-testid="error">{error.message}</div> : null}
     </div>
   );
 };
