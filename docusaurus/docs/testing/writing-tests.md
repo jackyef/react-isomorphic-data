@@ -148,11 +148,11 @@ test('data loads, renders and updates correctly', async () => {
   );
 
   // The `loading...` string is rendered inside the container
-  expect(queryByText(container, 'loading...')).not.toBeNull(); // it is still loading
+  expect(queryByText(container, 'loading...')).not.toBeNull();
 
   // Wait for the mock data to be "fetched"
   await wait(); 
-  // It's not longer loading, so the text is gone
+  // It's no longer loading, so the text is gone
   expect(queryByText(container, 'loading...')).toBeNull(); 
   // The first mock data is displayed
   expect(queryByTestId(container, 'data')?.innerHTML).toContain('123'); 
@@ -201,10 +201,125 @@ test('data loads, renders and updates correctly', async () => {
 
 ```
 
+Output: 🎉
+```sh
+PASS  src/components/__tests__/SearchInput.test.tsx
+  ✓ data loads, renders and updates correctly (32ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.558s, estimated 1s
+Ran all test suites.
+
+Watch Usage: Press w to show more.
+```
+
 The comments inside the code snippet should be pretty self-explanatory. Hopefully this short guide will help you on how to write tests with `react-isomorphic-data`!
 
-## Testing Lazy or non-GET datas
-`react-isomorphic-data` does not have a way to automatically support this. For now, the recommendation is to assert whether the event handler (like click, scroll, etc.) is invoked/called already.
+## Example #2 - Testing Lazy Data
+Let's look at another example. Imagine we have a `<Button>` component that will only fetch data once it is clicked.
+
+```javascript
+import * as React from 'react';
+import { useLazyData } from 'react-isomorphic-data';
+
+const Button = () => {
+  const [triggerLoad, { data, error, loading }] = useLazyData(
+    'http://localhost:3000/some-rest-api',
+    {
+      q: 'button-click',
+    },
+  );
+
+  return (
+    <div data-testid="container">
+      <button data-testid="button" onClick={() => triggerLoad()}>
+        Click me
+      </button>
+      {data ? (
+        <pre data-testid="data">{JSON.stringify(data, null, 2)}</pre>
+      ) : null}
+      {loading ? 'loading...' : null}
+      {error ? <div data-testid="error">{error.message}</div> : null}
+    </div>
+  );
+};
+
+export default Button;
+```
+
+This is how the test might look like:
+```javascript
+import React from 'react';
+import { MockedProvider } from '@react-isomorphic-data/testing';
+import {
+  render,
+  fireEvent,
+  wait,
+  queryByText,
+  act,
+  queryByTestId,
+} from '@testing-library/react';
+import Button from '../index';
+
+test('data loads on click correctly', async () => {
+  const mocks = [
+    {
+      request: {
+        url: 'http://localhost:3000/some-rest-api',
+        queryParams: {
+          q: 'button-click',
+        },
+      },
+      response: {
+        message: 'why did you click the button',
+        someRandomNumber: 123,
+      },
+    },
+  ];
+  const { container, getByTestId, debug } = render(
+    <MockedProvider mocks={mocks}>
+      <Button />
+    </MockedProvider>,
+  );
+
+  
+  // No `loading...` string, because the load is not triggered yet.
+  expect(queryByText(container, 'loading...')).toBeNull();
+  
+  // Now, we trigger a click on the button
+  act(() => {
+    const button = getByTestId('button');
+    fireEvent.click(button);
+  });
+
+  // It should show `loading...` string now.
+  expect(queryByText(container, 'loading...')).not.toBeNull();
+  // Wait for the mock data to be "fetched"
+  await wait(); 
+  // It's no longer loading, so the text is gone
+  expect(queryByText(container, 'loading...')).toBeNull(); 
+  // The mock data is now displayed
+  expect(queryByTestId(container, 'data')?.innerHTML).toContain('why did you click the button'); 
+});
+```
+Output: 🎉
+```sh
+PASS  src/components/SearchInput/__tests__/SearchInput.test.tsx
+PASS  src/components/Button/__tests__/Button.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        1.869s
+Ran all test suites.
+
+Watch Usage: Press w to show more.
+```
+
+## Testing non-GET data
+Because non-GET data are not cached, `react-isomorphic-data` does not have a way to automatically support this. For now, the recommendation is to assert whether the event handler (like `onClick`, `onScroll`, etc.) is invoked/called already.
 
 ## Disclaimer
 Testing is a field that I still have a lot to learn about. The current `MockedProvider` implementation might fail badly in your case. Feel free [open an issue](https://github.com/jackyef/react-isomorphic-data/issues) on the repo and I will see if I can help you.
