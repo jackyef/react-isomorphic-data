@@ -10,30 +10,24 @@ interface DataProviderProps {
 }
 
 const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
-  const [cache, setCache] = React.useState<Record<string, any>>(client.cache);
+  const [, setNumber] = React.useState<number>(0);
   const { toBePrefetched } = client;
 
   const addToBePrefetched = React.useCallback((url: string) => {
     toBePrefetched[url] = true;
   }, [toBePrefetched]);
 
-  const addToCache = (key: string, value: any) => {
-    if (client.ssr) {
-      normalisedAddToCache(client.cache, key, value);
-    }
+  const addToCache = React.useCallback((key: string, value: any) => {
+    normalisedAddToCache(client.cache, key, value);
 
-    setCache(prevCache => {
-      const newCache = { ...prevCache };
-      
-      return normalisedAddToCache(newCache, key, value);
-    });
-  };
+    if (!client.ssr) {
+      // force an update
+      setNumber(prev => prev + 1);
+    }
+  }, [client.cache, client.ssr]);
 
   const injectedValues: DataContextAPI = {
-    client: {
-      ...client,
-      cache,
-    },
+    client,
     addToCache,
     addToBePrefetched,
   };

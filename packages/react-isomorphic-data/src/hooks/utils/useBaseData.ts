@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { DataContext } from '../../common';
 import retrieveFromCache from '../../common/utils/retrieveFromCache';
-import qsify from '../../utils/querystringify.js';
+import qsify from '../../utils/querystringify/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
-import createFetchRequirements from '../../common/utils/createFetchRequirements';
+import useFetchRequirements from './useFetchRequirements';
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
@@ -22,7 +22,7 @@ const useBaseData = <T, > (
   const { client, addToCache, addToBePrefetched } = context;
   const { cache } = client;
 
-  const [finalFetchOpts, fetchPolicy] = createFetchRequirements(fetchOptions, client, dataOpts, lazy);
+  const [finalFetchOpts, fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
 
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const skip = dataOpts.skip !== undefined ? dataOpts.skip : false;
@@ -53,7 +53,7 @@ const useBaseData = <T, > (
     tempCache: {}, // store data from non-GET requests
   });
 
-  const createFetch = () => {
+  const createFetch = React.useCallback(() => {
     promiseRef.current = fetch(fullUrl, finalFetchOpts)
       .then((result) => result.json())
       .then((json) => {
@@ -102,9 +102,9 @@ const useBaseData = <T, > (
       });
 
     return promiseRef.current;
-  };
+  }, [addToCache, finalFetchOpts, fullUrl, isSSR, useTempData]);
 
-  const fetchData = async (): Promise<any> => {
+  const memoizedFetchData = React.useCallback((): Promise<any> => {
     const currentDataInCache = retrieveFromCache(cache, fullUrl);
     
     // data not in cache yet
@@ -127,22 +127,21 @@ const useBaseData = <T, > (
       }
     }
     
-    return new Promise((resolve) => resolve());
-  };
-
-  const memoizedFetchData = React.useCallback(fetchData, [
-    dataFromCache,
+    return new Promise((resolve) => resolve(currentDataInCache || state.tempCache[fullUrl]));
+  }, [
+    lazy,
+    state.tempCache,
+    cache,
+    createFetch,
     fullUrl,
     addToCache,
-    retrieveFromCache,
     fetchPolicy,
-    finalFetchOpts,
   ]);
 
   // if this data is supposed to be fetched during SSR
   if (isSSR) {
     if (!promisePushed.current && !lazy && !dataFromCache) {
-      client.pendingPromiseFactories.push(fetchData);
+      client.pendingPromiseFactories.push(memoizedFetchData);
       promisePushed.current = true;
     }
   }

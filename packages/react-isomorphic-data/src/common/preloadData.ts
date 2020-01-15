@@ -1,7 +1,7 @@
 import createFetchRequirements from './utils/createFetchRequirements';
 import { DataClient } from './types';
 import { DataHookOptions } from '../hooks/types';
-import qsify from '../utils/querystringify.js';
+import qsify from '../utils/querystringify/querystringify.js';
 
 /**
  * Simple cache for preloaded data

@@ -11,8 +11,8 @@ const withData = <T, > (options: HocOptions) => {
     console.warn('No `name` is passed to `withLazyData` HOC, defaulting to `data`. Please provide a name to avoid props name collision!');
   }
 
-  return (Component: React.ElementType) => {
-    return hoistNonReactStatics((props: any) => {
+  const Wrapped = (Component: React.ComponentType<any>) => {
+    const NewComp: React.SFC = (props: any) => {
       const [load, baseData] = useLazyData<T>(url, queryParams, fetchOptions, dataOptions);
       const dataProps = {
         [name || 'data']: [
@@ -22,8 +22,14 @@ const withData = <T, > (options: HocOptions) => {
       };
 
       return <Component {...props} {...dataProps} />;
-    }, Component);
+    }
+    
+    NewComp.displayName = `withLazyData(${Component.displayName || Component.name || 'Component'})`;
+    
+    return hoistNonReactStatics(NewComp, Component);
   };
+
+  return Wrapped;
 };
 
 export default withData;
