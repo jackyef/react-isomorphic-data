@@ -14,9 +14,9 @@ const SearchInput = () => {
   });
 
   return (
-    <div>
-      <input type="text" onChange={(e) => setSearchText(e.target.value)} />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+    <div data-testid="container">
+      <input type="text" data-testid="search-input" onChange={(e) => setSearchText(e.target.value)} />
+      {data ? <pre data-testid="data">{JSON.stringify(data, null, 2)}</pre> : null}
       {loading ? 'loading...' : null}
       {error ? error.message : null}
     </div>
