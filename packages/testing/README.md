@@ -10,7 +10,6 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 - SSR support
 - Simple built-in cache
 - TypeScript support
-- Testing utilities
 - React Suspense integration for implementing render-as-you-fetch pattern ⚠️ (experimental)
 
 ### Installing

@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import DataContext from './Context';
 import normalisedAddToCache from './utils/addToCache';
+import _retrieveFromCache from './utils/retrieveFromCache';
 import { DataClient, DataContextAPI } from './types';
 
 interface DataProviderProps {
@@ -26,10 +27,16 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
     }
   }, [client.cache, client.ssr]);
 
+  const retrieveFromCache = (url: string) => {
+    return _retrieveFromCache(client.cache, url);
+  }
+
   const injectedValues: DataContextAPI = {
     client,
     addToCache,
     addToBePrefetched,
+    retrieveFromCache,
+    fetcher: fetch,
   };
 
   return <DataContext.Provider value={injectedValues}>{children}</DataContext.Provider>;
