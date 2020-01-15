@@ -16,7 +16,7 @@ interface MockRequest {
 
 interface DataMock {
   request: MockRequest;
-  response: any;
+  response: any | Error;
 }
 
 interface MockedProviderProps {
@@ -86,18 +86,22 @@ const MockedProvider: React.FC<MockedProviderProps> = ({ mocks, children }) => {
       const fromCache = _retrieveFromCache(mockedCache, url);
 
       if (fromCache) {
-        const mockResponse = {
-          json: function() {
-            return new Promise(resolve => resolve(fromCache));
-          },
-          text: function() {
-            return new Promise(resolve => resolve(JSON.stringify(fromCache)));
-          },
-        };
-
-        resolve(mockResponse);
+        if (fromCache instanceof Error) {
+          reject(fromCache);
+        } else {
+          const mockResponse = {
+            json: function() {
+              return new Promise(resolve => resolve(fromCache));
+            },
+            text: function() {
+              return new Promise(resolve => resolve(JSON.stringify(fromCache)));
+            },
+          };
+          
+          resolve(mockResponse);
+        }
       } else {
-        reject(new Error(`[isomorphic-data mock] Failed to fetch data. Did you forget to pass mock data for url: "${url}"?`));
+        throw new Error(`[@react-isomorphic-data/testing] Failed to fetch data. Did you forget to pass mock data for url: "${url}"?`);
       }
     });
   }, []);
