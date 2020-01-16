@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useData } from 'react-isomorphic-data';
 
-import { DataFromAPI } from '../api-types';
+import { DataFromAPI } from '../../api-types';
 
 const SearchInput = () => {
   const [searchText, setSearchText] = React.useState('');
@@ -14,11 +14,11 @@ const SearchInput = () => {
   });
 
   return (
-    <div>
-      <input type="text" onChange={(e) => setSearchText(e.target.value)} />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+    <div data-testid="container">
+      <input type="text" data-testid="search-input" onChange={(e) => setSearchText(e.target.value)} />
+      {data ? <pre data-testid="data">{JSON.stringify(data, null, 2)}</pre> : null}
       {loading ? 'loading...' : null}
-      {error ? error.message : null}
+      {error ? <div data-testid="error">{error.message}</div> : null}
     </div>
   );
 };

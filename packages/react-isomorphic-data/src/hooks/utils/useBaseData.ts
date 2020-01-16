@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { DataContext } from '../../common';
-import retrieveFromCache from '../../common/utils/retrieveFromCache';
 import qsify from '../../utils/querystringify/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
@@ -19,8 +18,7 @@ const useBaseData = <T, > (
   
   if (!context) throw new Error('DataContext is null. Make sure you are wrapping your app inside DataProvider');
 
-  const { client, addToCache, addToBePrefetched } = context;
-  const { cache } = client;
+  const { client, addToCache, addToBePrefetched, retrieveFromCache, fetcher } = context;
 
   const [finalFetchOpts, fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
 
@@ -39,7 +37,7 @@ const useBaseData = <T, > (
 
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
-  const dataFromCache = retrieveFromCache(cache, fullUrl);
+  const dataFromCache = retrieveFromCache(fullUrl);
 
   let initialLoading = lazy || skip ? false : true;
 
@@ -54,7 +52,7 @@ const useBaseData = <T, > (
   });
 
   const createFetch = React.useCallback(() => {
-    promiseRef.current = fetch(fullUrl, finalFetchOpts)
+    promiseRef.current = fetcher(fullUrl, finalFetchOpts)
       .then((result) => result.json())
       .then((json) => {
         // this block of code will cause 2 re-renders because React doesn't batch these 2 updates
@@ -102,10 +100,10 @@ const useBaseData = <T, > (
       });
 
     return promiseRef.current;
-  }, [addToCache, finalFetchOpts, fullUrl, isSSR, useTempData]);
+  }, [addToCache, finalFetchOpts, fullUrl, isSSR, useTempData, fetcher]);
 
   const memoizedFetchData = React.useCallback((): Promise<any> => {
-    const currentDataInCache = retrieveFromCache(cache, fullUrl);
+    const currentDataInCache = retrieveFromCache(fullUrl);
     
     // data not in cache yet
     if (currentDataInCache === undefined && !state.tempCache[fullUrl]) {
@@ -131,11 +129,11 @@ const useBaseData = <T, > (
   }, [
     lazy,
     state.tempCache,
-    cache,
     createFetch,
     fullUrl,
     addToCache,
     fetchPolicy,
+    retrieveFromCache,
   ]);
 
   // if this data is supposed to be fetched during SSR

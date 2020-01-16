@@ -61,7 +61,6 @@ pre {
   display: inline-flex;
   border: 1px solid gray;
   padding: 8px;
-  width: 150px;
   justify-content: center;
   align-items: center;
 }

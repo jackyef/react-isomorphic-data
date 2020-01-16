@@ -11,6 +11,7 @@
     "deploy": "echo NOT_PUBLISHED"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.8.3",
     "@types/body-parser": "^1.17.1",
     "@types/compression": "^1.0.1",
     "@types/express": "^4.17.1",
@@ -32,5 +33,34 @@
     "react-router-dom": "^5.1.2",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0"
+  },
+  "devDependencies": {
+    "@react-isomorphic-data/testing": "*",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0"
+  },
+  "jest": {
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/babelJestTransformer.js",
+      "^.+\\.jsx?$": "<rootDir>/babelJestTransformer.js",
+      "\\.css$": "<rootDir>/../../node_modules/razzle/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/../../node_modules/razzle/config/jest/fileTransform.js"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.(ts|js)?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).(ts|js)?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/src/setupTests.ts"
+    ]
   }
 }

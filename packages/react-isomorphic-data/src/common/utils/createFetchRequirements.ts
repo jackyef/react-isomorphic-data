@@ -14,7 +14,7 @@ const createFetchOptions = (
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
 
   if (finalMethod !== 'GET') fetchPolicy = 'network-only';
-  if (isSSR) fetchPolicy = 'cache-first';
+  if (isSSR || client.test) fetchPolicy = 'cache-first';
 
   return [
     {

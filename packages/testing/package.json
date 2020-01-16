@@ -1,0 +1,52 @@
+{
+  "name": "@react-isomorphic-data/testing",
+  "version": "0.12.5",
+  "description": "Easily fetch data in your React components, with similar APIs to react-apollo 🎉",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {
+    "dev": "rollup -c --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production rollup -c",
+    "prepack": "yarn build",
+    "deploy": "npm publish"
+  },
+  "files": [
+    "dist",
+    "ssr"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackyef/react-isomorphic-data.git"
+  },
+  "keywords": [
+    "react",
+    "isomorphic",
+    "data",
+    "promise",
+    "fetch"
+  ],
+  "author": "Jacky Efendi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackyef/react-isomorphic-data/issues"
+  },
+  "homepage": "https://github.com/jackyef/react-isomorphic-data#readme",
+  "devDependencies": {
+    "hoist-non-react-statics": "^3.3.0",
+    "lodash.camelcase": "^4.3.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-isomorphic-data": "^0.12.5"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
