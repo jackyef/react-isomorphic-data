@@ -6,9 +6,6 @@ import { DataFromAPI } from '../../api-types';
 const Button = () => {
   const [triggerLoad, { data, error, loading }] = useLazyData<DataFromAPI>(
     'http://localhost:3000/some-rest-api',
-    {
-      q: 'button-click',
-    },
   );
 
   return (

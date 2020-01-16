@@ -15,9 +15,6 @@ test('data loads on click correctly', async () => {
     {
       request: {
         url: 'http://localhost:3000/some-rest-api',
-        queryParams: {
-          q: 'button-click',
-        },
       },
       response: {
         message: 'why did you click the button',
