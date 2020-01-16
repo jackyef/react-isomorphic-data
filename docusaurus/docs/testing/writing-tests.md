@@ -36,7 +36,7 @@ A `MockData` is just an object with `request` and `response` key. An example of 
 const aMock = {
   request: {
     url: 'http://localhost:3000/some-rest-api',
-    queryParams: {
+    queryParams: { // queryParams should be just 1 level-deep-object. It is optional. You can omit it.
       q: 'qweqwe',
     },
   },
@@ -227,9 +227,6 @@ import { useLazyData } from 'react-isomorphic-data';
 const Button = () => {
   const [triggerLoad, { data, error, loading }] = useLazyData(
     'http://localhost:3000/some-rest-api',
-    {
-      q: 'button-click',
-    },
   );
 
   return (
@@ -268,9 +265,6 @@ test('data loads on click correctly', async () => {
     {
       request: {
         url: 'http://localhost:3000/some-rest-api',
-        queryParams: {
-          q: 'button-click',
-        },
       },
       response: {
         message: 'why did you click the button',
