@@ -1,6 +1,6 @@
 {
   "name": "ssr",
-  "version": "0.11.5",
+  "version": "0.11.6",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -29,13 +29,13 @@
     "razzle-plugin-typescript": "^3.0.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-isomorphic-data": "^0.12.5",
+    "react-isomorphic-data": "^0.13.0",
     "react-router-dom": "^5.1.2",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0"
   },
   "devDependencies": {
-    "@react-isomorphic-data/testing": "*",
+    "@react-isomorphic-data/testing": "^0.13.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0"
   },

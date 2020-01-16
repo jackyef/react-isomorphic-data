@@ -1,6 +1,6 @@
 {
   "name": "@react-isomorphic-data/testing",
-  "version": "0.12.5",
+  "version": "0.13.0",
   "description": "Easily fetch data in your React components, with similar APIs to react-apollo 🎉",
   "sideEffects": false,
   "main": "dist/cjs/index.js",
