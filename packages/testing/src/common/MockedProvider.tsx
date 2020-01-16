@@ -11,7 +11,7 @@ import qsify from '../utils/querystringify/querystringify.js';
 
 interface MockRequest {
   url: string;
-  queryParams: Record<string, any>;
+  queryParams?: Record<string, any>;
 }
 
 interface DataMock {
