@@ -11,25 +11,46 @@ interface DataProviderProps {
 }
 
 const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
-  const [, setNumber] = React.useState<number>(0);
-  const { toBePrefetched } = client;
+  // const prevRef = React.useRef<any>();
+  // prevRef.current = client;
 
-  const addToBePrefetched = React.useCallback((url: string) => {
-    toBePrefetched[url] = true;
-  }, [toBePrefetched]);
 
-  const addToCache = React.useCallback((key: string, value: any) => {
-    normalisedAddToCache(client.cache, key, value);
+  console.log('DataProvider rerender');
 
-    if (!client.ssr) {
-      // force an update
-      setNumber(prev => prev + 1);
-    }
-  }, [client.cache, client.ssr]);
+  // React.useEffect(() => {
+  //   // all same.. why did we re-render then?
+  //   console.log('client same?', prevRef.current.client === client);
+  //   console.log('children same?', prevRef.current.children === children);
 
-  const retrieveFromCache = (url: string) => {
-    return _retrieveFromCache(client.cache, url);
-  }
+  //   prevRef.current.client = client;
+  //   prevRef.current.children = children;
+  // })
+
+  const addToBePrefetched = React.useCallback(
+    (url: string) => {
+      client.toBePrefetched[url] = true;
+    },
+    [client.toBePrefetched],
+  );
+
+  const addToCache = React.useCallback(
+    (key: string, value: any) => {
+      normalisedAddToCache(client.cache, key, value);
+
+      if (!client.ssr) {
+        // force an update
+        // setNumber((prev) => prev + 1);
+      }
+    },
+    [client.cache, client.ssr],
+  );
+
+  const retrieveFromCache = React.useCallback(
+    (url: string) => {
+      return _retrieveFromCache(client.cache, url);
+    },
+    [client.cache],
+  );
 
   const injectedValues: DataContextAPI = {
     client,
@@ -39,7 +60,11 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
     fetcher: fetch,
   };
 
-  return <DataContext.Provider value={injectedValues}>{children}</DataContext.Provider>;
+  return (
+    <DataContext.Provider value={injectedValues}>
+      {children}
+    </DataContext.Provider>
+  );
 };
 
 export default DataProvider;

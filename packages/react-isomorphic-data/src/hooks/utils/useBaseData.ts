@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { unstable_batchedUpdates } from 'react-dom'; // eslint-disable-line
-import { DataContext } from '../../common';
 import qsify from '../../utils/querystringify/querystringify.js';
 
 import { DataHookState, LazyDataState, DataHookOptions } from '../types';
 import useFetchRequirements from './useFetchRequirements';
+import useCacheSubscription from './useCacheSubscription';
 
 const LoadingSymbol = Symbol('LoadingFlag');
 
@@ -15,11 +15,10 @@ const useBaseData = <T, > (
   lazy = false,
   dataOpts: DataHookOptions = {},
 ): LazyDataState<T> => {
-  const context = React.useContext(DataContext);
-  
-  if (!context) throw new Error('DataContext is null. Make sure you are wrapping your app inside DataProvider');
-
-  const { client, addToCache, addToBePrefetched, retrieveFromCache, fetcher } = context;
+  const queryString = qsify(queryParams, '?');
+  const fullUrl = `${url}${queryString}`;
+  const { client, addToCache, addToBePrefetched, retrieveFromCache, fetcher } = useCacheSubscription(fullUrl);;
+  const dataFromCache = retrieveFromCache(fullUrl);
 
   const [finalFetchOpts, fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
 
@@ -35,10 +34,6 @@ const useBaseData = <T, > (
 
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
   const useTempData = finalFetchOpts.method !== 'GET' || fetchPolicy === 'network-only';
-
-  const queryString = qsify(queryParams, '?');
-  const fullUrl = `${url}${queryString}`;
-  const dataFromCache = retrieveFromCache(fullUrl);
 
   let initialLoading = lazy || skip ? false : true;
 
@@ -58,8 +53,7 @@ const useBaseData = <T, > (
       .then((json) => {
         // this block of code will cause 2 re-renders because React doesn't batch these 2 updates
         // https://twitter.com/dan_abramov/status/887963264335872000?lang=en
-        // Currently we use unstable_batchedUpdates to help reduce re-renders
-        // a more proper fix is to move to a subscription model
+        // For React 16.x we can use `unstable_batchedUpdates()` to solve this
         unstable_batchedUpdates(() => {
           if (!useTempData) {
             // only cache response for GET requests
@@ -69,7 +63,7 @@ const useBaseData = <T, > (
             // resets the cache to 'undefined'
             addToCache(fullUrl, undefined);
           }
-  
+
           if (!isSSR) {
             setState((prev: any) => ({
               ...prev,
@@ -78,7 +72,7 @@ const useBaseData = <T, > (
               error: { ...prev.error, [fullUrl]: undefined },
             }));
           }
-        })
+        });
 
         return json;
       })
@@ -170,6 +164,9 @@ const useBaseData = <T, > (
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
   const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
   const isLoading = dataFromCache === LoadingSymbol || state.loading;
+  const memoizedRefetch = React.useCallback((): Promise<T> => {
+    return new Promise(resolve => resolve(finalData));
+  }, [])
 
   return [
     memoizedFetchData,
@@ -177,12 +174,13 @@ const useBaseData = <T, > (
       error: state.error?.[fullUrl] || null,
       loading: isLoading,
       data: usedData,
-      refetch: () => {
-        // always bypass cache on refetch
-        setState((prev: any) => ({ ...prev, loading: true }));
+      // refetch: () => {
+      //   // always bypass cache on refetch
+      //   setState((prev: any) => ({ ...prev, loading: true }));
 
-        return createFetch();
-       },
+      //   // return createFetch();
+      //  },
+      refetch: memoizedRefetch,
     },
   ];
 };

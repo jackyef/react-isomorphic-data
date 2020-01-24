@@ -10,8 +10,15 @@ interface ComponentUsingHOCProps {
 }
 
 class ComponentUsingHOC extends React.Component<ComponentUsingHOCProps> {
+  private prev: any;
+
   public render() {
     const { pokemonData } = this.props;
+
+    // console.log('render', pokemonData);
+
+    // console.log('same?', this.prev === pokemonData);
+    this.prev = pokemonData;
 
     return (
       <div>
@@ -29,7 +36,8 @@ export default withData({
   name: 'pokemonData', // the name of the prop the data will be injected to
   queryParams: {},
   fetchOptions: {}, // options that can be accepted by the native `fetch` API
-  dataOptions: { // additional options
+  dataOptions: {
+    // additional options
     ssr: false,
     fetchPolicy: 'network-only',
   },

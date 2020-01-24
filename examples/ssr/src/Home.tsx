@@ -8,6 +8,7 @@ import SearchInput from './components/SearchInput';
 import logo from './react.svg';
 
 import './Home.css';
+import Comp from './ComponentUsingHook';
 
 const ChildComponent = ({ id, ssr }: { id: number; ssr: boolean }) => {
   const eagerData = useData<DataFromAPI>(`http://localhost:3000/some-rest-api/${id}`, {}, undefined, {
@@ -94,7 +95,7 @@ const Home = () => {
             
             if (promise && promise.then) {
               // you can get the data from the fetcher function as well, if you need to do something imperatively
-              promise.then((data) => console.log({ data }));
+              // promise.then((data) => console.log({ data }));
             }
           }}
         >
@@ -106,6 +107,7 @@ const Home = () => {
         {eagerData.loading ? null : (
           <>
             <ChildComponent id={123} ssr={true} />
+            <Comp />
             <ComponentUsingHOC />
             <ComponentUsingLazyHOC />
           </>
