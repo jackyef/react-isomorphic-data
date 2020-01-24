@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.7](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.6...ssr@0.11.7) (2020-01-24)
+
+**Note:** Version bump only for package ssr
+
+
+
+
+
 ## [0.11.6](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.5...ssr@0.11.6) (2020-01-16)
 
 **Note:** Version bump only for package ssr
