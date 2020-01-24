@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { unstable_batchedUpdates } from 'react-dom'; // eslint-disable-line
 import { DataContext } from '../../common';
 import qsify from '../../utils/querystringify/querystringify.js';
 
@@ -57,42 +58,46 @@ const useBaseData = <T, > (
       .then((json) => {
         // this block of code will cause 2 re-renders because React doesn't batch these 2 updates
         // https://twitter.com/dan_abramov/status/887963264335872000?lang=en
-        // TODO: improve how we are handling the states so we only have 1 re-render
-
-        if (!useTempData) {
-          // only cache response for GET requests
-          // AND non 'network-only' requests
-          addToCache(fullUrl, json);
-        } else {
-          // resets the cache to 'undefined'
-          addToCache(fullUrl, undefined);
-        }
-
-        if (!isSSR) {
-          setState((prev: any) => ({
-            ...prev,
-            loading: false,
-            tempCache: { ...prev.tempCache, [fullUrl]: json },
-            error: { ...prev.error, [fullUrl]: undefined },
-          }));
-        }
+        // Currently we use unstable_batchedUpdates to help reduce re-renders
+        // a more proper fix is to move to a subscription model
+        unstable_batchedUpdates(() => {
+          if (!useTempData) {
+            // only cache response for GET requests
+            // AND non 'network-only' requests
+            addToCache(fullUrl, json);
+          } else {
+            // resets the cache to 'undefined'
+            addToCache(fullUrl, undefined);
+          }
+  
+          if (!isSSR) {
+            setState((prev: any) => ({
+              ...prev,
+              loading: false,
+              tempCache: { ...prev.tempCache, [fullUrl]: json },
+              error: { ...prev.error, [fullUrl]: undefined },
+            }));
+          }
+        })
 
         return json;
       })
       .catch((err) => {
         if (!isSSR) {
           // sets the state accordingly
-          setState((prev: any) => ({
-            ...prev,
-            error: {
-              ...prev.error,
-              [fullUrl]: err,
-            },
-            loading: false,
-          }));
-
-          // resets the cache to 'undefined'
-          addToCache(fullUrl, undefined);
+          unstable_batchedUpdates(() => {
+            setState((prev: any) => ({
+              ...prev,
+              error: {
+                ...prev.error,
+                [fullUrl]: err,
+              },
+              loading: false,
+            }));
+  
+            // resets the cache to 'undefined'
+            addToCache(fullUrl, undefined);
+          });
         } else {
           // throw an error during SSR
           throw err;
@@ -107,8 +112,10 @@ const useBaseData = <T, > (
     
     // data not in cache yet
     if (currentDataInCache === undefined && !state.tempCache[fullUrl]) {
-      setState((prev: any) => ({ ...prev, loading: true }));
-      addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
+      unstable_batchedUpdates(() => {
+        setState((prev: any) => ({ ...prev, loading: true }));
+        addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
+      });
 
       fetchedFromNetwork.current = true;
 
