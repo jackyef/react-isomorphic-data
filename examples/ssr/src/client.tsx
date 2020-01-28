@@ -1,9 +1,17 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
-import { DataProvider, createDataClient } from 'react-isomorphic-data';
+import { useData, DataProvider, createDataClient } from 'react-isomorphic-data';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+
+// @ts-ignore
+import whyDidYouRender from '@welldone-software/why-did-you-render/dist/no-classes-transpile/umd/whyDidYouRender.min.js' ;
+
+const IsoData = { useData };
+whyDidYouRender(React, {trackExtraHooks: [
+  [IsoData, 'useData'],
+]});
 
 declare global {
   interface Window {

@@ -8,6 +8,9 @@ export interface DataClient {
   ssr: boolean;
   test: boolean;
   headers: Record<string, any>;
+  addSubscriber: (key: string, callback: Function) => void;
+  removeSubscriber: (key: string, callback: Function) => void;
+  notifySubscribers: (key: string) => void;
 }
 
 export interface DataClientOptions {

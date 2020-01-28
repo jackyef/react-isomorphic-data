@@ -10,8 +10,17 @@ interface ComponentUsingHOCProps {
 }
 
 class ComponentUsingHOC extends React.Component<ComponentUsingHOCProps> {
+  static whyDidYouRender = true;
+
+  private prev: any;
+
   public render() {
     const { pokemonData } = this.props;
+
+    // console.log('render', pokemonData);
+
+    // console.log('same?', this.prev === pokemonData);
+    this.prev = pokemonData;
 
     return (
       <div>
@@ -24,13 +33,18 @@ class ComponentUsingHOC extends React.Component<ComponentUsingHOCProps> {
   }
 }
 
-export default withData({
+const WithHOC = withData({
   url: 'http://localhost:3000/some-rest-api/24',
   name: 'pokemonData', // the name of the prop the data will be injected to
   queryParams: {},
   fetchOptions: {}, // options that can be accepted by the native `fetch` API
-  dataOptions: { // additional options
+  dataOptions: {
+    // additional options
     ssr: false,
     fetchPolicy: 'network-only',
   },
 })(ComponentUsingHOC);
+
+ComponentUsingHOC.whyDidYouRender = true
+
+export default WithHOC;
