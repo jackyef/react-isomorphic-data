@@ -5,27 +5,22 @@ import normalisedAddToCache from './utils/addToCache';
 import _retrieveFromCache from './utils/retrieveFromCache';
 import { DataClient, DataContextAPI } from './types';
 
+/**
+ * Implementation details note:
+ * DataProvider is expected to NEVER re-render. react-isomorphic-data implement a subscriber pattern where
+ * each hooks force an update for each component separately, instead of relying on React to automatically 
+ * re-renders when the DataClient.cache is updated.
+ * 
+ * All update to the DataClient.cache is done in-place (not creating a new object everytime),
+ * and the useCacheSubscription hook handle the force updates for each components.
+ */
+
 interface DataProviderProps {
   children: JSX.Element[] | JSX.Element;
   client: DataClient;
 }
 
 const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
-  // const prevRef = React.useRef<any>();
-  // prevRef.current = client;
-
-
-  console.log('DataProvider rerender');
-
-  // React.useEffect(() => {
-  //   // all same.. why did we re-render then?
-  //   console.log('client same?', prevRef.current.client === client);
-  //   console.log('children same?', prevRef.current.children === children);
-
-  //   prevRef.current.client = client;
-  //   prevRef.current.children = children;
-  // })
-
   const addToBePrefetched = React.useCallback(
     (url: string) => {
       client.toBePrefetched[url] = true;
@@ -39,10 +34,12 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, client }) => {
 
       if (!client.ssr) {
         // force an update
-        // setNumber((prev) => prev + 1);
+        // notify all subscribers that listens for the same key
+        // this will trigger an update/re-render for all affected hook
+        client.notifySubscribers(key);
       }
     },
-    [client.cache, client.ssr],
+    [client],
   );
 
   const retrieveFromCache = React.useCallback(

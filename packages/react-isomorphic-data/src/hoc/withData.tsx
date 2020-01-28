@@ -22,8 +22,8 @@ const withData = <T, >(options: HocOptions) => {
     }
 
     NewComp.displayName = `withData(${Component.displayName || Component.name || 'Component'})`;
-    
-    return hoistNonReactStatics(NewComp, Component);
+
+    return hoistNonReactStatics(React.memo(NewComp), Component);
   };
 
 
