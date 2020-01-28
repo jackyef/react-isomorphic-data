@@ -8,7 +8,8 @@
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "dev": "rollup -c --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "build": "NODE_ENV=production rollup -c",
     "prepack": "yarn build",
     "deploy": "npm publish"

@@ -1,0 +1,22 @@
+name: 'Bundlewatch - master'
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  codecoverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: Borales/actions-yarn@v2.1.0
+      - name: 'Setup'
+        run: yarn install
+      - name: 'Run tests'
+        run: yarn test:coverage
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} #required
+          file: ./packages/react-isomorphic-data/coverage/clover.xml
+          fail_ci_if_error: true #optional (default = false)
