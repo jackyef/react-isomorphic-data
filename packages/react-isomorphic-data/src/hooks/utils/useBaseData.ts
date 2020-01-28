@@ -28,7 +28,7 @@ const useBaseData = <T, > (
     dataFromCache,
     dataHookState: state,
     setDataHookState: setState,
-  } = useCacheSubscription(fullUrl, lazy, skip);;
+  } = useCacheSubscription(fullUrl, lazy, skip);
   const [finalFetchOpts, fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
   
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr

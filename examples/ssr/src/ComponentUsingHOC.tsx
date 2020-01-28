@@ -10,6 +10,8 @@ interface ComponentUsingHOCProps {
 }
 
 class ComponentUsingHOC extends React.Component<ComponentUsingHOCProps> {
+  static whyDidYouRender = true;
+
   private prev: any;
 
   public render() {
@@ -31,7 +33,7 @@ class ComponentUsingHOC extends React.Component<ComponentUsingHOCProps> {
   }
 }
 
-export default withData({
+const WithHOC = withData({
   url: 'http://localhost:3000/some-rest-api/24',
   name: 'pokemonData', // the name of the prop the data will be injected to
   queryParams: {},
@@ -42,3 +44,7 @@ export default withData({
     fetchPolicy: 'network-only',
   },
 })(ComponentUsingHOC);
+
+ComponentUsingHOC.whyDidYouRender = true
+
+export default WithHOC;

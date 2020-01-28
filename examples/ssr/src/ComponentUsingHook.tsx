@@ -13,8 +13,6 @@ const Comp = () => {
     },
   );
 
-  console.log('render', data);
-
   return (
     <div>
       This is a Comp using hook.
