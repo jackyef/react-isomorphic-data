@@ -1,4 +1,4 @@
-name: 'Bundlewatch - master'
+name: 'Tests and Coverage - master'
 
 on:
   push:
