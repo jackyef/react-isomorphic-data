@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.8](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.7...ssr@0.11.8) (2020-01-28)
+
+
+### Performance Improvements
+
+* initial commit for subscription model rework ([8ca05df](https://github.com/jackyef/react-isomorphic-data/commit/8ca05df3e46e25332d8ae6e6bcc6cbd9c289a568))
+
+
+
+
+
 ## [0.11.7](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.6...ssr@0.11.7) (2020-01-24)
 
 **Note:** Version bump only for package ssr

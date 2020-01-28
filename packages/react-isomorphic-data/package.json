@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-data",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "description": "Easily fetch data in your React components, with similar APIs to react-apollo 🎉",
   "sideEffects": false,
   "main": "dist/cjs/index.js",

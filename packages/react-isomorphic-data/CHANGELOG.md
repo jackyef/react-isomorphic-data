@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.13.1...react-isomorphic-data@0.14.0) (2020-01-28)
+
+
+### Features
+
+* implementation of subscription model for more precise re-render ([b27a7d2](https://github.com/jackyef/react-isomorphic-data/commit/b27a7d242eb6a37d32c38efe1bb9c6fd9b415c51))
+
+
+### Performance Improvements
+
+* initial commit for subscription model rework ([8ca05df](https://github.com/jackyef/react-isomorphic-data/commit/8ca05df3e46e25332d8ae6e6bcc6cbd9c289a568))
+
+
+
+
+
 ## [0.13.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.13.0...react-isomorphic-data@0.13.1) (2020-01-24)
 
 **Note:** Version bump only for package react-isomorphic-data
