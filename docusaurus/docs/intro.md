@@ -12,6 +12,8 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 - React hooks 
 - SSR support
 - Simple built-in cache
+- TypeScript support
+- [Testing utilities](./testing/writing-tests)
 - React Suspense integration for implementing render-as-you-fetch pattern ⚠️ (experimental)
 
 ### Installing
@@ -42,3 +44,8 @@ ReactDOM.render(
 ```
 
 ...and now you can use the hooks and HOCs inside your components 🎉
+
+> ⚠️ Note:
+> `react-isomorphic-data` depends on `fetch` and `Map` to exist in the `global` scope.
+> You should be already polyfilling `Map` if you are using React, because React depends on it as well.
+> You might need to polyfill `fetch` depending on your use case.
