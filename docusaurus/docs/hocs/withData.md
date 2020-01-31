@@ -2,6 +2,7 @@
 id: withdata
 title: withData()
 sidebar_label: withData()
+description: 'Explanation about withData() HOC in react-isomorphic-data'
 ---
 
 ## `withData`

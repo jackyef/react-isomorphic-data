@@ -2,6 +2,7 @@
 id: withlazydata
 title: withLazyData()
 sidebar_label: withLazyData()
+description: 'Explanation about withLazyData() HOC in react-isomorphic-data'
 ---
 
 ## `withLazyData`

@@ -2,6 +2,7 @@
 id: typescript
 title: TypeScript Support
 sidebar_label: TypeScript Support
+description: 'TypeScript support in react-isomorphic-data'
 ---
 
 `react-isomorphic-data` provides TypeScript support out of the box. When using hooks, you can define the shape of the expected returned data, and if your IDE supports intellisense, everything will just work!

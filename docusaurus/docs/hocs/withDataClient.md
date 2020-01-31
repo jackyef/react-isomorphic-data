@@ -2,6 +2,7 @@
 id: withdataclient
 title: withDataClient()
 sidebar_label: withDataClient()
+description: 'Explanation about withDataClient() HOC in react-isomorphic-data'
 ---
 
 ## `withDataClient`

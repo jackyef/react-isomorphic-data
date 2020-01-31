@@ -2,6 +2,7 @@
 id: preloaddata
 title: preloadData()
 sidebar_label: preloadData()
+description: 'How to implement render-as-you-fetch pattern with react-isomorphic-data'
 ---
 
 ## `preloadData`

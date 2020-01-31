@@ -2,6 +2,7 @@
 id: intro
 title: Introduction
 sidebar_label: Introduction
+description: 'react-isomorphic-data is a library to handle JSON-formatted data in your react app, with full SSR support. It has similar APIs to react-apollo'
 ---
 
 `react-isomorphic-data` is heavily inspired by `react-apollo`. The main purpose of it is to allow developers to write React components that can declare its own data requirement in the component itself, with SSR support as well!

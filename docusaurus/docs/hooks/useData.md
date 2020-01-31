@@ -2,6 +2,7 @@
 id: usedata
 title: useData()
 sidebar_label: useData()
+description: 'Explanation about useData() hook in react-isomorphic-data'
 ---
 
 ## `useData`

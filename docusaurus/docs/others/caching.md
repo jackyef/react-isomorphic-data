@@ -2,6 +2,7 @@
 id: caching
 title: Caching
 sidebar_label: Caching
+description: 'Explanation about different caching strategy in react-isomorphic-data'
 ---
 
 All `GET` requests, either lazy or non-lazy ones, can be cached. By default, `react-isomorphic-data` will use `cache-first` strategy for all the data. This means that if a response for a particular URL + query params already exist in the cache, all subsequent requests will always receive a response from the cache directly, without going to the network. 

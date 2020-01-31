@@ -2,6 +2,7 @@
 id: getdatafromtree
 title: getDataFromTree()
 sidebar_label: getDataFromTree()
+description: 'Explanation for getDataFromTree() in react-isomorphic-data'
 ---
 
 ## `getDataFromTree()`

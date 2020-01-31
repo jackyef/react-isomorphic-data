@@ -2,6 +2,7 @@
 id: intro
 title: Introduction
 sidebar_label: Introduction
+description: 'Server-side rendering with react-isomorphic-data'
 ---
 
 Server-side rendering (SSR) is a technique that renders a React app on the server, and send down the resulting HTML to the client. This is done to allow user to see something on their screen earlier, and also can help with SEO related stuffs. Here is a great article about [rendering on the web](https://developers.google.com/web/updates/2019/02/rendering-on-the-web) from Google.

@@ -2,6 +2,7 @@
 id: data-options
 title: dataOptions
 sidebar_label: dataOptions
+description: 'Various configurations you can use in react-isomorphic-data'
 ---
 
 `dataOptions` is an object that you can pass configurations to, to tweak the behavior of your particular hook or HOC. It is the 4th param you pass to the hook (either `useData` or `useLazyData`), or the `dataOptions` field of the object you pass to the HOC (`withData` or `withLazyData`).

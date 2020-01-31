@@ -2,6 +2,7 @@
 id: rendertostringwithdata
 title: renderToStringWithData()
 sidebar_label: renderToStringWithData()
+description: 'Explanation for renderToStringWithData() in react-isomorphic-data'
 ---
 
 ## `renderToStringWithData()`

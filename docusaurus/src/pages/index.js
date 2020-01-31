@@ -9,6 +9,7 @@ import React from 'react';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
@@ -19,7 +20,8 @@ const features = [
     imageUrl: 'img/undraw_react.svg',
     description: (
       <>
-        Declare the data required by your components in the components themselves!
+        Declare the data required by your components in the components
+        themselves!
       </>
     ),
   },
@@ -27,9 +29,7 @@ const features = [
     title: <>Full SSR Support</>,
     imageUrl: 'img/undraw_code_review.svg',
     description: (
-      <>
-        Everything works on SSR with little changes in your server code.
-      </>
+      <>Everything works on SSR with little changes in your server code.</>
     ),
   },
   // {
@@ -44,23 +44,30 @@ const features = [
   {
     title: <>Lightweight</>,
     imageUrl: `img/undraw_file_bundle.svg`,
-    description: (
-      <>Less than 4 kB gzipped</>
-    ),
+    description: <>Less than 4 kB gzipped</>,
   },
 ];
 
 function Home() {
   const context = useDocusaurusContext();
-  const {siteConfig = {}} = context;
+  const { siteConfig = {} } = context;
 
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Easily fetch data in your ⚛️ React app, with full SSR support! 🎉">
+      description="Easily fetch data in your ⚛️ React app, with full SSR support! 🎉"
+    >
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="MXUQmmnRvuWRzx7IMgocc8oVLeoW1KAe_R6rvFmvIEc"
+        />
+      </Head>
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
-          <h1 className="hero__title"><code>react-isomorphic-data</code></h1>
+          <h1 className="hero__title">
+            <code>react-isomorphic-data</code>
+          </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className={styles.buttons}>
             <Link
@@ -68,7 +75,8 @@ function Home() {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted,
               )}
-              to={useBaseUrl('docs/intro')}>
+              to={useBaseUrl('docs/intro')}
+            >
               Get Started
             </Link>
           </div>
@@ -79,10 +87,11 @@ function Home() {
           <section className={styles.features}>
             <div className="container">
               <div className="row">
-                {features.map(({imageUrl, title, description}, idx) => (
+                {features.map(({ imageUrl, title, description }, idx) => (
                   <div
                     key={idx}
-                    className={classnames('col col--4', styles.feature)}>
+                    className={classnames('col col--4', styles.feature)}
+                  >
                     {imageUrl && (
                       <div className="text--center">
                         <img

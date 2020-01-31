@@ -2,6 +2,7 @@
 id: uselazydata
 title: useLazyData()
 sidebar_label: useLazyData()
+description: 'Explanation about useLazyData() hook in react-isomorphic-data'
 ---
 
 ## `useLazyData`

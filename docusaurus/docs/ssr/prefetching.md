@@ -2,6 +2,7 @@
 id: prefetching
 title: Prefetching
 sidebar_label: Prefetching
+description: 'Adding prefetch hints to optimise loading with react-isomorphic-data'
 ---
 
 `react-isomorphic-data` provide helper function to inject `<link rel="prefetch">` tags in to the server-side rendered HTML. This is done to give hints to the browser that the particular resource should be prefetched. Prefetched resources have a very low priority and will only be run when the browser is idle. Prefetching resources could improve performance because when the resource is requested, it might already be ready in the prefetch cache. More about prefetch [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ).

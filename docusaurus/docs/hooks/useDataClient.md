@@ -2,6 +2,7 @@
 id: usedataclient
 title: useDataClient()
 sidebar_label: useDataClient()
+description: 'Explanation about useDataClient() hook in react-isomorphic-data'
 ---
 
 ## `useDataClient`

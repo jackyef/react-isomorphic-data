@@ -2,6 +2,7 @@
 id: suspense
 title: Working with React Suspense (Experimental)
 sidebar_label: Working with React Suspense
+description: 'How to working with React Suspense and Concurrent mode with react-isomorphic-data'
 ---
 
 `react-isomoprhic-data` provides an easy way for you to implement the [render-as-you-fetch pattern with React Suspense](https://reactjs.org/docs/concurrent-mode-suspense.html#approach-3-render-as-you-fetch-using-suspense) throughout your app with the `resource` object returned by the hooks or HOCs you use.

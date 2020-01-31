@@ -2,6 +2,7 @@
 id: examples
 title: Examples
 sidebar_label: Examples
+description: 'Example for implementing react-isomorphic-data in your React app'
 ---
 
 ### Simple example with `useData` hook

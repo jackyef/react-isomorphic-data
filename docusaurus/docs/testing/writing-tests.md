@@ -2,6 +2,7 @@
 id: writing-tests
 title: Writing Tests
 sidebar_label: Writing Tests
+description: 'How to write tests when working with react-isomorphic-data'
 ---
 
 `react-isomorphic-data` provides some utilities for writing tests for your React component. These utilies are published to `@react-isomorphic-data/testing` package.
