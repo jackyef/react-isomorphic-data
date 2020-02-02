@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "rollup -c --watch",
     "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage --watchAll=false",
     "build": "NODE_ENV=production rollup -c",
     "prepack": "yarn build",
     "deploy": "npm publish"
@@ -68,6 +68,7 @@
     "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-typescript2": "^0.22.1",
     "rollup-plugin-visualizer": "^2.6.0",
+    "ts-jest": "^25.1.0",
     "typescript": "^3.7.4"
   },
   "peerDependencies": {
