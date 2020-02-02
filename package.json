@@ -16,8 +16,8 @@
     "dev": "lerna run dev --scope=react-isomorphic-data --stream",
     "example": "lerna run start --scope=client --stream",
     "example:ssr": "lerna run start --scope=ssr --stream",
-    "deploy": "HUSKY_SKIP_HOOKS=true lerna publish --conventional-commits --create-release github",
-    "deploy:dryrun": "HUSKY_SKIP_HOOKS=true lerna version --no-commit-hooks --no-git-tag-version --no-push",
+    "deploy": "yarn test && HUSKY_SKIP_HOOKS=true lerna publish --conventional-commits --create-release github",
+    "deploy:dryrun": "yarn test && HUSKY_SKIP_HOOKS=true lerna version --no-commit-hooks --no-git-tag-version --no-push",
     "docgen:api": "yarn typedoc --out docusaurus/docs/api packages/react-isomorphic-data/src --tsconfig packages/react-isomorphic-data/tsconfig.json --theme docusaurus",
     "test": "lerna run test --scope=react-isomorphic-data --stream",
     "test:coverage": "lerna run test:coverage --scope=react-isomorphic-data --stream"

@@ -5,7 +5,7 @@ import { DataClient } from '../../common/types';
 
 const { renderToStaticMarkup } = ReactDOMServer;
 
-const getDataFromTree = async (
+const baseGetData = async (
   tree: React.ReactElement,
   client: DataClient,
   renderFunction: (tree: React.ReactElement) => string = renderToStaticMarkup,
@@ -36,4 +36,4 @@ const getDataFromTree = async (
   }
 };
 
-export default getDataFromTree;
+export default baseGetData;

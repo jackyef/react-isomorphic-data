@@ -46,12 +46,12 @@ const preloadData = (
     });
 
   const read = () => {
-    if (!fulfilled && promise instanceof Promise) {
-      // let a SuspenseBoundary catch this
-      throw promise;
-    } else if (error !== null) {
+    if (error !== null) {
       // let an ErrorBoundary catch this
       throw error;
+    } else if (!fulfilled && promise instanceof Promise) {
+      // let a SuspenseBoundary catch this
+      throw promise;
     } else {
       return data;
     }
