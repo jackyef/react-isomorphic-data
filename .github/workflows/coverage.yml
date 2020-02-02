@@ -17,5 +17,5 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} #required
-          file: ./packages/react-isomorphic-data/coverage/clover.xml
+          file: ./packages/react-isomorphic-data/coverage/coverage-final.json
           fail_ci_if_error: true #optional (default = false)
