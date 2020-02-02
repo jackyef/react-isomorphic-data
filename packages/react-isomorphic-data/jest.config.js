@@ -12,6 +12,7 @@ const config = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
+    '!src/utils/querystringify/*',
     '!src/**/__tests__/*.{js,jsx,ts,tsx}'
   ],
   setupFiles: ['<rootDir>/src/setupTests.ts'],
