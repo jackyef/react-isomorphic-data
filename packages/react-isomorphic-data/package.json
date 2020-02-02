@@ -37,6 +37,7 @@
   "homepage": "https://github.com/jackyef/react-isomorphic-data#readme",
   "devDependencies": {
     "@rollup/plugin-replace": "^2.2.0",
+    "@testing-library/react": "^9.4.0",
     "@types/jest": "^25.1.0",
     "@types/lodash.camelcase": "^4.3.6",
     "@types/node": "^12.7.9",

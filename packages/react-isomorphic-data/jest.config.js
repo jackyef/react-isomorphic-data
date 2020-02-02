@@ -18,6 +18,7 @@ const config = {
     {
       displayName: 'Core',
       testMatch: [
+        '<rootDir>/src/__tests__/*.test.{ts,tsx}',
         '<rootDir>/src/common/**/__tests__/*.test.{ts,tsx}',
         '<rootDir>/src/hoc/**/__tests__/*.test.{ts,tsx}',
         '<rootDir>/src/hooks/**/__tests__/*.test.{ts,tsx}',
