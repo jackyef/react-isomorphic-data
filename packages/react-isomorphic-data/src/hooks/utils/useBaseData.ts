@@ -154,7 +154,7 @@ const useBaseData = <T, > (
 
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
   const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
-  const isLoading = dataFromCache === LoadingSymbol;
+  const isLoading = dataFromCache === LoadingSymbol || (client.ssr && typeof dataFromCache === 'undefined' && !lazy);
 
   return [
     memoizedFetchData,
