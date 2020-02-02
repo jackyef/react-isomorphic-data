@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { DataContext, DataClient } from '../../common';
 import { DataHookState } from '../types';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';

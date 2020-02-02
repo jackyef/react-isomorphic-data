@@ -1,5 +1,6 @@
 const transformers = {
-  '\\.(js|jsx|ts|tsx)$': '<rootDir>/babelJestTransformer.js',
+  '\\.(js|jsx)$': '<rootDir>/babelJestTransformer.js',
+  '\\.(ts|tsx)$': 'ts-jest',
 };
 
 const config = {
@@ -11,9 +12,15 @@ const config = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
+    '!src/utils/querystringify/*',
     '!src/**/__tests__/*.{js,jsx,ts,tsx}'
   ],
   setupFiles: ['<rootDir>/src/setupTests.ts'],
+  globals: {
+    'ts-jest': {
+      tsConfig: 'tsconfig.test.json',
+    },
+  },
   projects: [
     {
       displayName: 'Core',
