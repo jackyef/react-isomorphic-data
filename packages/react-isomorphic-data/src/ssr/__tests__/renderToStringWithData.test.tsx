@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { FetchMock } from 'jest-fetch-mock';
 
-import renderToStringWithData from '../renderToStringWithData';
+import { getDataFromTree, renderToStringWithData } from '../index';
 import { DataProvider, createDataClient, retrieveFromCache } from '../../common';
 import { useData, useLazyData } from '../../hooks';
 import createPrefetchTags from '../createPrefetchTags';
 import { withLazyData, withData } from '../../hoc';
-import getDataFromTree from '../getDataFromTree';
 
 const fetchMock = fetch as FetchMock;
 

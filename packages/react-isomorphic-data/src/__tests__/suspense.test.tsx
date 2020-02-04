@@ -2,8 +2,15 @@ import * as React from 'react';
 import { FetchMock } from 'jest-fetch-mock';
 import { render, wait } from '@testing-library/react';
 
-import { DataProvider, preloadData, createDataClient } from '../common';
-import { useDataClient } from '../hooks';
+import {
+  useDataClient,
+  withDataClient,
+  DataProvider,
+  preloadData,
+  createDataClient,
+} from '../index';
+
+import { DataClient } from '../common/types';
 
 const fetchMock = fetch as FetchMock;
 
@@ -121,5 +128,46 @@ describe('render-as-you-fetch tests', () => {
     const errorFallback = await findByText('Error happened!');
 
     expect(errorFallback).toBeDefined();
+  });
+
+  it('Should fallback to Suspense boundary properly, with HOC', async () => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello world!' }));
+    const client = createDataClient();
+    const url = 'http://localhost:3000/fetch-as-you-render-hoc';
+
+    const Component = (props: any) => {
+      const data = props.resource.read();
+
+      return <div>{data.message}</div>;
+    };
+    const Wrapper = ({ client }: { client: DataClient }) => {
+      const resource = preloadData(client, url);
+
+      return (
+        <React.Suspense fallback={<div>Resource is not ready yet...</div>}>
+          <Component resource={resource} />
+        </React.Suspense>
+      );
+    };
+
+    const WrapperWithClient = withDataClient({ name: 'client' })(Wrapper);
+
+    const App = (
+      <DataProvider client={client}>
+        <WrapperWithClient />
+      </DataProvider>
+    );
+
+    const { findByText } = render(App);
+
+    const suspenseFallback = await findByText('Resource is not ready yet...');
+
+    expect(suspenseFallback).toBeDefined();
+
+    await wait();
+
+    const actualComponent = await findByText('Hello world!');
+
+    expect(actualComponent).toBeDefined();
   });
 });
