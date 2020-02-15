@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.2](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.14.1...react-isomorphic-data@0.14.2) (2020-02-15)
+
+
+### Performance Improvements
+
+* **core:** make hoist-non-react-static a peerDep ([d1c23eb](https://github.com/jackyef/react-isomorphic-data/commit/d1c23eb4e3bf1e9cc3b70d21b946b82a5363b4bf))
+
+
+
+
+
 ## [0.14.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.14.0...react-isomorphic-data@0.14.1) (2020-02-02)
 
 

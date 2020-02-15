@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.10](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.9...ssr@0.11.10) (2020-02-15)
+
+
+### Performance Improvements
+
+* **core:** make hoist-non-react-static a peerDep ([d1c23eb](https://github.com/jackyef/react-isomorphic-data/commit/d1c23eb4e3bf1e9cc3b70d21b946b82a5363b4bf))
+
+
+
+
+
 ## [0.11.9](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.8...ssr@0.11.9) (2020-02-02)
 
 **Note:** Version bump only for package ssr
