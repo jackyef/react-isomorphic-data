@@ -25,7 +25,8 @@ const server = express();
 
 server.disable('x-powered-by');
 server.use(bodyParser());
-// eslint-disable-next-line
+// @ts-ignore
+// eslint-disable-next-line 
 server.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
 server.use(compression());
 

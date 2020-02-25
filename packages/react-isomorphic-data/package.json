@@ -11,7 +11,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage --watchAll=false",
     "build": "NODE_ENV=production rollup -c",
-    "prepack": "yarn build",
+    "prepack": "pnpm run build",
     "deploy": "npm publish"
   },
   "files": [

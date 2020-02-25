@@ -10,11 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: Borales/actions-yarn@v2.1.0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
       - name: 'Setup'
-        run: yarn install
+        run: pnpm run bootstrap
       - name: 'Run tests'
-        run: yarn test:coverage
+        run: pnpm run test:coverage
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} #required
