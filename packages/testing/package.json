@@ -10,7 +10,7 @@
     "dev": "rollup -c --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production rollup -c",
-    "prepack": "yarn build",
+    "prepack": "pnpm run build",
     "deploy": "npm publish"
   },
   "files": [

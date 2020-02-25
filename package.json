@@ -3,28 +3,25 @@
   "private": true,
   "version": "0.0.1",
   "description": "Work in progress",
-  "workspaces": {
-    "packages": [
-      "examples/*",
-      "packages/*"
-    ]
+  "engines": {
+    "pnpm": ">=3.9.0"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build --scope=react-isomorphic-data --stream",
+    "bootstrap": "pnpm recursive install",
+    "build": "pnpm run build --filter react-isomorphic-data",
     "build:minify": "bnr build:minify",
-    "dev": "lerna run dev --scope=react-isomorphic-data --stream",
-    "example": "lerna run start --scope=client --stream",
-    "example:ssr": "lerna run start --scope=ssr --stream",
-    "deploy": "yarn test && HUSKY_SKIP_HOOKS=true lerna publish --conventional-commits --create-release github",
-    "deploy:dryrun": "yarn test && HUSKY_SKIP_HOOKS=true lerna version --no-commit-hooks --no-git-tag-version --no-push",
-    "docgen:api": "yarn typedoc --out docusaurus/docs/api packages/react-isomorphic-data/src --tsconfig packages/react-isomorphic-data/tsconfig.json --theme docusaurus",
-    "test": "lerna run test --scope=react-isomorphic-data --stream",
-    "test:coverage": "lerna run test:coverage --scope=react-isomorphic-data --stream"
+    "dev": "pnpm run dev --filter react-isomorphic-data",
+    "example": "pnpm run start --filter client",
+    "example:ssr": "pnpm run start --filter ssr",
+    "deploy": "pnpm run test && HUSKY_SKIP_HOOKS=true lerna publish --conventional-commits --create-release github",
+    "deploy:dryrun": "pnpm run test && HUSKY_SKIP_HOOKS=true lerna version --no-commit-hooks --no-git-tag-version --no-push",
+    "docgen:api": "pnpx typedoc --out docusaurus/docs/api packages/react-isomorphic-data/src --tsconfig packages/react-isomorphic-data/tsconfig.json --theme docusaurus",
+    "test": "pnpm run test --filter react-isomorphic-data",
+    "test:coverage": "pnpm run test:coverage --filter react-isomorphic-data"
   },
   "betterScripts": {
     "build:minify": {
-      "command": "lerna run build --scope=react-isomorphic-data --stream",
+      "command": "pnpm run build --filter react-isomorphic-data",
       "env": {
         "MINIFY": true
       }

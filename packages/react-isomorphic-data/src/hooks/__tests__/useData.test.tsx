@@ -6,6 +6,10 @@ import useData from '../useData';
 
 const fetchMock = fetch as FetchMock;
 
+interface TestingDataInterface {
+  message: string;
+};
+
 describe('useData hook tests', () => {
   const onError = (e: Event) => {
     e.preventDefault();
@@ -29,7 +33,7 @@ describe('useData hook tests', () => {
     const client = createDataClient();
 
     const Comp = () => {
-      const { data, loading } = useData(
+      const { data, loading } = useData<TestingDataInterface>(
         'http://localhost/somewhere',
         {},
         {},
@@ -63,7 +67,7 @@ describe('useData hook tests', () => {
     const client = createDataClient();
 
     const Comp = () => {
-      const { data, loading } = useData(
+      const { data, loading } = useData<TestingDataInterface>(
         'http://localhost/somewhere',
         {},
         {},
@@ -111,7 +115,7 @@ describe('useData hook tests', () => {
     }
 
     const Comp = () => {
-      const { data, loading } = useData('http://localhost/somewhere');
+      const { data, loading } = useData<TestingDataInterface>('http://localhost/somewhere');
 
       return loading || !data ? (
         <div>loading...</div>

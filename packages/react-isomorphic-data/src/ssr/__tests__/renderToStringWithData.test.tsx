@@ -9,6 +9,10 @@ import { withLazyData, withData } from '../../hoc';
 
 const fetchMock = fetch as FetchMock;
 
+interface TestDataInterface {
+  message: string;
+};
+
 describe('Server-side rendering utilities test', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
@@ -23,9 +27,9 @@ describe('Server-side rendering utilities test', () => {
     const url = 'http://localhost:3000/some-rest-api';
     const client = createDataClient({ initialCache: {}, ssr: true });
     const Component = () => {
-      const { loading, data } = useData(url);
+      const { loading, data } = useData<TestDataInterface>(url);
 
-      return loading ? <div>loading...</div> : <div>{data.message}</div>;
+      return loading || !data ? <div>loading...</div> : <div>{data.message}</div>;
     };
 
     const App = (
@@ -42,9 +46,9 @@ describe('Server-side rendering utilities test', () => {
   it('Should render a HTML markup with fetched data correctly', async () => {
     const client = createDataClient({ initialCache: {}, ssr: true });
     const Component = () => {
-      const { loading, data } = useData('http://localhost:3000/some-rest-api');
+      const { loading, data } = useData<TestDataInterface>('http://localhost:3000/some-rest-api');
 
-      return loading ? <div>loading...</div> : <div>{data.message}</div>;
+      return loading || !data ? <div>loading...</div> : <div>{data.message}</div>;
     };
 
     const App = (
@@ -61,11 +65,11 @@ describe('Server-side rendering utilities test', () => {
   it('Should render a HTML markup with nested data fetching correctly', async () => {
     const client = createDataClient({ initialCache: {}, ssr: true });
     const ComponentB = () => {
-      const { loading, data } = useData(
+      const { loading, data } = useData<TestDataInterface>(
         'http://localhost:3000/some-rest-api/2',
       );
 
-      return loading ? (
+      return loading || !data ? (
         <div>loading...</div>
       ) : (
         <div>{`ComponentB: ${data.message}`}</div>

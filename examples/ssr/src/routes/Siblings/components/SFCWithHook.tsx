@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useData } from 'react-isomorphic-data';
 
 const SFCWithHook: React.SFC<{ id: number }> = ({ id }) => {
-  const { data, loading, refetch } = useData(
+  const { data, loading, refetch } = useData<{ randomNumber: string }>(
     `http://localhost:3000/some-rest-api/8-24-siblings-${id}`,
     {},
     {}, // options that can be accepted by the native `fetch` API
