@@ -7,7 +7,9 @@ import { DataClient } from '../common/types';
 const { renderToString } = ReactDOMServer;
 
 const getDataFromTree = async (tree: React.ReactElement, client: DataClient): Promise<string> => {
-  return baseGetData(tree, client, renderToString);
+  await baseGetData(tree, client);
+
+  return renderToString(tree);
 };
 
 export default getDataFromTree;

@@ -1,20 +1,17 @@
 import * as React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import ssrPrepass from 'react-ssr-prepass'
 
 import { DataClient } from '../../common/types';
 
-const { renderToStaticMarkup } = ReactDOMServer;
-
 const baseGetData = async (
   tree: React.ReactElement,
-  client: DataClient,
-  renderFunction: (tree: React.ReactElement) => string = renderToStaticMarkup,
-): Promise<string> => {
+  client: DataClient
+): Promise<void> => {
   let prevPendingPromisesLength = 0;
-  let lastMarkup: string;
 
   while (true) {
-    lastMarkup = renderFunction(tree);
+    // require('react-dom/server').renderToStaticMarkup(tree);
+    await ssrPrepass(tree);
 
     const currPendingPromisesLength = client.pendingPromiseFactories.length;
 
@@ -31,7 +28,7 @@ const baseGetData = async (
 
       await Promise.all(arrayOfPromises);
     } else {
-      return lastMarkup;
+      break;
     }
   }
 };
