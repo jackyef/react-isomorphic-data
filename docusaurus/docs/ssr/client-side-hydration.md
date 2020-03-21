@@ -23,7 +23,7 @@ const tree = (
 let markup;
 
 try {
-  await getDataFromTree(tree, dataClient);
+  await getDataFromTree(tree);
   markup = renderToString(tree);
 } catch (err) {
   console.error('An error happened during server side rendering!');

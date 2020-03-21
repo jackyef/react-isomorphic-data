@@ -131,8 +131,10 @@ const useBaseData = <T, > (
   // if this data is supposed to be fetched during SSR
   if (isSSR) {
     if (!promisePushed.current && !lazy && !dataFromCache) {
-      client.pendingPromiseFactories.push(memoizedFetchData);
       promisePushed.current = true;
+
+      // throw a promise here. react-ssr-prepass will handle the suspension
+      throw memoizedFetchData();
     }
   }
 

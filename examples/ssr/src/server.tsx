@@ -14,6 +14,34 @@ const globalAny: any = global;
 globalAny.fetch = fetch;
 
 let assets: any;
+const time: [number, number][] = [];
+const methodName = 'ssr-prepass-no-multi-rendering-prod';
+
+const getResult = () => {
+  console.info("================ RESULT ================");
+  const durations = time.map(t => (t[0] + t[1] / 1e9) * 1e3);
+
+  durations.forEach((d, i) => {
+    console.info(`Run ${i} took `, d, "ms");
+  });
+
+  console.info("================ SUMMARY ================");
+  console.info(`[${methodName}]`);
+  console.info(
+    "Average is:",
+    durations.reduce((a, b) => a + b) / durations.length,
+    "ms"
+  );
+  console.info("Stdev is:", require("node-stdev").population(durations), "ms");
+
+  // uncomment this to write result into a json file
+  // require('fs').writeFileSync(`./result-${methodName}.json`, JSON.stringify({
+  //   name: methodName,
+  //   average: durations.reduce((a, b) => a + b) / durations.length,
+  //   stdev: require("node-stdev").population(durations),
+  //   runs: durations.length,
+  // }));
+}
 
 const syncLoadAssets = () => {
   // eslint-disable-next-line
@@ -70,7 +98,11 @@ server.get('/*', async (req: express.Request, res: express.Response) => {
   let markup;
   // pass the same dataClient instance you are passing to your provider here
   try {
+    const start = process.hrtime();
     markup = await renderToStringWithData(reactApp, dataClient);
+    time.push(process.hrtime(start));
+
+    getResult();
   } catch (err) {
     console.error('Error while trying to getDataFromTree', err);
   }

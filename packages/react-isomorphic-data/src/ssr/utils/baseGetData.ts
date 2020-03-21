@@ -1,39 +1,13 @@
 import * as React from 'react';
-import ReactDOMServer from 'react-dom/server';
-
-import { DataClient } from '../../common/types';
-
-const { renderToStaticMarkup } = ReactDOMServer;
+import ssrPrepass from 'react-ssr-prepass'
 
 const baseGetData = async (
-  tree: React.ReactElement,
-  client: DataClient,
-  renderFunction: (tree: React.ReactElement) => string = renderToStaticMarkup,
-): Promise<string> => {
-  let prevPendingPromisesLength = 0;
-  let lastMarkup: string;
+  tree: React.ReactElement
+): Promise<void> => {
+  // we use `react-ssr-prepass` that will automatically suspends on thrown promise
+  await ssrPrepass(tree);
 
-  while (true) {
-    lastMarkup = renderFunction(tree);
-
-    const currPendingPromisesLength = client.pendingPromiseFactories.length;
-
-    if (currPendingPromisesLength > prevPendingPromisesLength) {
-      const arrayOfPromises = client.pendingPromiseFactories.map((p, index) => {
-        if (index >= prevPendingPromisesLength) {
-          return p();
-        } else {
-          return new Promise((resolve) => resolve());
-        }
-      });
-
-      prevPendingPromisesLength = currPendingPromisesLength;
-
-      await Promise.all(arrayOfPromises);
-    } else {
-      return lastMarkup;
-    }
-  }
+  return;
 };
 
 export default baseGetData;

@@ -1,13 +1,9 @@
 import * as React from 'react';
-import ReactDOMServer from 'react-dom/server';
 
 import baseGetData from './utils/baseGetData';
-import { DataClient } from '../common/types';
 
-const { renderToStaticMarkup } = ReactDOMServer;
-
-const getDataFromTree = async (tree: React.ReactElement, client: DataClient): Promise<string> => {
-  return baseGetData(tree, client, renderToStaticMarkup);
+const getDataFromTree = async (tree: React.ReactElement): Promise<void> => {
+  return baseGetData(tree);
 }
 
 export default getDataFromTree;

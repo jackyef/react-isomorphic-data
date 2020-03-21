@@ -3,7 +3,6 @@ export interface DataResource {
 };
 export interface DataClient {
   cache: Record<string, any>;
-  pendingPromiseFactories: { () : Promise<any> }[];
   toBePrefetched: Record<string, boolean>;
   ssr: boolean;
   test: boolean;

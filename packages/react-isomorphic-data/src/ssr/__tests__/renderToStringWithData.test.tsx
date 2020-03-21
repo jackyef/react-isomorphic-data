@@ -34,7 +34,7 @@ describe('Server-side rendering utilities test', () => {
       </DataProvider>
     );
 
-    await getDataFromTree(App, client);
+    await getDataFromTree(App);
 
     expect(retrieveFromCache(client.cache, url)).toStrictEqual({ message: 'Hello world!' });
   });
@@ -53,7 +53,7 @@ describe('Server-side rendering utilities test', () => {
       </DataProvider>
     );
 
-    const markup = await renderToStringWithData(App, client);
+    const markup = await renderToStringWithData(App);
 
     expect(markup).toContain('Hello world!');
   });
@@ -83,7 +83,7 @@ describe('Server-side rendering utilities test', () => {
       </DataProvider>
     );
 
-    const markup = await renderToStringWithData(App, client);
+    const markup = await renderToStringWithData(App);
 
     expect(markup).toContain('ComponentB: Hello world!');
   });
@@ -118,7 +118,7 @@ describe('Server-side rendering utilities test', () => {
       </DataProvider>
     );
 
-    const markup = await renderToStringWithData(App, client);
+    const markup = await renderToStringWithData(App);
 
     expect(markup).toContain('ComponentB: Hello world!');
   });
@@ -145,7 +145,7 @@ describe('Server-side rendering utilities test', () => {
       </DataProvider>
     );
 
-    const markup = await renderToStringWithData(App, client);
+    const markup = await renderToStringWithData(App);
 
     expect(markup).toContain('loading...');
 
@@ -179,7 +179,7 @@ describe('Server-side rendering utilities test', () => {
       </DataProvider>
     );
 
-    const markup = await renderToStringWithData(App, client);
+    const markup = await renderToStringWithData(App);
 
     expect(markup).toContain('loading...');
 
