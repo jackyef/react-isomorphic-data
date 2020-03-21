@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.10...ssr@0.12.0) (2020-03-21)
+
+
+### Features
+
+* **core:** react-ssr-prepass for more performant SSR ([#46](https://github.com/jackyef/react-isomorphic-data/issues/46)) ([d8747cf](https://github.com/jackyef/react-isomorphic-data/commit/d8747cf2a22a4b1e60154c01b3636dabd505fe6d))
+
+
+
+
+
 ## [0.11.10](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.9...ssr@0.11.10) (2020-02-15)
 
 
