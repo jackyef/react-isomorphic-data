@@ -9,7 +9,6 @@ export const createDataClient = (
 
   return {
     cache: initialCache ? { ...initialCache } : {},
-    pendingPromiseFactories: [],
     ssr: ssr || false,
     test: test || false,
     headers: headers || {},

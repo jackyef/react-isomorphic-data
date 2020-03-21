@@ -14,8 +14,8 @@ const globalAny: any = global;
 globalAny.fetch = fetch;
 
 let assets: any;
-const time: number[] = [];
-const methodName = 'ssr-prepass';
+const time: [number, number][] = [];
+const methodName = 'ssr-prepass-no-multi-rendering-prod';
 
 const getResult = () => {
   console.info("================ RESULT ================");
@@ -34,12 +34,13 @@ const getResult = () => {
   );
   console.info("Stdev is:", require("node-stdev").population(durations), "ms");
 
-  require('fs').writeFileSync(`./result-${methodName}.json`, JSON.stringify({
-    name: methodName,
-    average: durations.reduce((a, b) => a + b) / durations.length,
-    stdev: require("node-stdev").population(durations),
-    runs: durations.length,
-  }));
+  // uncomment this to write result into a json file
+  // require('fs').writeFileSync(`./result-${methodName}.json`, JSON.stringify({
+  //   name: methodName,
+  //   average: durations.reduce((a, b) => a + b) / durations.length,
+  //   stdev: require("node-stdev").population(durations),
+  //   runs: durations.length,
+  // }));
 }
 
 const syncLoadAssets = () => {
