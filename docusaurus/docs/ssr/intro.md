@@ -27,7 +27,9 @@ import App from './App';
 // react-isomorphic-data needs fetch to be available in the global scope
 global.fetch = fetch;
 
-express.get('/*', async (req, res) => {
+const server = express();
+
+server.get('/*', async (req, res) => {
   const dataClient = createDataClient({
     initialCache: {},
     ssr: true, // set this to true on server side
@@ -42,7 +44,7 @@ express.get('/*', async (req, res) => {
   let markup;
 
   try {
-    markup = await renderToStringWithData(tree, dataClient);
+    markup = await renderToStringWithData(tree);
   } catch (err) {
     console.error('An error happened during server side rendering!');
   }
@@ -54,5 +56,5 @@ express.get('/*', async (req, res) => {
       </body>
     </html>
   `);
-}
+});
 ```

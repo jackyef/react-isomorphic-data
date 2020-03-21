@@ -8,7 +8,6 @@ description: 'Explanation for renderToStringWithData() in react-isomorphic-data'
 ## `renderToStringWithData()`
 Params
 * `tree: React.ReactElement`
-* `dataClient: DataClient`
 
 This function return a `Promise` that will resolve to a `string`, containing the markup for the React app.
 
@@ -28,7 +27,9 @@ import App from './App';
 // react-isomorphic-data needs fetch to be available in the global scope
 global.fetch = fetch;
 
-express.get('/*', async (req, res) => {
+const server = express();
+
+server.get('/*', async (req, res) => {
   const dataClient = createDataClient({
     initialCache: {},
     ssr: true, // set this to true on server side
@@ -55,5 +56,5 @@ express.get('/*', async (req, res) => {
       </body>
     </html>
   `);
-}
+});
 ```

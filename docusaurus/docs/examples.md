@@ -55,7 +55,9 @@ import App from './App';
 // react-isomorphic-data needs fetch to be available in the global scope
 global.fetch = fetch;
 
-express.get('/*', async (req: express.Request, res: express.Response) => {
+const server = express();
+
+server.get('/*', async (req: express.Request, res: express.Response) => {
   const dataClient = createDataClient({ 
     initialCache: {}, 
     ssr: true, 
@@ -71,7 +73,7 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
   );
 
   try {
-    await getDataFromTree(reactApp, dataClient);
+    await getDataFromTree(reactApp);
   } catch (err) {
     console.error('Error while trying to getDataFromTree', err);
   }
@@ -95,4 +97,5 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
       </body>
     </html>`
   );
-}
+});
+```

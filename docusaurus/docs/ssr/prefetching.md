@@ -7,7 +7,7 @@ description: 'Adding prefetch hints to optimise loading with react-isomorphic-da
 
 `react-isomorphic-data` provide helper function to inject `<link rel="prefetch">` tags in to the server-side rendered HTML. This is done to give hints to the browser that the particular resource should be prefetched. Prefetched resources have a very low priority and will only be run when the browser is idle. Prefetching resources could improve performance because when the resource is requested, it might already be ready in the prefetch cache. More about prefetch [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ).
 
-In general, you should prefetch data that you think will have a high possibility to be requested by the page.
+In general, you should prefetch data that you think will be needed later by the page, but not on the initial load.
 
 ## Example
 First, make sure you have are setting `dataOptions.prefetch` to true for some of your data. 
@@ -30,7 +30,7 @@ Then, in your server side rendering code, you can `createPrefetchTags` from the 
 ```javascript
 import { renderToStringWithData, createPrefetchTags } from 'react-isomorphic-data/ssr';
 
-express.get('/*', async (req, res) => {
+server.get('/*', async (req, res) => {
   const dataClient = createDataClient({
     initialCache: {},
     ssr: true, // set this to true on server side
@@ -45,7 +45,7 @@ express.get('/*', async (req, res) => {
   let markup;
 
   try {
-    markup = await renderToStringWithData(tree, dataClient);
+    markup = await renderToStringWithData(tree);
   } catch (err) {
     console.error('An error happened during server side rendering!');
   }
@@ -60,7 +60,7 @@ express.get('/*', async (req, res) => {
       </body>
     </html>
   `);
-}
+});
 ```
 
 ## Note

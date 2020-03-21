@@ -11,7 +11,7 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 
 ### Features
 - React hooks 
-- SSR support
+- SSR support with Suspense using [react-ssr-prepass](https://github.com/FormidableLabs/react-ssr-prepass) (No multi-rendering on the server!)
 - Simple built-in cache
 - TypeScript support
 - [Testing utilities](./testing/writing-tests)
