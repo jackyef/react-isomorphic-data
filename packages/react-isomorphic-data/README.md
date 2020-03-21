@@ -7,7 +7,7 @@ NOTE: This project is still very much work in progress, use at your own risk ⚠
 
 ### Features
 - React hooks 
-- SSR support
+- SSR support with Suspense using [react-ssr-prepass](https://github.com/FormidableLabs/react-ssr-prepass) (No multi-rendering on the server!)
 - Simple built-in cache
 - TypeScript support
 - [Testing utilities](https://react-isomorphic-data.netlify.com/docs/testing/writing-tests)
@@ -67,7 +67,9 @@ import App from './App';
 // react-isomorphic-data needs fetch to be available in the global scope
 global.fetch = fetch;
 
-express.get('/*', async (req: express.Request, res: express.Response) => {
+const server = express();
+
+server.get('/*', async (req: express.Request, res: express.Response) => {
   const dataClient = createDataClient({ 
     initialCache: {}, 
     ssr: true, 
@@ -84,7 +86,7 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
   );
 
   try {
-    await getDataFromTree(reactApp, dataClient);
+    await getDataFromTree(reactApp);
   } catch (err) {
     console.error('Error while trying to getDataFromTree', err);
   }
@@ -108,7 +110,7 @@ express.get('/*', async (req: express.Request, res: express.Response) => {
       </body>
     </html>`
   );
-}
+});
 ```
 
 ### Documentations [![Netlify Status](https://api.netlify.com/api/v1/badges/81844630-ff7d-4bf6-95f0-9f170ba6e421/deploy-status)](https://app.netlify.com/sites/unruffled-austin-36e969/deploys)
