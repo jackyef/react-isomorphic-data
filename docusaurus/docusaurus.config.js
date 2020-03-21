@@ -68,7 +68,7 @@ module.exports = {
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/jacky_efendi',
+              href: 'https://twitter.com/jackyef__',
             },
           ],
         },
