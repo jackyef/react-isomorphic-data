@@ -26,7 +26,7 @@ const features = [
     ),
   },
   {
-    title: <>Full SSR Support</>,
+    title: <>SSR Support with Suspense</>,
     imageUrl: 'img/undraw_code_review.svg',
     description: (
       <>Everything works on SSR with little changes in your server code.</>
@@ -55,7 +55,7 @@ function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Easily fetch data in your ⚛️ React app, with full SSR support! 🎉"
+      description="Easily fetch data in your ⚛️ React app, with Suspense SSR support! 🎉"
     >
       <Head>
         <meta
