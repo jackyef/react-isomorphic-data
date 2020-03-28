@@ -36,7 +36,7 @@ describe('Server-side rendering utilities test', () => {
 
     await getDataFromTree(App);
 
-    expect(retrieveFromCache(client.cache, url)).toStrictEqual({ message: 'Hello world!' });
+    expect(retrieveFromCache(client.cache, url)).toStrictEqual("{\"message\":\"Hello world!\"}");
   });
 
   it('Should render a HTML markup with fetched data correctly', async () => {
