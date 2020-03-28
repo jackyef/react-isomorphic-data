@@ -13,7 +13,8 @@ const addToCache = (cache: Record<string, any>, url: string, data: Record<string
       temp = temp[k];
     } else {
       // add the data
-      temp[k] = data;
+      temp[k] = temp[k] || {};
+      temp[k].__raw = data;
     }
   });
 

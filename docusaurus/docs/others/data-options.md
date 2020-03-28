@@ -66,6 +66,12 @@ Determines the how the data is handled. A more detailed explanation can be found
 
 Determines whether the data should be fetched or not.
 
+#### `raw`
+* Type: `boolean`
+* Default: `false`
+
+Determines whether to return the `data` as raw response string, or JSON. For example, setting this to `true` will cause the `data` to be a string like `{\"message\":\"Hello world!\"}`.
+
 #### `prefetch`
 * Type: `boolean`
 * Default: `false`

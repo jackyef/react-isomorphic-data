@@ -3,7 +3,7 @@ import { useData } from 'react-isomorphic-data';
 
 const Comp = () => {
   const { data } = useData(
-    'http://localhost:3000/some-rest-api/24-hook',
+    'http://localhost:3000/some-rest-api/1/24-hook',
     {},
     {}, // options that can be accepted by the native `fetch` API
     {

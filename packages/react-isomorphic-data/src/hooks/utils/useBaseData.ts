@@ -6,6 +6,8 @@ import { LazyDataState, DataHookOptions } from '../types';
 import useFetchRequirements from './useFetchRequirements';
 import useCacheSubscription, { LoadingSymbol } from './useCacheSubscription';
 
+const simpleCache: Record<string, any> = {};
+
 const useBaseData = <T, > (
   url: string,
   queryParams: Record<string, any> = {},
@@ -18,6 +20,7 @@ const useBaseData = <T, > (
   
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const skip = dataOpts.skip !== undefined ? dataOpts.skip : false;
+  const raw = dataOpts.raw !== undefined ? dataOpts.raw : false;
   
   const { 
     client,
@@ -43,8 +46,8 @@ const useBaseData = <T, > (
 
   const createFetch = React.useCallback(() => {
     promiseRef.current = fetcher(fullUrl, finalFetchOpts)
-      .then((result) => result.json())
-      .then((json) => {
+      .then((result) => result.text())
+      .then((data) => {
         // this block of code will cause 2 re-renders because React doesn't batch these 2 updates
         // https://twitter.com/dan_abramov/status/887963264335872000?lang=en
         // For React 16.x we can use `unstable_batchedUpdates()` to solve this
@@ -52,7 +55,7 @@ const useBaseData = <T, > (
           if (!useTempData) {
             // only cache response for GET requests
             // AND non 'network-only' requests
-            addToCache(fullUrl, json);
+            addToCache(fullUrl, data);
           } else {
             // resets the cache to 'undefined'
             addToCache(fullUrl, undefined);
@@ -61,13 +64,13 @@ const useBaseData = <T, > (
           if (!isSSR) {
             setState((prev: any) => ({
               ...prev,
-              tempCache: { ...prev.tempCache, [fullUrl]: json },
+              tempCache: { ...prev.tempCache, [fullUrl]: data },
               error: { ...prev.error, [fullUrl]: undefined },
             }));
           }
         });
 
-        return json;
+        return data;
       })
       .catch((err) => {
         if (!isSSR) {
@@ -154,16 +157,42 @@ const useBaseData = <T, > (
     }
   }, [skip, lazy, memoizedFetchData, dataFromCache, state.error, fullUrl]);
 
+  const isLoading = dataFromCache === LoadingSymbol || (client.ssr && typeof dataFromCache === 'undefined' && !lazy);
+  
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
   const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
-  const isLoading = dataFromCache === LoadingSymbol || (client.ssr && typeof dataFromCache === 'undefined' && !lazy);
+  const memoizedData = React.useMemo(() => {
+    /**
+     * we only store the raw response string in the cache to avoid including double the amount of data
+     * for the client.cache rehydration on client side
+     * The caveats are: 
+     * 1. each hooks will need to do JSON.parse again to get the JSON
+     *    So, we do some simple caching here to improve this
+     * 2. Every re-renders means another string comparison
+     *    Seems like string comparison isn't that expensive, even with long strings.
+     *    So, let's settle with this for now
+     *    (https://jsperf.com/eqaulity-is-constant-time)
+     */
+
+    if (raw) {
+      // if we just want the raw data, just return it immediately
+      return usedData;
+    } else {
+      // else, we want the data in json form
+      if (!simpleCache[usedData]) {
+        simpleCache[usedData] = JSON.parse(usedData);
+      }
+
+      return simpleCache[usedData];
+    }
+  }, [usedData, raw]);
 
   return [
     memoizedFetchData,
     {
       error: state.error?.[fullUrl] || null,
       loading: isLoading,
-      data: usedData,
+      data: memoizedData,
       refetch: () => {
         // always reset cache on refetch
         addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
