@@ -30,10 +30,11 @@ const Home = () => {
 
   const eagerData = useData(
     'http://localhost:3000/some-rest-api/1',
-    {
-      foo: 'bar',
-      symbols: '!@#$%^&*()////\\\\\\+_+_+_+-==~`'
-    },
+    {},
+    // {
+    //   foo: 'bar',
+    //   symbols: '!@#$%^&*()////\\\\\\+_+_+_+-==~`'
+    // },
     {
       headers: {
         'x-custom-header': 'will only be sent for some-rest-api/1 request',

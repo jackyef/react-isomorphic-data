@@ -99,7 +99,7 @@ server.get('/*', async (req: express.Request, res: express.Response) => {
   // pass the same dataClient instance you are passing to your provider here
   try {
     const start = process.hrtime();
-    markup = await renderToStringWithData(reactApp, dataClient);
+    markup = await renderToStringWithData(reactApp);;
     time.push(process.hrtime(start));
 
     getResult();
