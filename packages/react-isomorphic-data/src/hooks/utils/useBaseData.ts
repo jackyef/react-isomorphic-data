@@ -179,7 +179,9 @@ const useBaseData = <T, > (
       return usedData;
     } else {
       // else, we want the data in json form
-      simpleCache[usedData] = JSON.parse(usedData);
+      if (!simpleCache[usedData]) {
+        simpleCache[usedData] = JSON.parse(usedData);
+      }
 
       return simpleCache[usedData];
     }

@@ -7,6 +7,7 @@ import qsify from '../utils/querystringify/querystringify.js';
  * Simple cache for preloaded data
  */
 const preloadCache: Record<string, any> = {};
+const preloadJsonCache: Record<string, any> = {};
 
 /**
  * An imperative API to preload data to implement render-as-you-fetch pattern
@@ -28,12 +29,12 @@ const preloadData = (
 
   const promise = !data
     ? fetch(fullUrl, finalFetchOpts)
-        .then((result) => result.json())
-        .then((json) => {
-          data = json;
+        .then((result) => result.text())
+        .then((resText) => {
+          data = resText;
 
           if (fetchPolicy !== 'network-only') {
-            preloadCache[fullUrl] = data;
+            preloadCache[fullUrl] = resText;
           }
           
           fulfilled = true;
@@ -53,7 +54,15 @@ const preloadData = (
       // let a SuspenseBoundary catch this
       throw promise;
     } else {
-      return data;
+      if (dataOpts.raw) {
+        return data;
+      } else {
+        if (!preloadJsonCache[data]) {
+          preloadJsonCache[data] = JSON.parse(data);
+        }
+
+        return preloadJsonCache[data];
+      }
     }
   };
 
