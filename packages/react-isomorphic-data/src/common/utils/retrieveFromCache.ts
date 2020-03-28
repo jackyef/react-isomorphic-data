@@ -12,7 +12,7 @@ const retrieveFromCache = (cache: Record<string, any>, url: string): any => {
     temp = temp[tempKey];
   }
 
-  return temp;
+  return temp.__raw;
 };
 
 export default retrieveFromCache;

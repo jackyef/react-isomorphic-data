@@ -21,4 +21,5 @@ export interface DataHookOptions {
   fetchPolicy?: 'cache-first' | 'cache-and-network' | 'network-only';
   prefetch?: boolean;
   skip?: boolean;
+  raw?: boolean;
 };
