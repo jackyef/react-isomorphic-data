@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.12.0...ssr@0.13.0) (2020-03-28)
+
+
+### Features
+
+* **core:** raw response support ([#51](https://github.com/jackyef/react-isomorphic-data/issues/51)) ([1a33c45](https://github.com/jackyef/react-isomorphic-data/commit/1a33c45ad51d73c0d308ebbf6eb11c4c5ccfb763))
+
+
+
+
+
 # [0.12.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.11.10...ssr@0.12.0) (2020-03-21)
 
 
