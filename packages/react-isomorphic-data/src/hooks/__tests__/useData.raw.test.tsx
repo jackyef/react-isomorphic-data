@@ -82,15 +82,13 @@ describe('useData hook tests', () => {
       </DataProvider>
     );
 
-    const { findByText, debug } = render(App);
+    const { findByText } = render(App);
 
     expect(await findByText('loading...')).toBeDefined();
 
     await wait();
 
     expect(await findByText('{\"message\":\"Hello world!\"}')).toBeDefined();
-
-    debug();
   });
 
   it('should throw an error when not wrapped with DataProvider', async () => {
