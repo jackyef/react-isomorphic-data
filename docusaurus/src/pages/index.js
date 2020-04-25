@@ -60,7 +60,7 @@ function Home() {
       <Head>
         <meta
           name="google-site-verification"
-          content="MXUQmmnRvuWRzx7IMgocc8oVLeoW1KAe_R6rvFmvIEc"
+          content="Kfv47oL35rf9nVhBJ3SzXQb94URBT-qqZDPUp5c1MuI"
         />
       </Head>
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
