@@ -108,7 +108,7 @@ const useBaseData = <T, > (
     const currentDataInCache = retrieveFromCache(fullUrl);
 
     // data not in cache yet
-    if (currentDataInCache === undefined && !state.tempCache[fullUrl])
+    if (currentDataInCache === undefined && !state.tempCache[fullUrl]) {
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
 
       fetchedFromNetwork.current = true;
