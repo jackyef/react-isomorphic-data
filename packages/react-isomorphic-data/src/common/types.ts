@@ -5,6 +5,9 @@ export interface DataClient {
   cache: Record<string, any>;
   toBePrefetched: Record<string, boolean>;
   ssr: boolean;
+  ssrForceFetchDelay: number;
+  ssrForceFetchDelayTimer: number;
+  fetchPolicy?: string;
   test: boolean;
   headers: Record<string, any>;
   addSubscriber: (key: string, callback: Function) => void;
@@ -14,6 +17,8 @@ export interface DataClient {
 
 export interface DataClientOptions {
   ssr?: boolean;
+  ssrForceFetchDelay?: number;
+  fetchPolicy?: string;
   test?: boolean;
   initialCache?: Record<string, any>;
   headers?: Record<string, any>;

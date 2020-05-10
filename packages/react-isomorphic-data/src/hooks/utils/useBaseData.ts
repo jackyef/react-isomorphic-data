@@ -17,12 +17,12 @@ const useBaseData = <T, > (
 ): LazyDataState<T> => {
   const queryString = qsify(queryParams, '?');
   const fullUrl = `${url}${queryString}`;
-  
+
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const skip = dataOpts.skip !== undefined ? dataOpts.skip : false;
   const raw = dataOpts.raw !== undefined ? dataOpts.raw : false;
-  
-  const { 
+
+  const {
     client,
     addToCache,
     addToBePrefetched,
@@ -33,7 +33,7 @@ const useBaseData = <T, > (
     setDataHookState: setState,
   } = useCacheSubscription(fullUrl, lazy, skip);
   const [finalFetchOpts, fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
-  
+
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
   const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
 
@@ -42,7 +42,15 @@ const useBaseData = <T, > (
   const fetchedFromNetwork = React.useRef<boolean>(false);
 
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
-  const useTempData = finalFetchOpts.method !== 'GET' || fetchPolicy === 'network-only';
+  let isNetworkPolicy = fetchPolicy === 'network-only';
+  let useTempData = finalFetchOpts.method !== 'GET' || isNetworkPolicy;
+
+  if (!isSSR && isNetworkPolicy) {
+    let delay = Date.now() - Number(client.ssrForceFetchDelayTimer);
+    if (delay <= client.ssrForceFetchDelay) {
+      useTempData = false;
+    }
+  }
 
   const createFetch = React.useCallback(() => {
     promiseRef.current = fetcher(fullUrl, finalFetchOpts)
@@ -83,7 +91,7 @@ const useBaseData = <T, > (
                 [fullUrl]: err,
               },
             }));
-  
+
             // resets the cache to 'undefined'
             addToCache(fullUrl, undefined);
           });
@@ -98,9 +106,9 @@ const useBaseData = <T, > (
 
   const memoizedFetchData = React.useCallback((): Promise<any> => {
     const currentDataInCache = retrieveFromCache(fullUrl);
-    
+
     // data not in cache yet
-    if (currentDataInCache === undefined && !state.tempCache[fullUrl]) {
+    if (currentDataInCache === undefined && !state.tempCache[fullUrl])
       addToCache(fullUrl, LoadingSymbol); // Use the loading flag as value temporarily
 
       fetchedFromNetwork.current = true;
@@ -115,11 +123,11 @@ const useBaseData = <T, > (
       // this is so the component can reuse previous response while the new request is in progress
       if (!fetchedFromNetwork.current || lazy) {
         fetchedFromNetwork.current = true;
-        
+
         return createFetch();
       }
     }
-    
+
     return new Promise((resolve) => resolve(currentDataInCache || state.tempCache[fullUrl]));
   }, [
     lazy,
@@ -158,14 +166,14 @@ const useBaseData = <T, > (
   }, [skip, lazy, memoizedFetchData, dataFromCache, state.error, fullUrl]);
 
   const isLoading = dataFromCache === LoadingSymbol || (client.ssr && typeof dataFromCache === 'undefined' && !lazy);
-  
+
   const finalData = dataFromCache !== LoadingSymbol ? dataFromCache : null;
   const usedData = (!useTempData ? finalData : state.tempCache[fullUrl]) || null;
   const memoizedData = React.useMemo(() => {
     /**
      * we only store the raw response string in the cache to avoid including double the amount of data
      * for the client.cache rehydration on client side
-     * The caveats are: 
+     * The caveats are:
      * 1. each hooks will need to do JSON.parse again to get the JSON
      *    So, we do some simple caching here to improve this
      * 2. Every re-renders means another string comparison
