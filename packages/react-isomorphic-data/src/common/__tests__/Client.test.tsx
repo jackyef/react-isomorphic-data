@@ -11,6 +11,7 @@ describe('DataClient', () => {
 
     expect(client.ssr).toBe(true);
     expect(client.headers['x-header']).toBe('custom header');
+    expect(client.ssrForceFetchDelay).toBe(0);
   })
   test('DataClient can be created on non-SSR mode without initialCache', async () => {
     const client = createDataClient({ ssr: false });
@@ -24,6 +25,12 @@ describe('DataClient', () => {
     expect(client.ssr).toBe(false);
     expect(Object.keys(client.cache).length).toBe(1);
     expect(client.cache.foo).toBe('bar');
+  })
+
+  test('DataClient can be allow to set force fetch delay', async () => {
+    const client = createDataClient({ ssr: false, ssrForceFetchDelay: 200 });
+
+    expect(client.ssrForceFetchDelay).toBe(200);
   })
 
   test('DataClient subscription model works properly', async () => {
