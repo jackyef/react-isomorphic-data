@@ -9,7 +9,14 @@ const createFetchOptions = (
   lazy = false,
 ): [RequestInit, string] => {
   const finalMethod = fetchOptions.method && lazy ? fetchOptions.method : 'GET';
-  let fetchPolicy = dataOpts.fetchPolicy !== undefined ? dataOpts.fetchPolicy : 'cache-first';
+
+  let fetchPolicy = 'cache-first';
+  if (dataOpts.fetchPolicy !== undefined) {
+    fetchPolicy = dataOpts.fetchPolicy;
+  } else if (client.fetchPolicy !== undefined) {
+    fetchPolicy = client.fetchPolicy;
+  }
+
   const ssrOpt = dataOpts.ssr !== undefined ? dataOpts.ssr : true;
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
 
