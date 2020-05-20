@@ -8,7 +8,7 @@
 module.exports = {
   title: 'React Isomorphic Data Documentation',
   tagline: 'Easily fetch data in your ⚛️ React app, with Suspense SSR support! 🎉',
-  url: 'https://react-isomorphic-data.netlify.com/', // Your website URL
+  url: 'https://react-isomorphic-data.netlify.app/', // Your website URL
   baseUrl: '/',
   favicon: 'img/favicon.ico',
   organizationName: 'jackyef', // Usually your GitHub org/user name.
@@ -58,10 +58,6 @@ module.exports = {
         {
           title: 'Social',
           items: [
-            // {
-            //   label: 'Blog',
-            //   to: 'blog',
-            // },
             {
               label: 'GitHub',
               href: 'https://github.com/jackyef/react-isomorphic-data',
@@ -69,6 +65,10 @@ module.exports = {
             {
               label: 'Twitter',
               href: 'https://twitter.com/jackyef__',
+            },
+            {
+              label: 'Personal',
+              href: 'https://jackyef.com/',
             },
           ],
         },

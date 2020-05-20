@@ -13,6 +13,7 @@ import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
+import { useWebVitals } from '../hooks/useWebVitals';
 
 const features = [
   {
@@ -51,6 +52,9 @@ const features = [
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
+
+  // setup web vitals observers
+  useWebVitals();
 
   return (
     <Layout
