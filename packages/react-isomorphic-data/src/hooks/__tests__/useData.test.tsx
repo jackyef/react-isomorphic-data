@@ -57,6 +57,94 @@ describe('useData hook tests', () => {
     expect(await findByText('Hello world!')).toBeDefined();
   });
 
+  it('should default to cache-first fetchPolicy when none provided to useData', async () => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello world!' }));
+
+    const client = createDataClient({
+      initialCache: {
+        'http:': {
+          localhost: {
+            somewhere: {
+              __raw: '{"message":"initial message","randomNumber":55}',
+            }
+          }
+        }
+      },
+    });
+
+    const Comp = () => {
+      const { data, loading } = useData(
+        'http://localhost/somewhere',
+        {},
+        {},
+        { skip: false, ssr: true },
+      );
+
+      return loading || !data ? (
+        <div>loading...</div>
+      ) : (
+        <div>{data.message}</div>
+      );
+    };
+    const App = (
+      <DataProvider client={client}>
+        <Comp />
+      </DataProvider>
+    );
+
+    const { findByText } = render(App);
+
+    // will immediately render data from cache because default fetchPolicy is 'cache-first'
+    expect(await findByText('initial message')).toBeDefined();
+  });
+
+  it('should use defined default fetchPolicy when none provided to useData', async () => {
+    fetchMock.mockResponse(JSON.stringify({ message: 'Hello world!' }));
+
+    const client = createDataClient({
+      fetchPolicy: 'network-only',
+      initialCache: {
+        'http:': {
+          localhost: {
+            somewhere: {
+              __raw: '{"message":"initial message","randomNumber":55}',
+            }
+          }
+        }
+      },
+    });
+
+    const Comp = () => {
+      const { data, loading } = useData(
+        'http://localhost/somewhere',
+        {},
+        {},
+        { skip: false, ssr: true },
+      );
+
+      return loading || !data ? (
+        <div>loading...</div>
+      ) : (
+        <div>{data.message}</div>
+      );
+    };
+    const App = (
+      <DataProvider client={client}>
+        <Comp />
+      </DataProvider>
+    );
+
+    const { findByText } = render(App);
+
+    // will be loading even though data is already in cache. Because we set the default fetchPolicy is 'network-only'
+    expect(await findByText('loading...')).toBeDefined();
+
+    await wait();
+
+    // will render data from the network
+    expect(await findByText('Hello world!')).toBeDefined();
+  });
+
   it('should fetch data correctly; fetchPolicy: "network-only"', async () => {
     fetchMock.mockResponse(JSON.stringify({ message: 'Hello world!' }));
 
@@ -90,7 +178,7 @@ describe('useData hook tests', () => {
 
     expect(await findByText('Hello world!')).toBeDefined();
   });
-
+  
   it('should throw an error when not wrapped with DataProvider', async () => {
     fetchMock.mockResponse(JSON.stringify({ message: 'Hello world!' }));
 
@@ -130,3 +218,61 @@ describe('useData hook tests', () => {
     expect(await findByText('Error happened!')).toBeDefined();
   });
 });
+
+describe('useData hook with ssrForceFetchDelay', () => {
+  const onError = (e: Event) => {
+    e.preventDefault();
+  };
+
+  beforeEach(() => {
+    // to suppress error logs from error boundaries
+    // https://github.com/facebook/react/issues/11098#issuecomment-412682721
+    window.addEventListener('error', onError);
+    fetchMock.resetMocks();
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    window.removeEventListener('error', onError);
+    jest.useRealTimers();
+  });
+
+  it('should not fetch again; fetchPolicy: "network-only"', async () => {
+    const client = createDataClient({
+      initialCache: {
+        'http:': {
+          localhost: {
+            somewhere: {
+              __raw: '{"message":"initial message","randomNumber":55}',
+            }
+          }
+        }
+      },
+      ssrForceFetchDelay: 1000,
+    });
+
+    const Comp = () => {
+      const { data, loading } = useData(
+        'http://localhost/somewhere',
+        {},
+        {},
+        { skip: false, ssr: true, fetchPolicy: 'network-only' },
+      );
+
+      return loading || !data ? (
+        <div>loading...</div>
+      ) : (
+        <div>{data.message}</div>
+      );
+    };
+    const App = (
+      <DataProvider client={client}>
+        <Comp />
+      </DataProvider>
+    );
+
+    const { findByText } = render(App);
+
+    expect(await findByText('initial message')).toBeDefined();
+  });
+
+})
