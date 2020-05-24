@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.13.0...ssr@0.14.0) (2020-05-24)
+
+
+### Features
+
+* **core:** default global fetchPolicy and ssrForceFetchDelay ([#60](https://github.com/jackyef/react-isomorphic-data/issues/60)) ([8fc342a](https://github.com/jackyef/react-isomorphic-data/commit/8fc342abfd3c426567a8814c97c953d123225193))
+
+
+
+
+
 # [0.13.0](https://github.com/jackyef/react-isomorphic-data/compare/ssr@0.12.0...ssr@0.13.0) (2020-03-28)
 
 
