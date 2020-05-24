@@ -22,6 +22,10 @@ declare global {
 const dataClient = createDataClient({
   initialCache: window.__cache,
   ssr: false,
+  ssrForceFetchDelay: 1000,
+  headers: {
+    'x-foo': 'bar',
+  }
 });
 
 hydrate(

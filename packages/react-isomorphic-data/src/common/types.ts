@@ -5,6 +5,9 @@ export interface DataClient {
   cache: Record<string, any>;
   toBePrefetched: Record<string, boolean>;
   ssr: boolean;
+  ssrForceFetchDelay: number;
+  initTime: number;
+  fetchPolicy: 'cache-first' | 'cache-and-network' | 'network-only';
   test: boolean;
   headers: Record<string, any>;
   addSubscriber: (key: string, callback: Function) => void;
@@ -14,9 +17,11 @@ export interface DataClient {
 
 export interface DataClientOptions {
   ssr?: boolean;
+  ssrForceFetchDelay?: number;
+  fetchPolicy?: 'cache-first' | 'cache-and-network' | 'network-only';
   test?: boolean;
   initialCache?: Record<string, any>;
-  headers?: Record<string, any>;
+  headers?: Record<string, string>;
 }
 
 export interface DataContextAPI {

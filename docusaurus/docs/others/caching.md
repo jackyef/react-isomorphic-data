@@ -8,11 +8,21 @@ description: 'Explanation about different caching strategy in react-isomorphic-d
 All `GET` requests, either lazy or non-lazy ones, can be cached. By default, `react-isomorphic-data` will use `cache-first` strategy for all the data. This means that if a response for a particular URL + query params already exist in the cache, all subsequent requests will always receive a response from the cache directly, without going to the network. 
 
 ## Caching Strategies
-`react-isomorphic-data` comes with 3 different caching strategies, which you can choose by passing a `dataOptions.fetchPolicy` to your hook/HOC. [(More about dataOptions)](./data-options.md)
+`react-isomorphic-data` comes with 3 different caching strategies, which you can choose by passing a `dataOptions.fetchPolicy` to your hook/HOC. [(More about dataOptions)](./data-options.md). If you do not pass a value to `dataOptions.fetchPolicy`, `client.fetchPolicy` will be used instead. You can set `client.fetchPolicy` when creating a `dataClient` instance.
+
+```js
+const client = createDataClient({
+  fetchPolicy: 'network-only', // set the default fetchPolicy to 'network-only'
+});
+```
+
+> To learn more about what options can be passed to `createDataClient`, go [here](./create-data-client.md).
+
+If you do not set `client.fetchPolicy`, it will default to `cache-first`.
 
 1. `cache-first`
 
-    This is the default strategy used if you do not pass an explicit `fetchPolicy`. A network request will only be made if the particular URL + query params' response does not exist in the cache yet. 
+    This is the default strategy used if you do not pass an explicit `fetchPolicy` and `createDataClient`. A network request will only be made if the particular URL + query params' response does not exist in the cache yet. 
     
     If it exists in the cache, the data from cache will be passed to your component and a network request will never be made.
 
@@ -25,6 +35,6 @@ All `GET` requests, either lazy or non-lazy ones, can be cached. By default, `re
     The data will never be cached. Each data will only be kept until the component unmount, or until another network request is made explicitly. All non `GET` requests (`POST`, `PUT`, `DELETE`, etc.) are locked in to this strategy.
 
 ## Things to note
-1. `network-only` strategy should not be used for data that are going to be fetched during server side rendering. The reason for this is because it's going to be invalidated (become `null`) the moment your React app hydrates on the client side. Doing so in development mode will show a warning message in the console. [An issue](https://github.com/jackyef/react-isomorphic-data/issues/14) for this has been opened in the repo, and will be looked at in the near future.
+1. `network-only` strategy should not be used for data that are going to be fetched during server side rendering. The reason for this is because it's going to be invalidated (become `null`) the moment your React app hydrates on the client side. Doing so in development mode will show a warning message in the console. You can provide `{ ssrForceFetchDelay: 500 }` when doing `createDataClient()` to work around this.
 
 2. All non `GET` requests are locked in to `network-only` strategy. The reason for this is because non `GET` requests are not expected to be idempotent (calling them will introduces side-effects on the server side), and therefore should not be cached.

@@ -20,6 +20,8 @@ const useData = <T, >(
         console.warn(
           'You are doing SSR for data with `fetchPolicy` === "network-only". The cached value will automatically be discarded when hydrating on client, which is probably not what you want.',
           { url },
+          '\n',
+          'You can use the ssrForceFetchDelay option as a workaround for this.',
         );
       }
     }
