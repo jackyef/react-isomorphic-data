@@ -21,7 +21,7 @@ export interface DataClientOptions {
   fetchPolicy?: 'cache-first' | 'cache-and-network' | 'network-only';
   test?: boolean;
   initialCache?: Record<string, any>;
-  headers?: Record<string, any>;
+  headers?: Record<string, string>;
 }
 
 export interface DataContextAPI {
