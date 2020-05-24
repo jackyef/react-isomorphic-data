@@ -4,16 +4,17 @@ import { DataClient, DataClientOptions } from './types';
 export const createDataClient = (
   options: DataClientOptions = {},
 ): DataClient => {
-  const { ssr, initialCache, headers, test, ssrForceFetchDelay } = options;
+  const { ssr, initialCache, headers, test, ssrForceFetchDelay, fetchPolicy } = options;
   const subscribers: Record<string, Map<Function, Function>> = {};
 
   return {
     cache: initialCache ? { ...initialCache } : {},
     ssr: ssr || false,
     ssrForceFetchDelay: ssrForceFetchDelay || 0,
-    ssrForceFetchDelayTimer: Date.now(),
+    initTime: Date.now(),
     test: test || false,
     headers: headers || {},
+    fetchPolicy: fetchPolicy || 'cache-first',
     toBePrefetched: {},
     addSubscriber: (key: string, callback: Function) => {
       if (!(subscribers[key] instanceof Map)) {

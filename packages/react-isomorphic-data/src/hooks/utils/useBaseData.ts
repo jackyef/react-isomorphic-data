@@ -32,7 +32,7 @@ const useBaseData = <T, > (
     dataHookState: state,
     setDataHookState: setState,
   } = useCacheSubscription(fullUrl, lazy, skip);
-  const [finalFetchOpts, fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
+  const [finalFetchOpts, _fetchPolicy] = useFetchRequirements(fetchOptions, client, dataOpts, lazy);
 
   // add `<link rel="prefetch" /> tag for the resource only if it's enabled by user and the query isn't fetched during ssr
   const shouldPrefetch = dataOpts.prefetch !== undefined ? dataOpts.prefetch && (!ssrOpt || lazy) : false;
@@ -42,16 +42,18 @@ const useBaseData = <T, > (
   const fetchedFromNetwork = React.useRef<boolean>(false);
 
   const isSSR = client.ssr && ssrOpt && typeof window === 'undefined';
-  let isNetworkPolicy = fetchPolicy === 'network-only';
-  let useTempData = finalFetchOpts.method !== 'GET' || isNetworkPolicy;
-
-  if (!isSSR && isNetworkPolicy) {
-    let delay = Date.now() - Number(client.ssrForceFetchDelayTimer);
+  let fetchPolicy = _fetchPolicy;
+  
+  if (!isSSR && _fetchPolicy === 'network-only') {
+    const delay = Date.now() - Number(client.initTime);
+    
     if (delay <= client.ssrForceFetchDelay) {
-      useTempData = false;
+      fetchPolicy = 'cache-first'; // force to 'cache-first' policy when using ssrForceFetchDelay
     }
   }
 
+  const useTempData = finalFetchOpts.method !== 'GET' || fetchPolicy === 'network-only';
+  
   const createFetch = React.useCallback(() => {
     promiseRef.current = fetcher(fullUrl, finalFetchOpts)
       .then((result) => result.text())
