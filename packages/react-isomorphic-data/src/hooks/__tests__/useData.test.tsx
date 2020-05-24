@@ -106,7 +106,7 @@ describe('useData hook tests', () => {
       initialCache: {
         'http:': {
           localhost: {
-            somewhere: {
+            'somewhere-hook': {
               __raw: '{"message":"initial message","randomNumber":55}',
             }
           }
@@ -116,7 +116,7 @@ describe('useData hook tests', () => {
 
     const Comp = () => {
       const { data, loading } = useData(
-        'http://localhost/somewhere',
+        'http://localhost/somewhere-hook',
         {},
         {},
         { skip: false, ssr: true },
@@ -134,13 +134,15 @@ describe('useData hook tests', () => {
       </DataProvider>
     );
 
-    const { findByText } = render(App);
+    const { findByText, debug } = render(App);
 
     // will be loading even though data is already in cache. Because we set the default fetchPolicy is 'network-only'
+    debug();
     expect(await findByText('loading...')).toBeDefined();
-
+    
     await wait();
-
+    
+    debug();
     // will render data from the network
     expect(await findByText('Hello world!')).toBeDefined();
   });
