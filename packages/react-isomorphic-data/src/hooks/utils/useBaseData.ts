@@ -6,8 +6,6 @@ import { LazyDataState, DataHookOptions } from '../types';
 import useFetchRequirements from './useFetchRequirements';
 import useCacheSubscription, { LoadingSymbol } from './useCacheSubscription';
 
-const simpleCache: Record<string, any> = {};
-
 const useBaseData = <T, > (
   url: string,
   queryParams: Record<string, any> = {},
@@ -48,7 +46,6 @@ const useBaseData = <T, > (
     const delay = Date.now() - Number(client.initTime);
     
     if (delay <= client.ssrForceFetchDelay) {
-      console.log('set to cache-first')
       fetchPolicy = 'cache-first'; // force to 'cache-first' policy when using ssrForceFetchDelay
     }
   }
@@ -59,6 +56,9 @@ const useBaseData = <T, > (
     promiseRef.current = fetcher(fullUrl, finalFetchOpts)
       .then((result) => result.text())
       .then((data) => {
+        if (!raw) {
+          JSON.parse(data); // check if valid JSON or not, will throw error if it is not
+        }
         // this block of code will cause 2 re-renders because React doesn't batch these 2 updates
         // https://twitter.com/dan_abramov/status/887963264335872000?lang=en
         // For React 16.x we can use `unstable_batchedUpdates()` to solve this
@@ -105,7 +105,7 @@ const useBaseData = <T, > (
       });
 
     return promiseRef.current;
-  }, [addToCache, finalFetchOpts, fullUrl, isSSR, useTempData, fetcher, setState]);
+  }, [addToCache, finalFetchOpts, fullUrl, isSSR, useTempData, fetcher, setState, raw]);
 
   const memoizedFetchData = React.useCallback((): Promise<any> => {
     const currentDataInCache = retrieveFromCache(fullUrl);
@@ -190,13 +190,17 @@ const useBaseData = <T, > (
       return usedData;
     } else {
       // else, we want the data in json form
-      if (!simpleCache[usedData]) {
-        simpleCache[usedData] = JSON.parse(usedData);
+      if (!client.__internal[usedData]) {
+        try {
+          client.__internal[usedData] = JSON.parse(usedData);
+        } catch (err) {
+          client.__internal[usedData] = null;
+        }
       }
 
-      return simpleCache[usedData];
+      return client.__internal[usedData];
     }
-  }, [usedData, raw]);
+  }, [usedData, raw, client]);
 
   return [
     memoizedFetchData,

@@ -10,6 +10,7 @@ export interface DataClient {
   fetchPolicy: 'cache-first' | 'cache-and-network' | 'network-only';
   test: boolean;
   headers: Record<string, any>;
+  __internal: Record<string, any>;
   addSubscriber: (key: string, callback: Function) => void;
   removeSubscriber: (key: string, callback: Function) => void;
   notifySubscribers: (key: string) => void;

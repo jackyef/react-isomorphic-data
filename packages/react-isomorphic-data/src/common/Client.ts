@@ -16,6 +16,7 @@ export const createDataClient = (
     headers: headers || {},
     fetchPolicy: fetchPolicy || 'cache-first',
     toBePrefetched: {},
+    __internal: {},
     addSubscriber: (key: string, callback: Function) => {
       if (!(subscribers[key] instanceof Map)) {
         subscribers[key] = new Map();
