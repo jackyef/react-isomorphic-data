@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.1](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.17.0...react-isomorphic-data@0.17.1) (2020-05-29)
+
+
+### Bug Fixes
+
+* **core:** fix possible memory leak on SSR and validate JSON on non-raw request ([eb196a2](https://github.com/jackyef/react-isomorphic-data/commit/eb196a2f23095495ab881419e8bb16e4857d2e96))
+
+
+
+
+
 # [0.17.0](https://github.com/jackyef/react-isomorphic-data/compare/react-isomorphic-data@0.16.0...react-isomorphic-data@0.17.0) (2020-05-24)
 
 
